@@ -1,10 +1,8 @@
 package com.example.kaupark
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -17,13 +15,14 @@ import com.example.kaupark.ui.theme.KAUParkTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             KAUParkTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Col_Row()
+                    Greeting("Android")
                 }
             }
         }
@@ -36,16 +35,6 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
         text = "Hello $name!",
         modifier = modifier
     )
-}
-
-
-@Composable
-fun Col_Row() {
-    Column {
-        Greeting("Android")
-        Greeting("Android")
-        Greeting("Android")
-    }
 }
 
 @Preview(showBackground = true)
