@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/parkingAvailable"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <View
+        android:id = "@+id/rectangleView_StudentCenter"
+        android:layout_width="162dp"
+        android:layout_height="143dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginStart="33dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background = "@drawable/rounded_top_left_corners"
+        />
+
+    <View
+        android:id = "@+id/rectangleView_Library"
+        android:layout_width="162dp"
+        android:layout_height="143dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginStart="22dp"
+        app:layout_constraintTop_toTopOf="@id/rectangleView_StudentCenter"
+        app:layout_constraintStart_toEndOf="@id/rectangleView_StudentCenter"
+        android:background="@drawable/rounded_top_right_corners"
+        />
+
+    <View
+        android:id = "@+id/rectangleView_AcademicBuilding"
+        android:layout_width="162dp"
+        android:layout_height="143dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="0dp"
+        app:layout_constraintTop_toBottomOf="@id/rectangleView_StudentCenter"
+        app:layout_constraintStart_toStartOf="@id/rectangleView_StudentCenter"
+        android:background="#D9D9D9"
+        />
+
+    <View
+        android:id = "@+id/rectangleView_ScienceBuilding"
+        android:layout_width="162dp"
+        android:layout_height="143dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="0dp"
+        app:layout_constraintTop_toBottomOf="@id/rectangleView_Library"
+        app:layout_constraintStart_toStartOf="@id/rectangleView_Library"
+        android:background="#D9D9D9"
+        />
+
+    <View
+        android:id = "@+id/rectangleView_SearchBuilding"
+        android:layout_width="162dp"
+        android:layout_height="143dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="0dp"
+        app:layout_constraintTop_toBottomOf="@id/rectangleView_AcademicBuilding"
+        app:layout_constraintStart_toStartOf="@id/rectangleView_AcademicBuilding"
+        android:background="@drawable/rounded_bottom_left_corners"
+        />
+
+    <View
+        android:id = "@+id/rectangleView_SomethingBuilding"
+        android:layout_width="162dp"
+        android:layout_height="143dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="0dp"
+        app:layout_constraintTop_toBottomOf="@id/rectangleView_ScienceBuilding"
+        app:layout_constraintStart_toStartOf="@id/rectangleView_ScienceBuilding"
+        android:background="@drawable/rounded_bottom_right_corners"
+        />
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
