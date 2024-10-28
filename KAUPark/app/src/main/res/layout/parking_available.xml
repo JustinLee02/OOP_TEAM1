@@ -171,10 +171,33 @@
         app:layout_constraintStart_toStartOf="@id/rectangleView_SomethingBuilding"
         app:layout_constraintEnd_toEndOf="@id/rectangleView_SomethingBuilding"
         />
+    <android.widget.Button
+        android:id="@+id/button"
+        android:layout_width="206dp"
+        android:layout_height="72dp"
+
+        android:layout_marginTop="72dp"
+        android:background="#00FF0000"
 
 
+        android:text="여석 확인"
 
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
 
+    <android.widget.Button
+        android:id="@+id/button2"
+        android:layout_width="206dp"
+        android:layout_height="72dp"
+        android:text="대기시간 확인"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="0dp"
+        android:background="#00FF0000"
+
+        app:layout_constraintStart_toEndOf="@+id/button"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="MissingClass" />
 
 
 
