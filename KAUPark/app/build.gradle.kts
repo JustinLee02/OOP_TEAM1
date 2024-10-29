@@ -38,10 +38,6 @@ android {
         enable = true
     }
 
-    dataBinding {
-        enable = true
-    }
-
 
 }
 
