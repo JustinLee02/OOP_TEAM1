@@ -1,17 +1,9 @@
 package com.example.kaupark
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.viewpager2.widget.ViewPager2
-import com.example.kaupark.databinding.ActivityMainBinding
 import com.example.kaupark.databinding.ChattingListBinding
-import com.example.kaupark.databinding.ParkingAvailableBinding
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,7 +15,7 @@ class MainActivity : AppCompatActivity() {
         Person("1100님", "새로운 메세지가 왔습니다.", "am 9:47")
     )
 
-    lateinit var binding : ChattingListBinding
+    lateinit var binding: ChattingListBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,5 +26,10 @@ class MainActivity : AppCompatActivity() {
         binding.recChatting.layoutManager = LinearLayoutManager(this)
         binding.recChatting.adapter = PersonsAdapter(p)
 
+        // chatplus_btn 클릭 리스너 추가
+        binding.chatplusBtn.setOnClickListener {
+            val chatPopupFragment = ChatPopupFragment()
+            chatPopupFragment.show(supportFragmentManager, "ChatPopupFragment")
+        }
     }
 }
