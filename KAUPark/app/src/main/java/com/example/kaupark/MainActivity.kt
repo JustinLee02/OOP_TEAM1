@@ -28,11 +28,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ChattingListBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        // binding = ChattingListBinding.inflate(layoutInflater)
+        setContentView(R.layout.home_view)
 
-        binding.recChatting.layoutManager = LinearLayoutManager(this)
-        binding.recChatting.adapter = PersonsAdapter(p)
+//        binding.recChatting.layoutManager = LinearLayoutManager(this)
+//        binding.recChatting.adapter = PersonsAdapter(p)
 
     }
 }
