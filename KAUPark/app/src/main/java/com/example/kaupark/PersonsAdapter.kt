@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kaupark.databinding.ListPersonBinding
 
-class PersonsAdapter(val p: Array<Person>) :RecyclerView.Adapter<PersonsAdapter.Holder>() {
+class PersonsAdapter(private val personList: MutableList<Person>) : RecyclerView.Adapter<PersonsAdapter.Holder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding = ListPersonBinding.inflate(LayoutInflater.from(parent.context))
@@ -13,22 +13,23 @@ class PersonsAdapter(val p: Array<Person>) :RecyclerView.Adapter<PersonsAdapter.
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        holder.bind(p[position])
+        holder.bind(personList[position])
     }
 
-    override fun getItemCount() = p.size
+    override fun getItemCount() = personList.size
 
-    class Holder(private val binding : ListPersonBinding) : RecyclerView.ViewHolder(binding.root){
-        fun bind(p: Person) {
-            binding.txtName.text = p.carNum
-            binding.txtMessage.text = p.text
-            binding.txtTime.text = p.time
+    fun addPerson(person: Person) {
+        personList.add(0, person)
+        notifyItemInserted(0)
+    }
 
-            binding.root.setOnClickListener(){
-                // 화면 전환
-            }
 
+
+    class Holder(private val binding: ListPersonBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(person: Person) {
+            binding.txtName.text = person.carNum
+            binding.txtMessage.text = person.text
+            binding.txtTime.text = person.time
         }
     }
-
 }
