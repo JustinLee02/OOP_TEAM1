@@ -5,6 +5,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.example.kaupark.databinding.ActivityMainBinding
@@ -28,11 +29,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ChattingListBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        // binding = ChattingListBinding.inflate(layoutInflater)
+        setContentView(R.layout.home_view)
 
-        binding.recChatting.layoutManager = LinearLayoutManager(this)
-        binding.recChatting.adapter = PersonsAdapter(p)
+//        binding.recChatting.layoutManager = LinearLayoutManager(this)
+//        binding.recChatting.adapter = PersonsAdapter(p)
 
     }
 }
