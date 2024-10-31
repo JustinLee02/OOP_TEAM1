@@ -30,6 +30,10 @@ class MainActivity : AppCompatActivity(), ChatPopupFragment.OnPersonAddedListene
 //        val binding2 = HomeViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+       chattingListFun()
+    }
+
+    fun chattingListFun(){
         adapter = PersonsAdapter(personList)
         binding.recChatting.layoutManager = LinearLayoutManager(this)
         binding.recChatting.adapter = adapter
@@ -39,19 +43,18 @@ class MainActivity : AppCompatActivity(), ChatPopupFragment.OnPersonAddedListene
             chatPopupFragment.show(supportFragmentManager, "ChatPopupFragment")
         }
 
-        // 스와이프하여 삭제하는 기능 추가
         val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
             override fun onMove(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,
                 target: RecyclerView.ViewHolder
             ): Boolean {
-                return false // 이동 기능은 필요 없음
+                return false
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.bindingAdapterPosition
-                adapter.removePerson(position) // 아이템 삭제
+                adapter.removePerson(position)
             }
         })
 
