@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity(), ChatPopupFragment.OnPersonAddedListene
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val position = viewHolder.adapterPosition
+                val position = viewHolder.bindingAdapterPosition
                 adapter.removePerson(position) // 아이템 삭제
             }
         })
