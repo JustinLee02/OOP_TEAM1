@@ -2,7 +2,9 @@ package com.example.kaupark
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.kaupark.databinding.ChattingListBinding
 
 class MainActivity : AppCompatActivity(), ChatPopupFragment.OnPersonAddedListener {
@@ -31,6 +33,24 @@ class MainActivity : AppCompatActivity(), ChatPopupFragment.OnPersonAddedListene
             val chatPopupFragment = ChatPopupFragment()
             chatPopupFragment.show(supportFragmentManager, "ChatPopupFragment")
         }
+
+        // 스와이프하여 삭제하는 기능 추가
+        val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false // 이동 기능은 필요 없음
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.adapterPosition
+                adapter.removePerson(position) // 아이템 삭제
+            }
+        })
+
+        itemTouchHelper.attachToRecyclerView(binding.recChatting)
     }
 
     override fun onPersonAdded(person: Person) {

@@ -23,7 +23,12 @@ class PersonsAdapter(private val personList: MutableList<Person>) : RecyclerView
         notifyItemInserted(0)
     }
 
-
+    fun removePerson(position: Int) {
+        if (position >= 0 && position < personList.size) {
+            personList.removeAt(position) // 리스트에서 아이템 삭제
+            notifyItemRemoved(position) // RecyclerView에 변경 알림
+        }
+    }
 
     class Holder(private val binding: ListPersonBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(person: Person) {
