@@ -1,4 +1,4 @@
-package com.example.kaupark
+package com.example.kaupark.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
