@@ -1,4 +1,4 @@
-package com.example.kaupark
+package com.example.kaupark.fragment
 
 import android.content.Context
 import android.os.Bundle
@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.DialogFragment
+import com.example.kaupark.model.Person
+import com.example.kaupark.R
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
