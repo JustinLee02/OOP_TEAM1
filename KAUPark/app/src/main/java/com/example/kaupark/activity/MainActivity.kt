@@ -9,6 +9,8 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kaupark.databinding.ChattingListBinding
+import com.example.kaupark.fragment.ChatPopupFragment
+import com.example.kaupark.model.Person
 
 class MainActivity : AppCompatActivity(), ChatPopupFragment.OnPersonAddedListener {
 
@@ -25,8 +27,8 @@ class MainActivity : AppCompatActivity(), ChatPopupFragment.OnPersonAddedListene
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //binding = ChattingListBinding.inflate(layoutInflater)
-        setContentView(R.layout.home_view)
+        binding = ChattingListBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         adapter = PersonsAdapter(personList)
         binding.recChatting.layoutManager = LinearLayoutManager(this)
@@ -48,7 +50,7 @@ class MainActivity : AppCompatActivity(), ChatPopupFragment.OnPersonAddedListene
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val position = viewHolder.adapterPosition
+                val position = viewHolder.bindingAdapterPosition
                 adapter.removePerson(position) // 아이템 삭제
             }
         })
