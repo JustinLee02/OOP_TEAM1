@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -51,6 +52,7 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.filament.android)
     implementation("de.hdodenhof:circleimageview:3.1.0")
+    implementation(libs.firebase.auth.ktx)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -59,5 +61,9 @@ dependencies {
     implementation ("de.hdodenhof:circleimageview:3.1.0")
     implementation (libs.androidx.viewpager2)
     implementation("com.naver.maps:map-sdk:3.19.1")
+
+    implementation(platform("com.google.firebase:firebase-bom:33.5.1")) // Firebase BOM 추가
+    implementation("com.google.firebase:firebase-firestore-ktx") // Firebase Firestore 추가
+    implementation("com.google.firebase:firebase-auth-ktx") // Firebase Auth 추가
 }
 
