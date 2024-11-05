@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".fragment.ChattingList" >
 
-    <Button
+    <android.widget.Button
         android:id="@+id/chatplus_btn"
         android:layout_width="75dp"
         android:layout_height="75dp"
@@ -14,6 +14,7 @@
         android:layout_marginBottom="16dp"
         android:text="+"
         android:textSize="25dp"
+        android:textColor="@color/white"
         android:background="@drawable/shape_for_circle_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

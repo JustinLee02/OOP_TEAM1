@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/parkingAvailable"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
 
     <View
         android:id = "@+id/rectangleView_StudentCenter"
@@ -18,6 +17,24 @@
         android:background = "@drawable/rounded_top_left_corners"
         />
 
+    <TextView
+        android:id="@+id/textView_StudentCenter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="116dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginStart="58.5dp"
+        android:layout_marginEnd="58.5dp"
+        android:gravity="center"
+        android:text="학생회관"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintTop_toTopOf="@id/rectangleView_StudentCenter"
+        app:layout_constraintBottom_toBottomOf="@id/rectangleView_StudentCenter"
+        app:layout_constraintStart_toStartOf="@id/rectangleView_StudentCenter"
+        app:layout_constraintEnd_toEndOf="@id/rectangleView_StudentCenter"
+        tools:ignore="HardcodedText" />
+
     <View
         android:id = "@+id/rectangleView_Library"
         android:layout_width="162dp"
@@ -28,6 +45,22 @@
         app:layout_constraintStart_toEndOf="@id/rectangleView_StudentCenter"
         android:background="@drawable/rounded_top_right_corners"
         />
+    <TextView
+        android:id="@+id/textView_Library"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="116dp"
+        android:layout_marginBottom="9dp"
+        android:layout_marginStart="58.5dp"
+        android:layout_marginEnd="58.5dp"
+        android:gravity="center"
+        android:text="도서관"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintTop_toTopOf="@id/rectangleView_Library"
+        app:layout_constraintBottom_toBottomOf="@id/rectangleView_Library"
+        app:layout_constraintStart_toStartOf="@id/rectangleView_Library"
+        app:layout_constraintEnd_toEndOf="@id/rectangleView_Library" />
 
     <View
         android:id = "@+id/rectangleView_AcademicBuilding"
@@ -39,6 +72,22 @@
         app:layout_constraintStart_toStartOf="@id/rectangleView_StudentCenter"
         android:background="#D9D9D9"
         />
+    <TextView
+        android:id="@+id/textView_AcademicBuilding"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="116dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginStart="58.5dp"
+        android:layout_marginEnd="58.5dp"
+        android:gravity="center"
+        android:text="강의동"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintTop_toTopOf="@id/rectangleView_AcademicBuilding"
+        app:layout_constraintBottom_toBottomOf="@id/rectangleView_AcademicBuilding"
+        app:layout_constraintStart_toStartOf="@id/rectangleView_AcademicBuilding"
+        app:layout_constraintEnd_toEndOf="@id/rectangleView_AcademicBuilding" />
 
     <View
         android:id = "@+id/rectangleView_ScienceBuilding"
@@ -50,6 +99,23 @@
         app:layout_constraintStart_toStartOf="@id/rectangleView_Library"
         android:background="#D9D9D9"
         />
+    <TextView
+        android:id="@+id/textView_ScienceBuilding"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="116dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginStart="58.5dp"
+        android:layout_marginEnd="58.5dp"
+        android:text="과학관"
+        android:textSize="16sp"
+        android:textColor="#000000"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="@id/rectangleView_ScienceBuilding"
+        app:layout_constraintBottom_toBottomOf="@id/rectangleView_ScienceBuilding"
+        app:layout_constraintStart_toStartOf="@id/rectangleView_ScienceBuilding"
+        app:layout_constraintEnd_toEndOf="@id/rectangleView_ScienceBuilding" />
+
 
     <View
         android:id = "@+id/rectangleView_SearchBuilding"
@@ -61,6 +127,22 @@
         app:layout_constraintStart_toStartOf="@id/rectangleView_AcademicBuilding"
         android:background="@drawable/rounded_bottom_left_corners"
         />
+    <TextView
+        android:id="@+id/textView_SearchBuilding"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="116dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginStart="58.5dp"
+        android:layout_marginEnd="58.5dp"
+        android:text="연구동"
+        android:textSize="16sp"
+        android:textColor="#000000"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="@id/rectangleView_SearchBuilding"
+        app:layout_constraintBottom_toBottomOf="@id/rectangleView_SearchBuilding"
+        app:layout_constraintStart_toStartOf="@id/rectangleView_SearchBuilding"
+        app:layout_constraintEnd_toEndOf="@id/rectangleView_SearchBuilding" />
 
     <View
         android:id = "@+id/rectangleView_SomethingBuilding"
@@ -72,9 +154,48 @@
         app:layout_constraintStart_toStartOf="@id/rectangleView_ScienceBuilding"
         android:background="@drawable/rounded_bottom_right_corners"
         />
+    <TextView
+        android:id="@+id/textView_SomethingBuilding"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="116dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginStart="58.5dp"
+        android:layout_marginEnd="58.5dp"
+        android:text="운동장"
+        android:textSize="16sp"
+        android:textColor="#000000"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="@id/rectangleView_SomethingBuilding"
+        app:layout_constraintBottom_toBottomOf="@id/rectangleView_SomethingBuilding"
+        app:layout_constraintStart_toStartOf="@id/rectangleView_SomethingBuilding"
+        app:layout_constraintEnd_toEndOf="@id/rectangleView_SomethingBuilding"
+        />
+    <android.widget.Button
+        android:id="@+id/button"
+        android:layout_width="206dp"
+        android:layout_height="72dp"
+        android:layout_marginTop="72dp"
+        android:background="#00FF0000"
+        android:text="여석 확인"
+        android:paddingStart="30dp"
 
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
 
+    <android.widget.Button
+        android:id="@+id/button2"
+        android:layout_width="206dp"
+        android:layout_height="72dp"
+        android:layout_marginTop="72dp"
+        android:background="#00FF0000"
+        android:text="대기시간 확인"
+        android:paddingEnd="20dp"
 
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingClass" />
 
 
 

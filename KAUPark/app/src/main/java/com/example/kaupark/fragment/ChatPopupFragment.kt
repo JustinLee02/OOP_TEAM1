@@ -24,7 +24,7 @@ class ChatPopupFragment : DialogFragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        listener = context as? OnPersonAddedListener
+        listener = targetFragment as? OnPersonAddedListener
     }
 
     override fun onDetach() {
@@ -39,6 +39,7 @@ class ChatPopupFragment : DialogFragment() {
         val view = inflater.inflate(R.layout.fragment_chat_popup, container, false)
 
         val sendButton: Button = view.findViewById(R.id.send_btn)
+        val closeButton: Button = view.findViewById(R.id.close_btn)
         val nameEditText: EditText = view.findViewById(R.id.blank_text)
 
         sendButton.setOnClickListener {
@@ -50,6 +51,14 @@ class ChatPopupFragment : DialogFragment() {
                 dismiss()
             }
         }
+
+        closeButton.setOnClickListener{
+            dismiss()
+        }
+
+
+
+
         return view
     }
 }
