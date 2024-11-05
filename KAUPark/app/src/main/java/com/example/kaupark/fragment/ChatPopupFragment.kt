@@ -39,7 +39,7 @@ class ChatPopupFragment : DialogFragment() {
         val view = inflater.inflate(R.layout.fragment_chat_popup, container, false)
 
         val sendButton: Button = view.findViewById(R.id.send_btn)
-        //val closeButton: Button = view.findViewById(R.id.close_btn)
+        val closeButton: Button = view.findViewById(R.id.close_btn)
         val nameEditText: EditText = view.findViewById(R.id.blank_text)
 
         sendButton.setOnClickListener {
@@ -50,6 +50,10 @@ class ChatPopupFragment : DialogFragment() {
                 listener?.onPersonAdded(Person("$name", "채팅을 시작하세요.", currentTime))
                 dismiss()
             }
+        }
+
+        closeButton.setOnClickListener{
+            dismiss()
         }
 
 
