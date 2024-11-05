@@ -65,5 +65,6 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:33.5.1")) // Firebase BOM 추가
     implementation("com.google.firebase:firebase-firestore-ktx") // Firebase Firestore 추가
     implementation("com.google.firebase:firebase-auth-ktx") // Firebase Auth 추가
+    implementation ("com.google.firebase:firebase-database-ktx:20.0.4")
 }
 
