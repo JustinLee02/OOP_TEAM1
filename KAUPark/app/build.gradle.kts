@@ -38,10 +38,6 @@ android {
         enable = true
     }
 
-    dataBinding {
-        enable = true
-    }
-
 
 }
 
@@ -54,6 +50,8 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.filament.android)
+    implementation("de.hdodenhof:circleimageview:3.1.0")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -62,3 +60,4 @@ dependencies {
     implementation (libs.androidx.viewpager2)
     implementation("com.naver.maps:map-sdk:3.19.1")
 }
+

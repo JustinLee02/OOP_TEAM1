@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "120528185867",
+    "project_id": "kaupark-28acb",
+    "storage_bucket": "kaupark-28acb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:120528185867:android:c4dedc4f7e7dc9d216f50e",
+        "android_client_info": {
+          "package_name": "com.example.kaupark"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCAx2PnjPxjvYEtdzZRfaAdBJkz0Jqjz98"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
