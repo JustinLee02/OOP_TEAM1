@@ -8,8 +8,10 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.kaupark.R
 import com.example.kaupark.databinding.ActivityBottomNavigationBinding
+import com.example.kaupark.databinding.ChattingListBinding
 import com.example.kaupark.databinding.HomeViewBinding
 import com.example.kaupark.fragment.ChatPopupFragment
+import com.example.kaupark.fragment.ChattingList
 import com.example.kaupark.fragment.HomeView
 import com.example.kaupark.fragment.ParkingAvailable
 
@@ -45,7 +47,7 @@ class BottomNavigationActivity : AppCompatActivity() {
                     false
                 }
                 R.id.fragment_chat -> {
-                    supportFragmentManager.beginTransaction().replace(R.id.main_container, ChatPopupFragment()).commit()
+                    supportFragmentManager.beginTransaction().replace(R.id.main_container, ChattingList()).commit()
                     true
                 }
                 else -> false
