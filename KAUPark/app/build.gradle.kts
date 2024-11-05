@@ -59,4 +59,8 @@ dependencies {
     implementation ("de.hdodenhof:circleimageview:3.1.0")
     implementation (libs.androidx.viewpager2)
     implementation("com.naver.maps:map-sdk:3.19.1")
+
+    implementation ("com.google.firebase:firebase-bom:29.3.1")
+    implementation ("com.google.firebase:firebase-analytics-ktx")
 }
+
