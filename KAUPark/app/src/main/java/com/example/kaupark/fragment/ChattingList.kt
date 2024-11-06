@@ -17,6 +17,7 @@ class ChattingList : Fragment(), ChatPopupFragment.OnPersonAddedListener {
     private var _binding: ChattingListBinding? = null
     private val binding get() = _binding!!
 
+
     private val personList = mutableListOf(
         Person("4130", "새로운 메세지가 왔습니다.", "pm 23:59"),
         Person("9997", "새로운 메세지가 왔습니다.", "pm 22:00"),
