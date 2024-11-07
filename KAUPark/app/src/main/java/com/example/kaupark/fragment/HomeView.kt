@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.kaupark.R
 import com.example.kaupark.databinding.HomeViewBinding
 
 class HomeView : Fragment() {
@@ -23,31 +24,15 @@ class HomeView : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {0
+    ): View? {
         val binding = HomeViewBinding.inflate(inflater, container, false)
+
+        binding.inbutton.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.main_container, ParkingMap())
+                .addToBackStack(null)
+                .commit()
+        }
         return binding.root
     }
-
-    /*
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HomeView.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HomeView().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
-
-     */
 }
