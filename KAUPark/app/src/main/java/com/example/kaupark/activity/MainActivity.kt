@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         FirebaseApp.initializeApp(this)
+
         uid = FirebaseAuth.getInstance().currentUser?.uid
         firestore = FirebaseFirestore.getInstance()
 

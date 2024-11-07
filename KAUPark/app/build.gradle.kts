@@ -53,6 +53,7 @@ dependencies {
     implementation(libs.filament.android)
     implementation("de.hdodenhof:circleimageview:3.1.0")
     implementation(libs.firebase.auth.ktx)
+    implementation(libs.androidx.tools.core)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

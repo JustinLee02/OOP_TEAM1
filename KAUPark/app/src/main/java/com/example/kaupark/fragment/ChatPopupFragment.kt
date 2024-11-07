@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import com.example.kaupark.PersonsAdapter
 import com.example.kaupark.model.Person
 import com.example.kaupark.R
 import com.example.kaupark.model.ResultDTO
@@ -26,22 +27,21 @@ class ChatPopupFragment : DialogFragment() {
 
     var auth : FirebaseAuth? = null
     var firestore : FirebaseFirestore? = null
+    val personList = arrayListOf<Person>()
 
-    interface OnPersonAddedListener {
-        fun onPersonAdded(person: Person)
-    }
+    private lateinit var adapter: PersonsAdapter
 
-    private var listener: OnPersonAddedListener? = null
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        listener = targetFragment as? OnPersonAddedListener
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        listener = null
-    }
+//    private var listener: OnPersonAddedListener? = null
+//
+//    override fun onAttach(context: Context) {
+//        super.onAttach(context)
+//        listener = targetFragment as? OnPersonAddedListener
+//    }
+//
+//    override fun onDetach() {
+//        super.onDetach()
+//        listener = null
+//    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -64,7 +64,25 @@ class ChatPopupFragment : DialogFragment() {
 
 
             firestore?.collection("chattingList")?.document()?.set(resultDTO)
-//
+
+
+
+//            firestore?.collection("chattingList")   // 작업할 컬렉션
+//                ?.get()      // 문서 가져오기
+//                ?.addOnSuccessListener { result ->
+//                    // 성공할 경우
+//                    personList.clear()
+//                    for (document in result) {  // 가져온 문서들은 result에 들어감
+//                        val item = Person(document["carNum"] as String, document["currentTime"] as String)
+//                        personList.add(item)
+//                    }
+//                    adapter.notifyDataSetChanged()  // 리사이클러 뷰 갱신
+//                }
+//                ?.addOnFailureListener { exception ->
+//                    // 실패할 경우
+//                    Log.w("MainActivity", "Error getting documents: $exception")
+//                }
+////
 //            firestore?.collection("chattingList")
 //                ?.addSnapshotListener { snapshot, e ->
 //                    if (e != null) {
@@ -84,7 +102,12 @@ class ChatPopupFragment : DialogFragment() {
 //                }
 
             nameEditText.text.clear()
-
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, ChatFragment()) // R.id.fragment_container는 대상 액티비티의 레이아웃에 있는 Fragment용 컨테이너 ID입니다.
+                .addToBackStack(null) // 뒤로 가기 버튼을 누르면 이전 Fragment로 돌아가게 함
+                .commit()
+//            adapter.notifyDataSetChanged()
+//            dismiss()
 //            if (!resultDTO.carNum.isNullOrBlank()) {
 //                listener?.onPersonAdded(Person("${resultDTO.carNum}님", "채팅을 시작하세요.", resultDTO.currentTime!!))
 //                dismiss()
