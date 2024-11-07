@@ -15,20 +15,20 @@ class PersonsAdapter(private val personList: MutableList<Person>) : RecyclerView
     private var firestore : FirebaseFirestore? = null
     private var uid : String? = null
 
-    init {
-        firestore?.collection(uid!!)?.orderBy("currentTime", Query.Direction.DESCENDING)
-            ?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
-                resultDTOs.clear()
-                if (querySnapshot == null) return@addSnapshotListener
-
-                // 데이터 받아오기
-                for (snapshot in querySnapshot!!.documents) {
-                    var item = snapshot.toObject(ResultDTO::class.java)
-                    resultDTOs.add(item!!)
-                }
-                notifyDataSetChanged()
-            }
-    }
+//    init {
+//        firestore?.collection(uid!!)?.orderBy("currentTime", Query.Direction.DESCENDING)
+//            ?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+//                resultDTOs.clear()
+//                if (querySnapshot == null) return@addSnapshotListener
+//
+//                // 데이터 받아오기
+//                for (snapshot in querySnapshot!!.documents) {
+//                    var item = snapshot.toObject(ResultDTO::class.java)
+//                    resultDTOs.add(item!!)
+//                }
+//                notifyDataSetChanged()
+//            }
+//    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding = ListPersonBinding.inflate(LayoutInflater.from(parent.context))
@@ -56,8 +56,7 @@ class PersonsAdapter(private val personList: MutableList<Person>) : RecyclerView
     class Holder(private val binding: ListPersonBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(person: Person) {
             binding.txtName.text = person.carNum
-            binding.txtMessage.text = person.text
-            binding.txtTime.text = person.time
+            binding.txtTime.text = person.currentTime
         }
     }
 }

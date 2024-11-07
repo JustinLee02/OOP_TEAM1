@@ -64,24 +64,24 @@ class ChatPopupFragment : DialogFragment() {
 
 
             firestore?.collection("chattingList")?.document()?.set(resultDTO)
-
-            firestore?.collection("chattingList")
-                ?.addSnapshotListener { snapshot, e ->
-                    if (e != null) {
-                        Log.w("ChatPopupFragment", "Listen failed.", e)
-                        return@addSnapshotListener
-                    }
-
-                    if (snapshot != null) {
-                        // snapshot을 통해 채팅 목록 데이터 가져오기
-                        val chatList = snapshot.documents.mapNotNull { it.toObject(ResultDTO::class.java) }
-
-                        // 가져온 데이터를 listener를 통해 전달하여 화면에 업데이트
-                        chatList.forEach { resultDTO ->
-                            listener?.onPersonAdded(Person("${resultDTO.carNum}님", "채팅을 시작하세요.", resultDTO.currentTime ?: ""))
-                        }
-                    }
-                }
+//
+//            firestore?.collection("chattingList")
+//                ?.addSnapshotListener { snapshot, e ->
+//                    if (e != null) {
+//                        Log.w("ChatPopupFragment", "Listen failed.", e)
+//                        return@addSnapshotListener
+//                    }
+//
+//                    if (snapshot != null) {
+//                        // snapshot을 통해 채팅 목록 데이터 가져오기
+//                        val chatList = snapshot.documents.mapNotNull { it.toObject(ResultDTO::class.java) }
+//
+//                        // 가져온 데이터를 listener를 통해 전달하여 화면에 업데이트
+//                        chatList.forEach { resultDTO ->
+//                            listener?.onPersonAdded(Person("${resultDTO.carNum}님", "채팅을 시작하세요.", resultDTO.currentTime ?: ""))
+//                        }
+//                    }
+//                }
 
             nameEditText.text.clear()
 
