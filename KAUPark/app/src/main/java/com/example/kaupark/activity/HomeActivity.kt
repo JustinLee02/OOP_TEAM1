@@ -1,5 +1,6 @@
 package com.example.kaupark.activity
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +8,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.kaupark.R
 import com.example.kaupark.databinding.HomeViewBinding
+import com.example.kaupark.fragment.ParkingMap
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.MapFragment
@@ -25,6 +27,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
                 supportFragmentManager.beginTransaction().add(R.id.mapimage, it).commit()
             }
         mapFragment.getMapAsync(this)
+
     }
 
     override fun onMapReady(naverMap: NaverMap) {
@@ -34,4 +37,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
         naverMap.moveCamera(cameraUpdate)
         // naverMap.cameraPosition = naverMap.cameraPosition.withZoom(14)
     }
+
+
 }
