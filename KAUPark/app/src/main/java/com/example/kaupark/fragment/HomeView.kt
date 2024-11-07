@@ -23,7 +23,7 @@ class HomeView : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View? {0
         val binding = HomeViewBinding.inflate(inflater, container, false)
         return binding.root
     }
