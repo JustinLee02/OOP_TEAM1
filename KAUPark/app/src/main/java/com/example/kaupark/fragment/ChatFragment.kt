@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
-import androidx.privacysandbox.tools.core.model.Type
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kaupark.ChatAdapter
 import com.example.kaupark.R

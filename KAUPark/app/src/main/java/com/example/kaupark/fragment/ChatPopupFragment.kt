@@ -57,13 +57,13 @@ class ChatPopupFragment : DialogFragment() {
 
 
         sendButton.setOnClickListener {
-            var resultDTO = ResultDTO()
+//            var resultDTO = ResultDTO()
+            var person = Person()
+            person.carNum = nameEditText.text.toString()
+            person.currentTime = SimpleDateFormat("a hh:mm", Locale.getDefault()).format(Date())
 
-            resultDTO.carNum = nameEditText.text.toString()
-            resultDTO.currentTime = SimpleDateFormat("a hh:mm", Locale.getDefault()).format(Date())
 
-
-            firestore?.collection("chattingList")?.document()?.set(resultDTO)
+            firestore?.collection("chattingList")?.document()?.set(person)
 
 
 
