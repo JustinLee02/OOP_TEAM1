@@ -21,10 +21,10 @@ import java.util.Locale
 class ChatFragment : Fragment() {
     private var _binding: FragmentChatBinding? = null
     private val binding get() = _binding!!
-    private lateinit var currentUser: String            // 현재 닉네임
-    private val firestore = FirebaseFirestore.getInstance()    // Firestore 인스턴스
-    private val chatList = arrayListOf<Chat>()    // 리사이클러 뷰 목록
-    private lateinit var adapter: ChatAdapter   // 리사이클러 뷰 어댑터
+    private lateinit var currentUser: String
+    private val firestore = FirebaseFirestore.getInstance()
+    private val chatList = arrayListOf<Chat>()
+    private lateinit var adapter: ChatAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,33 +46,31 @@ class ChatFragment : Fragment() {
         adapter = ChatAdapter(currentUser, chatList)
         binding.rvList.adapter = adapter
 
-        // 채팅창이 공백일 경우 버튼 비활성화
+
         binding.etChatting.addTextChangedListener { text ->
             binding.btnSend.isEnabled = text.toString() != ""
         }
 
         // 입력 버튼
         binding.btnSend.setOnClickListener {
-            var chat = Chat()
+            val chat = Chat()
             chat.nickname = currentUser
             chat.contents = binding.etChatting.text.toString()
             chat.time = SimpleDateFormat("a hh:mm", Locale.getDefault()).format(Date())
 
-            firestore?.collection("Chat")?.document()?.set(chat)
-        }
+            firestore.collection("Chat").document().set(chat)
 
-
-        firestore.collection("Chat")
-            .get()      // 문서 가져오기
-            .addOnSuccessListener { result ->
-                // 성공할 경우
-                chatList.clear()
-                for (document in result) {  // 가져온 문서들은 result에 들어감
-                    val item = Chat(document["nickname"].toString(), document["contents"].toString(), document["time"].toString())
-                    chatList.add(item)
+            firestore.collection("Chat")
+                .get()
+                .addOnSuccessListener { result ->
+                    chatList.clear()
+                    for (document in result) {
+                        val item = Chat(document["nickname"].toString(), document["contents"].toString(), document["time"].toString())
+                        chatList.add(item)
+                    }
+                    adapter.notifyDataSetChanged()  // 리사이클러 뷰 갱신
                 }
-                adapter.notifyDataSetChanged()  // 리사이클러 뷰 갱신
-            }
+        }
 
         binding.chatToolbar.apply {
             setNavigationIcon(R.drawable.arrow_back)
