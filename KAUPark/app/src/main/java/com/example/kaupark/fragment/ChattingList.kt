@@ -38,15 +38,13 @@ class ChattingList : Fragment(){
         binding.recChatting.layoutManager = LinearLayoutManager(context)
         binding.recChatting.adapter = adapter
 
-        //personList.sortBy { T -> T.currentTime }
-
         firestore.collection("chattingList")   // 작업할 컬렉션
             .get()      // 문서 가져오기
             .addOnSuccessListener { result ->
                 // 성공할 경우
                 personList.clear()
                 for (document in result) {  // 가져온 문서들은 result에 들어감
-                    val item = Person(document["carNum"] as String, document["currentTime"] as String)
+                    val item = Person(document["carNum"].toString(), document["currentTime"].toString())
                     personList.add(item)
                 }
                 adapter.notifyDataSetChanged()  // 리사이클러 뷰 갱신

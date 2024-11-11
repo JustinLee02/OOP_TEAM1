@@ -1,6 +1,8 @@
 package com.example.kaupark.model
 
-data class Chat(val nickname: String,
-                val contents: String,
-                val time: String)
+data class Chat(
+    var nickname: String? = null,
+    var contents: String? = null,
+    var time: String? = null
+)
 
