@@ -7,18 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.kaupark.R
 import com.example.kaupark.databinding.HomeViewBinding
+import com.naver.maps.geometry.LatLng
+import com.naver.maps.map.CameraUpdate
+import com.naver.maps.map.NaverMap
+import com.naver.maps.map.OnMapReadyCallback
+import com.naver.maps.map.MapFragment
+import com.naver.maps.map.overlay.Marker
+import com.naver.maps.map.util.MarkerIcons
 
-class HomeView : Fragment() {
+class HomeView : Fragment(), OnMapReadyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        /*
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
 
-         */
     }
 
     override fun onCreateView(
@@ -26,6 +27,12 @@ class HomeView : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = HomeViewBinding.inflate(inflater, container, false)
+
+        val mapFragment = childFragmentManager.findFragmentById(R.id.mapimage) as MapFragment?
+            ?: MapFragment.newInstance().also {
+                childFragmentManager.beginTransaction().add(R.id.mapimage, it).commit()
+            }
+        mapFragment.getMapAsync(this)
 
         binding.inbutton.setOnClickListener {
             parentFragmentManager.beginTransaction()
@@ -35,4 +42,17 @@ class HomeView : Fragment() {
         }
         return binding.root
     }
+
+    override fun onMapReady(naverMap: NaverMap) {
+        val initialPosition = LatLng(37.5997399, 126.8644887)
+        val cameraUpdate = CameraUpdate.scrollTo(initialPosition)
+
+        naverMap.moveCamera(cameraUpdate)
+        val zoomUpdate = CameraUpdate.zoomTo(16.0)
+        naverMap.moveCamera(zoomUpdate)
+
+
+
+    }
+
 }
