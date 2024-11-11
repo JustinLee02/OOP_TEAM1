@@ -13,24 +13,16 @@ import com.example.kaupark.ChatAdapter
 import com.example.kaupark.R
 import com.example.kaupark.databinding.FragmentChatBinding
 import com.example.kaupark.model.Chat
-import com.example.kaupark.model.Person
-import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ListenerRegistration
-import com.google.firebase.firestore.Query
-import com.google.firebase.firestore.QuerySnapshot
-import com.google.firestore.v1.DocumentChange
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import java.util.TimeZone
 
 class ChatFragment : Fragment() {
     private var _binding: FragmentChatBinding? = null
     private val binding get() = _binding!!
     private lateinit var currentUser: String            // 현재 닉네임
     private val firestore = FirebaseFirestore.getInstance()    // Firestore 인스턴스
-    private lateinit var registration: ListenerRegistration    // 문서 수신
     private val chatList = arrayListOf<Chat>()    // 리사이클러 뷰 목록
     private lateinit var adapter: ChatAdapter   // 리사이클러 뷰 어댑터
 
@@ -82,12 +74,18 @@ class ChatFragment : Fragment() {
                 adapter.notifyDataSetChanged()  // 리사이클러 뷰 갱신
             }
 
+        binding.chatToolbar.apply {
+            setNavigationIcon(R.drawable.arrow_back)
+            setNavigationOnClickListener{
+                parentFragmentManager.popBackStack()
+            }
+        }
+
         return binding.root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        registration.remove()
         _binding = null
     }
 
