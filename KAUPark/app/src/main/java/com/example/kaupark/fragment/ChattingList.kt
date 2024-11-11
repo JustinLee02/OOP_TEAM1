@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.kaupark.databinding.ChattingListBinding
 import com.example.kaupark.model.Person
 import com.example.kaupark.PersonsAdapter
-import com.google.firebase.database.core.RepoManager.clear
 import com.google.firebase.firestore.FirebaseFirestore
 
 class ChattingList : Fragment(){
