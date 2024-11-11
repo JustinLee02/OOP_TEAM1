@@ -5,8 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kaupark.databinding.ListPersonBinding
 import com.example.kaupark.model.Person
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 
 class PersonsAdapter(private val personList: MutableList<Person>) : RecyclerView.Adapter<PersonsAdapter.Holder>() {
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding = ListPersonBinding.inflate(LayoutInflater.from(parent.context))
@@ -19,11 +22,6 @@ class PersonsAdapter(private val personList: MutableList<Person>) : RecyclerView
 
     override fun getItemCount() = personList.size
 
-    fun addPerson(person: Person) {
-        personList.add(0, person)
-        notifyItemInserted(0)
-    }
-
     fun removePerson(position: Int) {
         if (position >= 0 && position < personList.size) {
             personList.removeAt(position) // 리스트에서 아이템 삭제
@@ -34,8 +32,7 @@ class PersonsAdapter(private val personList: MutableList<Person>) : RecyclerView
     class Holder(private val binding: ListPersonBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(person: Person) {
             binding.txtName.text = person.carNum
-            binding.txtMessage.text = person.text
-            binding.txtTime.text = person.time
+            binding.txtTime.text = person.currentTime
         }
     }
 }
