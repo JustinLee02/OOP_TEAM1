@@ -60,6 +60,8 @@ class ChatFragment : Fragment() {
 
             firestore.collection("Chat").document().set(chat)
 
+            binding.etChatting.setText("")
+
             firestore.collection("Chat")
                 .get()
                 .addOnSuccessListener { result ->
@@ -68,7 +70,7 @@ class ChatFragment : Fragment() {
                         val item = Chat(document["nickname"].toString(), document["contents"].toString(), document["time"].toString())
                         chatList.add(item)
                     }
-                    adapter.notifyDataSetChanged()  // 리사이클러 뷰 갱신
+                    adapter.notifyDataSetChanged()
                 }
         }
 
