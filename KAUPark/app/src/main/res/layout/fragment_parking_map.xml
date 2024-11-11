@@ -31,6 +31,15 @@
         app:layout_constraintStart_toStartOf="@id/maptoolbar"
         android:name = "com.naver.maps.map.MapFragment" />
 
-
+    <FrameLayout
+        android:id="@+id/subFrag"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginStart="0dp"
+        app:layout_constraintTop_toBottomOf="@id/mapmain"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@color/white"/>
+    
 
 </androidx.constraintlayout.widget.ConstraintLayout>
