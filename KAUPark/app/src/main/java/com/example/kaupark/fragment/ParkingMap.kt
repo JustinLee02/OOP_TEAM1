@@ -152,7 +152,4 @@ class ParkingMap : Fragment(), OnMapReadyCallback {
             true
         }
     }
-
-
-
 }

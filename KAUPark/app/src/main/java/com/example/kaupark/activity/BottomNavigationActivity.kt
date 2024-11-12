@@ -15,6 +15,7 @@ import com.example.kaupark.fragment.ChatPopupFragment
 import com.example.kaupark.fragment.ChattingList
 import com.example.kaupark.fragment.HomeView
 import com.example.kaupark.fragment.ParkingAvailable
+import com.example.kaupark.fragment.ParkingPayment
 
 class BottomNavigationActivity : AppCompatActivity() {
     private val binding: ActivityBottomNavigationBinding by lazy {
@@ -45,7 +46,8 @@ class BottomNavigationActivity : AppCompatActivity() {
                     true
                 }
                 R.id.fragment_payment -> {
-                    false
+                    supportFragmentManager.beginTransaction().replace(R.id.main_container, ParkingPayment()).commit()
+                    true
                 }
                 R.id.fragment_chat -> {
                     supportFragmentManager.beginTransaction().replace(R.id.main_container, ChattingList()).commit()
