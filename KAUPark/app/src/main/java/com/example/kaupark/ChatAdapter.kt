@@ -20,7 +20,7 @@ class ChatAdapter(val currentUser: String, val itemList: ArrayList<Chat>): Recyc
     }
 
     override fun onBindViewHolder(holder: ChatAdapter.ViewHolder, position: Int) {
-        // 현재 닉네임과 글쓴이의 닉네임이 같을 경우 배경을 노란색으로 변경
+
         if (currentUser == itemList[position].nickname) {
             holder.card.setCardBackgroundColor(Color.parseColor("#FFF176"))
         }

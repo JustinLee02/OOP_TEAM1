@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="ParkingCar_Number">
+        <item>09라1231</item>
+        <item>03라1231</item>
+    </string-array>
+    <color name="black">#FF000000</color>
+    <color name="kaucolor">#40368A</color>
+    <color name="white">#FFFFFFFF</color>
+    <string name="app_name">My Application</string>
+    <string name="gcm_defaultSenderId" translatable="false">120528185867</string>
+    <string name="google_api_key" translatable="false">AIzaSyCAx2PnjPxjvYEtdzZRfaAdBJkz0Jqjz98</string>
+    <string name="google_app_id" translatable="false">1:120528185867:android:c4dedc4f7e7dc9d216f50e</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyCAx2PnjPxjvYEtdzZRfaAdBJkz0Jqjz98</string>
+    <string name="google_storage_bucket" translatable="false">kaupark-28acb.firebasestorage.app</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="project_id" translatable="false">kaupark-28acb</string>
+    <style name="Base.Theme.KAUPark" parent="Theme.Material3.DayNight.NoActionBar">
+        
+        
+        <item name="android:statusBarColor">@android:color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+    <style name="Theme.KAUPark" parent="Base.Theme.KAUPark"/>
+</resources>
