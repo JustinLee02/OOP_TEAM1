@@ -4118,7 +4118,6 @@ int layout notification_template_icon_group 0x7f0c007b
 int layout notification_template_part_chronometer 0x7f0c007c
 int layout notification_template_part_time 0x7f0c007d
 int layout parking_available 0x7f0c007e
-int layout parking_payment 0x7f0c007f
 int layout parking_time_left 0x7f0c0080
 int layout select_dialog_item_material 0x7f0c0081
 int layout select_dialog_multichoice_material 0x7f0c0082
