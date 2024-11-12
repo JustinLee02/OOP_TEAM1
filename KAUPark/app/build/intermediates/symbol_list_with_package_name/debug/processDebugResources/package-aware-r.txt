@@ -4119,7 +4119,6 @@ layout notification_template_icon_group
 layout notification_template_part_chronometer
 layout notification_template_part_time
 layout parking_available
-layout parking_payment
 layout parking_time_left
 layout select_dialog_item_material
 layout select_dialog_multichoice_material

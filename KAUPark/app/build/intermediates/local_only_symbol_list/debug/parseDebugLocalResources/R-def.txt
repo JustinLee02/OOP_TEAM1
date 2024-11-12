@@ -114,7 +114,6 @@ layout fragment_parking_payment
 layout home_view
 layout list_person
 layout parking_available
-layout parking_payment
 layout parking_time_left
 menu back_button
 menu menu_bottom

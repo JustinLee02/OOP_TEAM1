@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -21,7 +21,7 @@ import java.lang.String;
 
 public final class FragmentParkingPaymentBinding implements ViewBinding {
   @NonNull
-  private final LinearLayout rootView;
+  private final ScrollView rootView;
 
   @NonNull
   public final Spinner ParkingCarNumber;
@@ -36,7 +36,7 @@ public final class FragmentParkingPaymentBinding implements ViewBinding {
   public final ImageView imageView;
 
   @NonNull
-  public final LinearLayout main;
+  public final ScrollView main;
 
   @NonNull
   public final TextView textView2;
@@ -56,9 +56,9 @@ public final class FragmentParkingPaymentBinding implements ViewBinding {
   @NonNull
   public final TextView title;
 
-  private FragmentParkingPaymentBinding(@NonNull LinearLayout rootView,
+  private FragmentParkingPaymentBinding(@NonNull ScrollView rootView,
       @NonNull Spinner ParkingCarNumber, @NonNull ImageButton button, @NonNull Button button2,
-      @NonNull ImageView imageView, @NonNull LinearLayout main, @NonNull TextView textView2,
+      @NonNull ImageView imageView, @NonNull ScrollView main, @NonNull TextView textView2,
       @NonNull TextView textView3, @NonNull TextView textView4, @NonNull TextView textView5,
       @NonNull TextView textView6, @NonNull TextView title) {
     this.rootView = rootView;
@@ -77,7 +77,7 @@ public final class FragmentParkingPaymentBinding implements ViewBinding {
 
   @Override
   @NonNull
-  public LinearLayout getRoot() {
+  public ScrollView getRoot() {
     return rootView;
   }
 
@@ -126,7 +126,7 @@ public final class FragmentParkingPaymentBinding implements ViewBinding {
         break missingId;
       }
 
-      LinearLayout main = (LinearLayout) rootView;
+      ScrollView main = (ScrollView) rootView;
 
       id = R.id.textView2;
       TextView textView2 = ViewBindings.findChildViewById(rootView, id);
@@ -164,7 +164,7 @@ public final class FragmentParkingPaymentBinding implements ViewBinding {
         break missingId;
       }
 
-      return new FragmentParkingPaymentBinding((LinearLayout) rootView, ParkingCarNumber, button,
+      return new FragmentParkingPaymentBinding((ScrollView) rootView, ParkingCarNumber, button,
           button2, imageView, main, textView2, textView3, textView4, textView5, textView6, title);
     }
     String missingId = rootView.getResources().getResourceName(id);

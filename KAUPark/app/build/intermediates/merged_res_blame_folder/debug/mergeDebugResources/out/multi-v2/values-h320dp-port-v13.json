@@ -4,7 +4,7 @@
             "outputFile": "com.example.kaupark.app-mergeDebugResources-43:/values-h320dp-port-v13/values-h320dp-port-v13.xml",
             "map": [
                 {
-                    "source": "/Users/soohyunlee/.gradle/caches/transforms-4/cba9d46fa0aab5bb0beed269bd3679f1/transformed/material-1.12.0/res/values-h320dp-port-v13/values-h320dp-port-v13.xml",
+                    "source": "C:\\Users\\user\\.gradle\\caches\\transforms-4\\cba9d46fa0aab5bb0beed269bd3679f1\\transformed\\material-1.12.0\\res\\values-h320dp-port-v13\\values-h320dp-port-v13.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
