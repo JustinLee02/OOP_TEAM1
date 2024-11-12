@@ -19,8 +19,6 @@ import java.util.Date
 import java.util.Locale
 
 class ChatFragment : Fragment() {
-    private var _binding: FragmentChatBinding? = null
-    private val binding get() = _binding!!
     private lateinit var currentUser: String
     private val firestore = FirebaseFirestore.getInstance()
     private val chatList = arrayListOf<Chat>()
@@ -39,7 +37,7 @@ class ChatFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentChatBinding.inflate(inflater, container, false)
+        val binding = FragmentChatBinding.inflate(inflater, container, false)
         Toast.makeText(context, "현재 닉네임은 ${currentUser}입니다.", Toast.LENGTH_SHORT).show()
 
         binding.rvList.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -82,11 +80,6 @@ class ChatFragment : Fragment() {
         }
 
         return binding.root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
 }
