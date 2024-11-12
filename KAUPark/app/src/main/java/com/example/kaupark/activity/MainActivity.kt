@@ -1,5 +1,6 @@
 package com.example.kaupark
 
+import android.R
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.kaupark.databinding.ChattingListBinding
@@ -29,7 +30,7 @@ class MainActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(android.R.id.content, ChattingList())
+                .replace(R.id.content, ChattingList())
                 .commit()
         }
     }

@@ -8,7 +8,6 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.kaupark.R
 import com.example.kaupark.databinding.ActivityBottomNavigationBinding
-import com.example.kaupark.databinding.ChattingListBinding
 import com.example.kaupark.databinding.HomeViewBinding
 import com.example.kaupark.fragment.ChatFragment
 import com.example.kaupark.fragment.ChatPopupFragment
