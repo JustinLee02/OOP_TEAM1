@@ -16,8 +16,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class ChattingList : Fragment(){
 
-    private var _binding: ChattingListBinding? = null
-    private val binding get() = _binding!!
     val firestore = FirebaseFirestore.getInstance()
     val personList = arrayListOf<Person>()
 
@@ -28,12 +26,7 @@ class ChattingList : Fragment(){
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = ChattingListBinding.inflate(inflater, container, false)
-        setupChattingList()
-        return binding.root
-    }
-
-    private fun setupChattingList() {
+        val binding = ChattingListBinding.inflate(inflater, container, false)
         adapter = PersonsAdapter(personList)
         binding.recChatting.layoutManager = LinearLayoutManager(context)
         binding.recChatting.adapter = adapter
@@ -56,7 +49,6 @@ class ChattingList : Fragment(){
 
         binding.chatplusBtn.setOnClickListener {
             val chatPopupFragment = ChatPopupFragment()
-            chatPopupFragment.setTargetFragment(this, 0) // ChattingList를 targetFragment로 설정
             chatPopupFragment.show(parentFragmentManager, "ChatPopupFragment")
         }
 
@@ -74,10 +66,7 @@ class ChattingList : Fragment(){
         })
 
         itemTouchHelper.attachToRecyclerView(binding.recChatting)
+        return binding.root
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 }
