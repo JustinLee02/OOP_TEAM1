@@ -5,11 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import com.example.kaupark.R
 import com.example.kaupark.databinding.FragmentParkingMapBinding
-import com.example.kaupark.databinding.FragmentParkingMapSubBinding
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.MapFragment
@@ -21,12 +18,12 @@ import com.naver.maps.map.util.MarkerIcons
 
 class ParkingMap : Fragment(), OnMapReadyCallback {
 
-    val marker1 = Marker()
-    val marker2 = Marker()
-    val marker3 = Marker()
-    val marker4 = Marker()
-    val marker5 = Marker()
-    val marker6 = Marker()
+    val marker1 = Marker() // 과학관 주차장
+    val marker2 = Marker() // 운동장 주차장
+    val marker3 = Marker() // 학생회관 주차장
+    val marker4 = Marker() // 연구동 주차장
+    val marker5 = Marker() // 도서관 주차장
+    val marker6 = Marker() // 산학협력관 주차장
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,24 +45,24 @@ class ParkingMap : Fragment(), OnMapReadyCallback {
         val mapFragment = childFragmentManager.findFragmentById(R.id.mapmain) as? MapFragment
             ?: MapFragment.newInstance().also {
                 childFragmentManager.beginTransaction().replace(R.id.mapmain, it).commit()
-            }
-        mapFragment.getMapAsync(this)
+            } // 지도 객체 생성
+        mapFragment.getMapAsync(this) // async로 지도 초기화
 
         return binding.root
     }
 
     override fun onMapReady(naverMap: NaverMap) {
-        val initialPosition = LatLng(37.6000000, 126.8656335)
+        val initialPosition = LatLng(37.6000000, 126.8656335) // 위도 경도 지정
         val cameraUpdate = CameraUpdate.scrollTo(initialPosition)
 
         naverMap.moveCamera(cameraUpdate)
-        val zoomUpdate = CameraUpdate.zoomTo(15.8)
+        val zoomUpdate = CameraUpdate.zoomTo(15.8) // Zoom 레벨 설정
         naverMap.moveCamera(zoomUpdate)
 
-        val infoWindow = InfoWindow()
+        val infoWindow = InfoWindow() // 정보창 객체
         infoWindow.adapter = object: InfoWindow.DefaultTextAdapter(requireContext()) {
             override fun getText(infoWindow: InfoWindow): CharSequence {
-                return infoWindow.marker?.tag as CharSequence? ?: ""
+                return infoWindow.marker?.tag as CharSequence? ?: "" // 정보창에 tag 값을 표시하는 어댑터
             }
         }
 
@@ -79,7 +76,7 @@ class ParkingMap : Fragment(), OnMapReadyCallback {
         marker1.height = 80
 
         marker1.setOnClickListener {
-            infoWindow.open(marker1)
+            infoWindow.open(marker1) // 클릭 시 해당 마커의 tag를 정보창에 띄움
             parentFragmentManager.beginTransaction()
                 .replace(R.id.subFrag, ParkingMapSubFragment())
                 .commit()
