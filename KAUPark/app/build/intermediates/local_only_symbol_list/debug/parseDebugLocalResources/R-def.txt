@@ -120,6 +120,7 @@ id textView_ScienceBuilding
 id textView_SearchBuilding
 id textView_SomethingBuilding
 id textView_StudentCenter
+id timetext
 id title
 id txt_message
 id txt_name

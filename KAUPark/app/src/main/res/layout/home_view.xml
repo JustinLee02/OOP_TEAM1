@@ -73,6 +73,18 @@
                             android:textColor="@color/black"
                             android:text=""
                             />
+                        
+                        <TextView
+                                android:id="@+id/timetext"
+                            android:layout_width="100dp"
+                            android:layout_height="18dp"
+                                android:layout_marginTop="12dp"
+                                android:layout_marginStart="0dp"
+                                app:layout_constraintTop_toBottomOf="@id/usercarnum"
+                                app:layout_constraintStart_toStartOf="@id/usercarnum"
+                            android:textStyle="normal"
+                            android:textSize="12sp"
+                                />
 
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:id = "@+id/userimage"

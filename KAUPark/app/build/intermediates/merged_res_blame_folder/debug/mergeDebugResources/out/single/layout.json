@@ -28,10 +28,6 @@
         "source": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-main-47:/layout/home_view.xml"
     },
     {
-        "merged": "com.example.kaupark.app-mergeDebugResources-44:/layout/home_view.xml",
-        "source": "com.example.kaupark.app-main-47:/layout/home_view.xml"
-    },
-    {
         "merged": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-mergeDebugResources-44:/layout/activity_login.xml",
         "source": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-main-47:/layout/activity_login.xml"
     },
@@ -62,6 +58,10 @@
     {
         "merged": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-mergeDebugResources-44:/layout/chatting_list.xml",
         "source": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-main-47:/layout/chatting_list.xml"
+    },
+    {
+        "merged": "com.example.kaupark.app-mergeDebugResources-44:/layout/fragment_parking_map_sub.xml",
+        "source": "com.example.kaupark.app-main-47:/layout/fragment_parking_map_sub.xml"
     },
     {
         "merged": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-mergeDebugResources-44:/layout/fragment_chat.xml",

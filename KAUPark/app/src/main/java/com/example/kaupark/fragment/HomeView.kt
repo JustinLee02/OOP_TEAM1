@@ -1,11 +1,13 @@
 package com.example.kaupark.fragment
 
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import com.example.kaupark.R
 import com.example.kaupark.databinding.HomeViewBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -15,6 +17,7 @@ import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.MapFragment
+import java.time.LocalDate
 
 class HomeView : Fragment(), OnMapReadyCallback {
 
@@ -22,11 +25,16 @@ class HomeView : Fragment(), OnMapReadyCallback {
     private lateinit var firestore: FirebaseFirestore
     private lateinit var binding: HomeViewBinding
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    val date: LocalDate = LocalDate.now()
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,6 +44,8 @@ class HomeView : Fragment(), OnMapReadyCallback {
         firestore = FirebaseFirestore.getInstance()
 
         binding = HomeViewBinding.inflate(inflater, container, false)
+
+        binding.timetext.text = date.toString()
 
         val mapFragment = childFragmentManager.findFragmentById(R.id.mapimage) as MapFragment?
             ?: MapFragment.newInstance().also {

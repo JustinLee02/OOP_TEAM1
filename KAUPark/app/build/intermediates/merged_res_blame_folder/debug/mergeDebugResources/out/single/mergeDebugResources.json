@@ -80,6 +80,10 @@
         "source": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-main-47:/drawable/rounded_all_corners_login.xml"
     },
     {
+        "merged": "com.example.kaupark.app-debug-45:/layout_fragment_parking_map_sub.xml.flat",
+        "source": "com.example.kaupark.app-main-47:/layout/fragment_parking_map_sub.xml"
+    },
+    {
         "merged": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-debug-45:/mipmap-mdpi_ic_launcher.webp.flat",
         "source": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-main-47:/mipmap-mdpi/ic_launcher.webp"
     },
@@ -134,10 +138,6 @@
     {
         "merged": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-debug-45:/drawable_rounded_top_left_corners.xml.flat",
         "source": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-main-47:/drawable/rounded_top_left_corners.xml"
-    },
-    {
-        "merged": "com.example.kaupark.app-debug-45:/layout_home_view.xml.flat",
-        "source": "com.example.kaupark.app-main-47:/layout/home_view.xml"
     },
     {
         "merged": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-debug-45:/layout_fragment_parking_payment.xml.flat",

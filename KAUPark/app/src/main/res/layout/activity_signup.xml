@@ -54,7 +54,8 @@
         app:layout_constraintStart_toStartOf="@id/nametext"
         android:background="@drawable/rounded_all_corners_login"
         android:paddingStart="15dp"
-        />
+        android:privateImeOptions="defaultInputmode=korean"
+    />
 
     <TextView
         android:id="@+id/studentidtext"
@@ -184,6 +185,7 @@
         app:layout_constraintStart_toStartOf="@id/carnumtext"
         android:background="@drawable/rounded_all_corners_login"
         android:paddingStart="15dp"
+        android:privateImeOptions="defaultInputmode=korean"
         />
 
     <android.widget.Button

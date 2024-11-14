@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.kaupark.R
 import com.example.kaupark.databinding.FragmentParkingMapBinding
+import com.example.kaupark.databinding.FragmentParkingMapSubBinding
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.MapFragment
@@ -76,9 +77,11 @@ class ParkingMap : Fragment(), OnMapReadyCallback {
         marker1.height = 80
 
         marker1.setOnClickListener {
-            infoWindow.open(marker1) // 클릭 시 해당 마커의 tag를 정보창에 띄움
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.subFrag, ParkingMapSubFragment())
+            infoWindow.open(marker1)
+
+            val subFragment = ParkingMapSubFragment.newInstance(marker1.captionText.toString())
+                parentFragmentManager.beginTransaction()
+                .replace(R.id.subFrag, subFragment)
                 .commit()
 
             true

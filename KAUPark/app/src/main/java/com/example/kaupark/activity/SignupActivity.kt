@@ -67,9 +67,9 @@ class SignupActivity : AppCompatActivity() {
             "email" to email,
             "carNum" to carNum
         )
-
+        val userId = auth.currentUser?.uid ?: return
         firestore.collection("users")
-            .document(id)
+            .document(userId)
             .set(user)
             .addOnSuccessListener { document ->
                 Log.d("SignupActivity", "DocumentSnapshot added with ID: $id")
