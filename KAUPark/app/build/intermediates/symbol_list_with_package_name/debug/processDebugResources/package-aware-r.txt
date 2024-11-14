@@ -3277,11 +3277,14 @@ drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
 drawable parking_logo
 drawable rounded_all_corners
+drawable rounded_all_corners_login
+drawable rounded_all_corners_loginpassword_button
 drawable rounded_bottom_left_corners
 drawable rounded_bottom_right_corners
 drawable rounded_top_left_corners
 drawable rounded_top_right_corners
 drawable shape_for_circle_button
+drawable signupbutton
 drawable test_level_drawable
 drawable tooltip_frame_dark
 drawable tooltip_frame_light
@@ -3402,6 +3405,8 @@ id buttonPanel
 id cache_measures
 id callMeasure
 id cancel_button
+id carnumtext
+id carnumtextfield
 id carryVelocity
 id center
 id centerCrop
@@ -3484,6 +3489,8 @@ id edge
 id edit_query
 id edit_text_id
 id elastic
+id emailtext
+id emailtextfield
 id embed
 id end
 id endToStart
@@ -3519,6 +3526,8 @@ id fragment_payment
 id frameLayout
 id frameLayout2
 id frameLayout3
+id frameLayout4
+id frameLayout5
 id frost
 id fullscreen_header
 id ghost_view
@@ -3540,6 +3549,7 @@ id horizontal_only
 id icon
 id icon_group
 id icon_only
+id idtextfield
 id ifRoom
 id ignore
 id ignoreRequest
@@ -3569,6 +3579,8 @@ id line3
 id linear
 id listMode
 id list_item
+id loginView
+id loginuser
 id m3_side_sheet
 id main
 id main_container
@@ -3637,6 +3649,8 @@ id mtrl_picker_title_text
 id mtrl_view_tag_bottom_padding
 id multiply
 id myInfo
+id nametext
+id nametextfield
 id navermap_bar
 id navermap_compass
 id navermap_compass_icon
@@ -3713,10 +3727,14 @@ id parkingAvailable
 id parkinglogo
 id parkinglotname
 id password_toggle
+id passwordtext
+id passwordtextfield
 id path
 id pathRelative
 id peekHeight
 id percent
+id phonenumtext
+id phonenumtextfield
 id pin
 id pooling_container_listener_holder_tag
 id popup_title
@@ -3725,6 +3743,7 @@ id postLayout
 id pressed
 id progress_circular
 id progress_horizontal
+id pwtextfield
 id radio
 id ratio
 id rec_chatting
@@ -3776,6 +3795,11 @@ id shortcut
 id showCustom
 id showHome
 id showTitle
+id signinbutton
+id signupText
+id signupbutton
+id signupbuttonfinal
+id signuptoolbar
 id sin
 id skipCollapsed
 id skipped
@@ -3805,6 +3829,10 @@ id staticLayout
 id staticPostLayout
 id stop
 id stretch
+id studentid
+id studentidtext
+id studentidtextfield
+id studentpassword
 id subFrag
 id submenuarrow
 id submit_area
@@ -3880,6 +3908,7 @@ id unlabeled
 id up
 id useLogo
 id user_name
+id usercarnum
 id userimage
 id userview
 id vertical_only
@@ -4020,7 +4049,9 @@ layout abc_search_view
 layout abc_select_dialog_material
 layout abc_tooltip
 layout activity_bottom_navigation
+layout activity_login
 layout activity_main
+layout activity_signup
 layout browser_actions_context_menu_page
 layout browser_actions_context_menu_row
 layout chat_layout

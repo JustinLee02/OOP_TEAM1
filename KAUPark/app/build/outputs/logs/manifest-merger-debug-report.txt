@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /Users/soohyunlee/OOP_TEAM1/KAUPark/app/src/main/AndroidManifest.xml:2:1-36:12
-INJECTED from /Users/soohyunlee/OOP_TEAM1/KAUPark/app/src/main/AndroidManifest.xml:2:1-36:12
-INJECTED from /Users/soohyunlee/OOP_TEAM1/KAUPark/app/src/main/AndroidManifest.xml:2:1-36:12
-INJECTED from /Users/soohyunlee/OOP_TEAM1/KAUPark/app/src/main/AndroidManifest.xml:2:1-36:12
+ADDED from /Users/soohyunlee/OOP_TEAM1/KAUPark/app/src/main/AndroidManifest.xml:2:1-37:12
+INJECTED from /Users/soohyunlee/OOP_TEAM1/KAUPark/app/src/main/AndroidManifest.xml:2:1-37:12
+INJECTED from /Users/soohyunlee/OOP_TEAM1/KAUPark/app/src/main/AndroidManifest.xml:2:1-37:12
+INJECTED from /Users/soohyunlee/OOP_TEAM1/KAUPark/app/src/main/AndroidManifest.xml:2:1-37:12
 MERGED from [androidx.databinding:viewbinding:8.6.0] /Users/soohyunlee/.gradle/caches/transforms-4/82fac39898dae83d2de2dd5bf61aa674/transformed/jetified-viewbinding-8.6.0/AndroidManifest.xml:2:1-7:12
 MERGED from [com.google.firebase:firebase-database-ktx:21.0.0] /Users/soohyunlee/.gradle/caches/transforms-4/118da2860ad24a132554ee67aa81ab82/transformed/jetified-firebase-database-ktx-21.0.0/AndroidManifest.xml:2:1-18:12
 MERGED from [com.google.firebase:firebase-firestore-ktx:25.1.1] /Users/soohyunlee/.gradle/caches/transforms-4/7e43435231b469ef57723614b5feaf4b/transformed/jetified-firebase-firestore-ktx-25.1.1/AndroidManifest.xml:2:1-18:12
@@ -92,8 +92,8 @@ MERGED from [com.google.android.play:core-common:2.0.3] /Users/soohyunlee/.gradl
 	xmlns:android
 		ADDED from /Users/soohyunlee/OOP_TEAM1/KAUPark/app/src/main/AndroidManifest.xml:2:11-69
 application
-ADDED from /Users/soohyunlee/OOP_TEAM1/KAUPark/app/src/main/AndroidManifest.xml:5:5-34:19
-INJECTED from /Users/soohyunlee/OOP_TEAM1/KAUPark/app/src/main/AndroidManifest.xml:5:5-34:19
+ADDED from /Users/soohyunlee/OOP_TEAM1/KAUPark/app/src/main/AndroidManifest.xml:5:5-35:19
+INJECTED from /Users/soohyunlee/OOP_TEAM1/KAUPark/app/src/main/AndroidManifest.xml:5:5-35:19
 MERGED from [com.google.firebase:firebase-database-ktx:21.0.0] /Users/soohyunlee/.gradle/caches/transforms-4/118da2860ad24a132554ee67aa81ab82/transformed/jetified-firebase-database-ktx-21.0.0/AndroidManifest.xml:8:5-16:19
 MERGED from [com.google.firebase:firebase-database-ktx:21.0.0] /Users/soohyunlee/.gradle/caches/transforms-4/118da2860ad24a132554ee67aa81ab82/transformed/jetified-firebase-database-ktx-21.0.0/AndroidManifest.xml:8:5-16:19
 MERGED from [com.google.firebase:firebase-firestore-ktx:25.1.1] /Users/soohyunlee/.gradle/caches/transforms-4/7e43435231b469ef57723614b5feaf4b/transformed/jetified-firebase-firestore-ktx-25.1.1/AndroidManifest.xml:8:5-16:19
@@ -172,34 +172,40 @@ MERGED from [com.google.android.play:core-common:2.0.3] /Users/soohyunlee/.gradl
 		ADDED from /Users/soohyunlee/OOP_TEAM1/KAUPark/app/src/main/AndroidManifest.xml:13:9-45
 	android:dataExtractionRules
 		ADDED from /Users/soohyunlee/OOP_TEAM1/KAUPark/app/src/main/AndroidManifest.xml:7:9-65
+activity#com.example.kaupark.activity.SignupActivity
+ADDED from /Users/soohyunlee/OOP_TEAM1/KAUPark/app/src/main/AndroidManifest.xml:15:9-17:40
+	android:exported
+		ADDED from /Users/soohyunlee/OOP_TEAM1/KAUPark/app/src/main/AndroidManifest.xml:17:13-37
+	android:name
+		ADDED from /Users/soohyunlee/OOP_TEAM1/KAUPark/app/src/main/AndroidManifest.xml:16:13-52
 activity#com.example.kaupark.activity.BottomNavigationActivity
-ADDED from /Users/soohyunlee/OOP_TEAM1/KAUPark/app/src/main/AndroidManifest.xml:15:9-23:20
+ADDED from /Users/soohyunlee/OOP_TEAM1/KAUPark/app/src/main/AndroidManifest.xml:19:9-21:39
 	android:exported
-		ADDED from /Users/soohyunlee/OOP_TEAM1/KAUPark/app/src/main/AndroidManifest.xml:17:13-36
+		ADDED from /Users/soohyunlee/OOP_TEAM1/KAUPark/app/src/main/AndroidManifest.xml:21:13-36
 	android:name
-		ADDED from /Users/soohyunlee/OOP_TEAM1/KAUPark/app/src/main/AndroidManifest.xml:16:13-62
+		ADDED from /Users/soohyunlee/OOP_TEAM1/KAUPark/app/src/main/AndroidManifest.xml:20:13-62
+activity#com.example.kaupark.activity.LoginActivity
+ADDED from /Users/soohyunlee/OOP_TEAM1/KAUPark/app/src/main/AndroidManifest.xml:22:9-30:20
+	android:exported
+		ADDED from /Users/soohyunlee/OOP_TEAM1/KAUPark/app/src/main/AndroidManifest.xml:24:13-36
+	android:name
+		ADDED from /Users/soohyunlee/OOP_TEAM1/KAUPark/app/src/main/AndroidManifest.xml:23:13-51
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from /Users/soohyunlee/OOP_TEAM1/KAUPark/app/src/main/AndroidManifest.xml:18:13-22:29
+ADDED from /Users/soohyunlee/OOP_TEAM1/KAUPark/app/src/main/AndroidManifest.xml:25:13-29:29
 action#android.intent.action.MAIN
-ADDED from /Users/soohyunlee/OOP_TEAM1/KAUPark/app/src/main/AndroidManifest.xml:19:17-69
+ADDED from /Users/soohyunlee/OOP_TEAM1/KAUPark/app/src/main/AndroidManifest.xml:26:17-69
 	android:name
-		ADDED from /Users/soohyunlee/OOP_TEAM1/KAUPark/app/src/main/AndroidManifest.xml:19:25-66
+		ADDED from /Users/soohyunlee/OOP_TEAM1/KAUPark/app/src/main/AndroidManifest.xml:26:25-66
 category#android.intent.category.LAUNCHER
-ADDED from /Users/soohyunlee/OOP_TEAM1/KAUPark/app/src/main/AndroidManifest.xml:21:17-77
+ADDED from /Users/soohyunlee/OOP_TEAM1/KAUPark/app/src/main/AndroidManifest.xml:28:17-77
 	android:name
-		ADDED from /Users/soohyunlee/OOP_TEAM1/KAUPark/app/src/main/AndroidManifest.xml:21:27-74
-activity#com.example.kaupark.activity.HomeActivity
-ADDED from /Users/soohyunlee/OOP_TEAM1/KAUPark/app/src/main/AndroidManifest.xml:24:9-26:38
-	android:exported
-		ADDED from /Users/soohyunlee/OOP_TEAM1/KAUPark/app/src/main/AndroidManifest.xml:26:13-36
-	android:name
-		ADDED from /Users/soohyunlee/OOP_TEAM1/KAUPark/app/src/main/AndroidManifest.xml:25:13-50
+		ADDED from /Users/soohyunlee/OOP_TEAM1/KAUPark/app/src/main/AndroidManifest.xml:28:27-74
 meta-data#com.naver.maps.map.CLIENT_ID
-ADDED from /Users/soohyunlee/OOP_TEAM1/KAUPark/app/src/main/AndroidManifest.xml:31:9-33:42
+ADDED from /Users/soohyunlee/OOP_TEAM1/KAUPark/app/src/main/AndroidManifest.xml:32:9-34:42
 	android:value
-		ADDED from /Users/soohyunlee/OOP_TEAM1/KAUPark/app/src/main/AndroidManifest.xml:33:13-39
+		ADDED from /Users/soohyunlee/OOP_TEAM1/KAUPark/app/src/main/AndroidManifest.xml:34:13-39
 	android:name
-		ADDED from /Users/soohyunlee/OOP_TEAM1/KAUPark/app/src/main/AndroidManifest.xml:32:13-56
+		ADDED from /Users/soohyunlee/OOP_TEAM1/KAUPark/app/src/main/AndroidManifest.xml:33:13-56
 uses-sdk
 INJECTED from /Users/soohyunlee/OOP_TEAM1/KAUPark/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /Users/soohyunlee/OOP_TEAM1/KAUPark/app/src/main/AndroidManifest.xml

@@ -41,7 +41,14 @@
         android:testOnly="true"
         android:theme="@style/Theme.KAUPark" >
         <activity
+            android:name="com.example.kaupark.activity.SignupActivity"
+            android:exported="false" />
+        <!-- Remove the MAIN and LAUNCHER intent-filter from BottomNavigationActivity -->
+        <activity
             android:name="com.example.kaupark.activity.BottomNavigationActivity"
+            android:exported="true" /> <!-- Set HomeActivity as the initial activity with MAIN and LAUNCHER intent-filter -->
+        <activity
+            android:name="com.example.kaupark.activity.LoginActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -49,12 +56,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.example.kaupark.activity.HomeActivity"
-            android:exported="true" />
-        <activity
-            android:name="com.example.kaupark.activity.HomeActivity"
-            android:exported="true" />
 
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"

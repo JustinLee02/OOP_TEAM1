@@ -16,6 +16,10 @@
         "source": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-main-47:/layout/activity_main.xml"
     },
     {
+        "merged": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-debug-45:/layout_activity_login.xml.flat",
+        "source": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-main-47:/layout/activity_login.xml"
+    },
+    {
         "merged": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-debug-45:/layout_parking_time_left.xml.flat",
         "source": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-main-47:/layout/parking_time_left.xml"
     },
@@ -30,6 +34,10 @@
     {
         "merged": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-debug-45:/layout_parking_available.xml.flat",
         "source": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-main-47:/layout/parking_available.xml"
+    },
+    {
+        "merged": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-debug-45:/layout_fragment_signup.xml.flat",
+        "source": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-main-47:/layout/fragment_signup.xml"
     },
     {
         "merged": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-debug-45:/drawable_ic_launcher_background.xml.flat",
@@ -56,12 +64,20 @@
         "source": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-main-47:/drawable/arrow_back.xml"
     },
     {
+        "merged": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-debug-45:/layout_fragment_login.xml.flat",
+        "source": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-main-47:/layout/fragment_login.xml"
+    },
+    {
         "merged": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-debug-45:/drawable_rounded_bottom_left_corners.xml.flat",
         "source": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-main-47:/drawable/rounded_bottom_left_corners.xml"
     },
     {
         "merged": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-debug-45:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
         "source": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-main-47:/mipmap-xxhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-debug-45:/drawable_rounded_all_corners_login.xml.flat",
+        "source": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-main-47:/drawable/rounded_all_corners_login.xml"
     },
     {
         "merged": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-debug-45:/mipmap-mdpi_ic_launcher.webp.flat",
@@ -84,6 +100,10 @@
         "source": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-main-47:/xml/data_extraction_rules.xml"
     },
     {
+        "merged": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-debug-45:/layout_activity_signup.xml.flat",
+        "source": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-main-47:/layout/activity_signup.xml"
+    },
+    {
         "merged": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-debug-45:/mipmap-xxxhdpi_ic_launcher.webp.flat",
         "source": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-main-47:/mipmap-xxxhdpi/ic_launcher.webp"
     },
@@ -104,12 +124,20 @@
         "source": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-main-47:/drawable/rounded_bottom_right_corners.xml"
     },
     {
+        "merged": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-debug-45:/drawable_signupbutton.xml.flat",
+        "source": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-main-47:/drawable/signupbutton.xml"
+    },
+    {
         "merged": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-debug-45:/layout_activity_bottom_navigation.xml.flat",
         "source": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-main-47:/layout/activity_bottom_navigation.xml"
     },
     {
         "merged": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-debug-45:/drawable_rounded_top_left_corners.xml.flat",
         "source": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-main-47:/drawable/rounded_top_left_corners.xml"
+    },
+    {
+        "merged": "com.example.kaupark.app-debug-45:/layout_home_view.xml.flat",
+        "source": "com.example.kaupark.app-main-47:/layout/home_view.xml"
     },
     {
         "merged": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-debug-45:/layout_fragment_parking_payment.xml.flat",
@@ -138,6 +166,10 @@
     {
         "merged": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-debug-45:/mipmap-xhdpi_ic_launcher_round.webp.flat",
         "source": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-main-47:/mipmap-xhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-debug-45:/drawable_rounded_all_corners_loginpassword_button.xml.flat",
+        "source": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-main-47:/drawable/rounded_all_corners_loginpassword_button.xml"
     },
     {
         "merged": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-debug-45:/drawable_user.png.flat",

@@ -12,16 +12,28 @@
         "source": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-main-47:/layout/chat_layout.xml"
     },
     {
-        "merged": "com.example.kaupark.app-mergeDebugResources-44:/layout/fragment_parking_payment.xml",
-        "source": "com.example.kaupark.app-main-47:/layout/fragment_parking_payment.xml"
-    },
-    {
         "merged": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-mergeDebugResources-44:/layout/parking_time_left.xml",
         "source": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-main-47:/layout/parking_time_left.xml"
     },
     {
+        "merged": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-mergeDebugResources-44:/layout/fragment_signup.xml",
+        "source": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-main-47:/layout/fragment_signup.xml"
+    },
+    {
+        "merged": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-mergeDebugResources-44:/layout/fragment_login.xml",
+        "source": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-main-47:/layout/fragment_login.xml"
+    },
+    {
         "merged": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-mergeDebugResources-44:/layout/home_view.xml",
         "source": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-main-47:/layout/home_view.xml"
+    },
+    {
+        "merged": "com.example.kaupark.app-mergeDebugResources-44:/layout/home_view.xml",
+        "source": "com.example.kaupark.app-main-47:/layout/home_view.xml"
+    },
+    {
+        "merged": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-mergeDebugResources-44:/layout/activity_login.xml",
+        "source": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-main-47:/layout/activity_login.xml"
     },
     {
         "merged": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-mergeDebugResources-44:/layout/parking_payment.xml",
@@ -40,6 +52,10 @@
         "source": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-main-47:/layout/fragment_parking_map_sub.xml"
     },
     {
+        "merged": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-mergeDebugResources-44:/layout/activity_signup.xml",
+        "source": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-main-47:/layout/activity_signup.xml"
+    },
+    {
         "merged": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-mergeDebugResources-44:/layout/list_person.xml",
         "source": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-main-47:/layout/list_person.xml"
     },
@@ -50,6 +66,10 @@
     {
         "merged": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-mergeDebugResources-44:/layout/fragment_chat.xml",
         "source": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-main-47:/layout/fragment_chat.xml"
+    },
+    {
+        "merged": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-mergeDebugResources-44:/layout/fragment_parking_payment.xml",
+        "source": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-main-47:/layout/fragment_parking_payment.xml"
     },
     {
         "merged": "/Users/soohyunlee/.gradle/daemon/8.7/com.example.kaupark.app-mergeDebugResources-44:/layout/activity_bottom_navigation.xml",
