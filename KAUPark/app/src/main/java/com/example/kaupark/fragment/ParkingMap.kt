@@ -97,6 +97,10 @@ class ParkingMap : Fragment(), OnMapReadyCallback {
         marker2.height = 80
         marker2.setOnClickListener {
             infoWindow.open(marker2)
+            val subFragment = ParkingMapSubFragment.newInstance(marker2.captionText.toString())
+                parentFragmentManager.beginTransaction()
+                .replace(R.id.subFrag, subFragment)
+                    .commit()
             true
         }
 
@@ -110,6 +114,10 @@ class ParkingMap : Fragment(), OnMapReadyCallback {
         marker3.height = 80
         marker3.setOnClickListener {
             infoWindow.open(marker3)
+            val subFragment = ParkingMapSubFragment.newInstance(marker3.captionText.toString())
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.subFrag, subFragment)
+                .commit()
             true
         }
 
@@ -123,6 +131,10 @@ class ParkingMap : Fragment(), OnMapReadyCallback {
         marker4.height = 80
         marker4.setOnClickListener {
             infoWindow.open(marker4)
+            val subFragment = ParkingMapSubFragment.newInstance(marker4.captionText.toString())
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.subFrag, subFragment)
+                .commit()
             true
         }
 
@@ -136,6 +148,10 @@ class ParkingMap : Fragment(), OnMapReadyCallback {
         marker5.height = 80
         marker5.setOnClickListener {
             infoWindow.open(marker5)
+            val subFragment = ParkingMapSubFragment.newInstance(marker5.captionText.toString())
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.subFrag, subFragment)
+                .commit()
             true
         }
 
@@ -149,6 +165,10 @@ class ParkingMap : Fragment(), OnMapReadyCallback {
         marker6.height = 80
         marker6.setOnClickListener {
             infoWindow.open(marker6)
+            val subFragment = ParkingMapSubFragment.newInstance(marker6.captionText.toString())
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.subFrag, subFragment)
+                .commit()
             true
         }
     }

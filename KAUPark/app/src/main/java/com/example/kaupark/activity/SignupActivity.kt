@@ -23,11 +23,6 @@ class SignupActivity : AppCompatActivity() {
         val binding = ActivitySignupBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//        binding.signupbuttonfinal.setOnClickListener {
-//            val intent = Intent(this, LoginActivity::class.java)
-//            startActivity(intent)
-//        }
-
         // 회원가입 부분
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()

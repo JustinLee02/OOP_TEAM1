@@ -53,11 +53,19 @@ class HomeView : Fragment(), OnMapReadyCallback {
             }
         mapFragment.getMapAsync(this)
 
-        binding.inbutton.setOnClickListener {
+        binding.transparentbutton.setOnClickListener {
             parentFragmentManager.beginTransaction()
                 .replace(R.id.main_container, ParkingMap())
                 .addToBackStack(null)
                 .commit()
+        }
+
+        binding.inbutton.setOnClickListener {
+            recordEntryTime()
+        }
+
+        binding.outbutton.setOnClickListener {
+            recordExitTime()
         }
 
         fetchUserInfo()
@@ -92,4 +100,70 @@ class HomeView : Fragment(), OnMapReadyCallback {
             }
     }
 
+    private fun recordEntryTime() {
+            val userId = auth.currentUser?.uid ?: return
+            val entryTime = System.currentTimeMillis()
+
+            val record = hashMapOf(
+                "entrytime" to entryTime,
+                "exittime" to null
+            )
+
+            firestore.collection("users").document(userId)
+                .collection("parking_records").document("duration")
+                .set(record)
+                .addOnSuccessListener {
+                    Toast.makeText(requireContext(), "입차 시간이 기록되었습니다", Toast.LENGTH_SHORT).show()
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(requireContext(), "입차 시간 기록 실패: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+    }
+
+    private fun recordExitTime() {
+            val userId = auth.currentUser?.uid ?: return
+            val exitTime = System.currentTimeMillis()
+
+            firestore.collection("users").document(userId)
+                .collection("parking_records").document("duration")
+                .get()
+                .addOnSuccessListener { document ->
+                    if(document != null && document.contains("entrytime")) {
+                        val entryTime = document.getLong("entrytime") ?: return@addOnSuccessListener
+                        val durationMill = exitTime - entryTime
+
+                        val update = mapOf(
+                            "exittime" to exitTime,
+                            "duration" to durationMill
+                        )
+
+                        firestore.collection("users").document(userId)
+                            .collection("parking_records").document("duration")
+                            .update(update)
+                            .addOnSuccessListener {
+                                val durationSecs = durationMill / 1000
+                                Toast.makeText(requireContext(), "총 주차시간: ${durationSecs}초", Toast.LENGTH_SHORT).show()
+                                if (durationSecs / 60 < 30) {
+                                    binding.parkingfee.text = "30분 무료 ${durationSecs/60}분 주차중"
+                                } else if (durationSecs / 60 < 60) {
+                                    binding.parkingfee.text = "2000원 ${durationSecs/60}분 주차중"
+                                } else {
+                                    val durationMin = ((durationSecs / 60) - 60) / 30
+                                    binding.parkingfee.text = "${2000+(500 * (durationMin+1))}원 ${durationSecs/60}분 주차중"
+                                }
+
+
+                            }
+                            .addOnFailureListener{ e ->
+                                Toast.makeText(requireContext(), "입차 기록이 없습니다", Toast.LENGTH_SHORT).show()
+                            }
+
+                    } else {
+                        Toast.makeText(requireContext(), "입차 기록이 없습니다", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(requireContext(), "데이터를 가져오는데 실패했습니다", Toast.LENGTH_SHORT).show()
+                }
+        }
 }
