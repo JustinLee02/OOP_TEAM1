@@ -1,4 +1,4 @@
-package com.example.kaupark.fragment
+package com.example.kaupark.view.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
