@@ -1,4 +1,4 @@
-package com.example.kaupark.fragment
+package com.example.kaupark.view.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -28,7 +28,7 @@ class ParkingMapSubFragment : Fragment() {
     }
 
     companion object {
-        fun newInstance(captiontext: String): ParkingMapSubFragment{
+        fun newInstance(captiontext: String): ParkingMapSubFragment {
 
             val fragment = ParkingMapSubFragment()
             val args = Bundle()

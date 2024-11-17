@@ -1,4 +1,4 @@
-package com.example.kaupark.activity
+package com.example.kaupark.view.fragment.activity
 
 
 import android.os.Bundle
@@ -10,12 +10,12 @@ import com.example.kaupark.R
 import com.example.kaupark.databinding.ActivityBottomNavigationBinding
 import com.example.kaupark.databinding.ChattingListBinding
 import com.example.kaupark.databinding.HomeViewBinding
-import com.example.kaupark.fragment.ChatFragment
-import com.example.kaupark.fragment.ChatPopupFragment
-import com.example.kaupark.fragment.ChattingList
-import com.example.kaupark.fragment.HomeView
-import com.example.kaupark.fragment.ParkingAvailable
-import com.example.kaupark.fragment.ParkingPayment
+import com.example.kaupark.view.fragment.ChatFragment
+import com.example.kaupark.view.fragment.ChatPopupFragment
+import com.example.kaupark.view.fragment.ChattingList
+import com.example.kaupark.view.fragment.HomeView
+import com.example.kaupark.view.fragment.ParkingAvailable
+import com.example.kaupark.view.fragment.ParkingPayment
 
 class BottomNavigationActivity : AppCompatActivity() {
     private val binding: ActivityBottomNavigationBinding by lazy {

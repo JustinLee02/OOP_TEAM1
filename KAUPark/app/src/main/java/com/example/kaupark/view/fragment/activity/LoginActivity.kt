@@ -1,4 +1,4 @@
-package com.example.kaupark.activity
+package com.example.kaupark.view.fragment.activity
 
 import android.content.Intent
 import android.os.Bundle
