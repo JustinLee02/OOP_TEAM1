@@ -67,5 +67,11 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore-ktx") // Firebase Firestore 추가
     implementation("com.google.firebase:firebase-auth-ktx") // Firebase Auth 추가
     implementation ("com.google.firebase:firebase-database-ktx:20.0.4")
+    implementation ("android.arch.lifecycle:extensions:1.1.1")
+
+    implementation ("androidx.fragment:fragment-ktx:1.5.7'")
+    implementation ("androidx.activity:activity-ktx:1.7.1")
+
+
 }
 
