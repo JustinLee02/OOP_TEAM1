@@ -36,10 +36,6 @@ class ChatPopupFragment : DialogFragment() {
     ): View? {
         val binding = FragmentChatPopupBinding.inflate(inflater, container, false)
 
-//        val sendButton: Button = view.findViewById(R.id.send_btn)
-//        val closeButton: Button = view.findViewById(R.id.close_btn)
-//        val nameEditText: EditText = view.findViewById(R.id.blank_text)
-
 
         binding.sendBtn.setOnClickListener {
             var person = Person()
