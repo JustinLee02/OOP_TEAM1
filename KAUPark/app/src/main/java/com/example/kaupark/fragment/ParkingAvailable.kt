@@ -11,7 +11,6 @@ import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
-import com.github.mikephil.charting.utils.ColorTemplate
 import com.github.mikephil.charting.animation.Easing
 
 class ParkingAvailable : Fragment() {
@@ -20,12 +19,6 @@ class ParkingAvailable : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        /*
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-         */
     }
 
     override fun onCreateView(
@@ -34,19 +27,23 @@ class ParkingAvailable : Fragment() {
     ): View? {
         binding = ParkingAvailableBinding.inflate(inflater, container, false)
 
-        // PieChart Setup
-        binding.libraryPiechart.setUsePercentValues(true)
+        //binding.libraryPiechart.setUsePercentValues(true)
 
-        // Data Set
+        // 가운데 원형 색상 변경
+        binding.libraryPiechart.setHoleColor(Color.parseColor("#D9D9D9"))
+        binding.studentCenterPiechart.setHoleColor(Color.parseColor("#D9D9D9"))
+        binding.academicBuildingPiechart.setHoleColor(Color.parseColor("#D9D9D9"))
+        binding.scienceBuildingPiechart.setHoleColor(Color.parseColor("#D9D9D9"))
+        binding.searchBuildingPiechart.setHoleColor(Color.parseColor("#D9D9D9"))
+        binding.somethingBuildingPiechart.setHoleColor(Color.parseColor("#D9D9D9"))
+
         val entries = ArrayList<PieEntry>()
-        entries.add(PieEntry(508f, "Apple"))
-        entries.add(PieEntry(600f, "Orange"))
+        entries.add(PieEntry(700f))
+        entries.add(PieEntry(500f))
 
-        // Add a lot of colors
         val colorsItems = ArrayList<Int>()
-        for (c in ColorTemplate.VORDIPLOM_COLORS) colorsItems.add(c)
-        for (c in ColorTemplate.JOYFUL_COLORS) colorsItems.add(c)
-        colorsItems.add(ColorTemplate.getHoloBlue())
+        colorsItems.add(Color.parseColor("#FFFFFF"))
+        colorsItems.add(Color.parseColor("#F5D509"))
 
         val pieDataSet = PieDataSet(entries, "").apply {
             colors = colorsItems
@@ -59,7 +56,61 @@ class ParkingAvailable : Fragment() {
             data = pieData
             description.isEnabled = false
             isRotationEnabled = false
-            centerText = "This is Center"
+            legend.isEnabled = false
+            setEntryLabelColor(Color.BLACK)
+            animateY(1400, Easing.EaseInOutQuad)
+            animate()
+        }
+
+        val pieData1 = PieData(pieDataSet)
+        binding.studentCenterPiechart.apply {
+            data = pieData1
+            description.isEnabled = false
+            isRotationEnabled = false
+            legend.isEnabled = false
+            setEntryLabelColor(Color.BLACK)
+            animateY(1400, Easing.EaseInOutQuad)
+            animate()
+        }
+        val pieData2 = PieData(pieDataSet)
+        binding.academicBuildingPiechart.apply {
+            data = pieData2
+            description.isEnabled = false
+            isRotationEnabled = false
+            legend.isEnabled = false
+            setEntryLabelColor(Color.BLACK)
+            animateY(1400, Easing.EaseInOutQuad)
+            animate()
+        }
+
+        val pieData3 = PieData(pieDataSet)
+        binding.scienceBuildingPiechart.apply {
+            data = pieData3
+            description.isEnabled = false
+            isRotationEnabled = false
+            legend.isEnabled = false
+            setEntryLabelColor(Color.BLACK)
+            animateY(1400, Easing.EaseInOutQuad)
+            animate()
+        }
+
+        val pieData4 = PieData(pieDataSet)
+        binding.searchBuildingPiechart.apply {
+            data = pieData4
+            description.isEnabled = false
+            isRotationEnabled = false
+            legend.isEnabled = false
+            setEntryLabelColor(Color.BLACK)
+            animateY(1400, Easing.EaseInOutQuad)
+            animate()
+        }
+
+        val pieData5 = PieData(pieDataSet)
+        binding.somethingBuildingPiechart.apply {
+            data = pieData5
+            description.isEnabled = false
+            isRotationEnabled = false
+            legend.isEnabled = false
             setEntryLabelColor(Color.BLACK)
             animateY(1400, Easing.EaseInOutQuad)
             animate()
@@ -67,27 +118,4 @@ class ParkingAvailable : Fragment() {
 
         return binding.root
     }
-
-    /*
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ParkingAvailable.
-         */
-
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ParkingAvailable().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
-    */
 }

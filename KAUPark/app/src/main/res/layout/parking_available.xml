@@ -6,8 +6,6 @@
     android:id="@+id/parkingAvailable"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- Existing views -->
-
     <View
         android:id="@+id/rectangleView_StudentCenter"
         android:layout_width="162dp"
@@ -33,8 +31,18 @@
         app:layout_constraintTop_toTopOf="@id/rectangleView_StudentCenter"
         app:layout_constraintBottom_toBottomOf="@id/rectangleView_StudentCenter"
         app:layout_constraintStart_toStartOf="@id/rectangleView_StudentCenter"
+        app:layout_constraintEnd_toEndOf="@id/rectangleView_StudentCenter" />
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/studentCenter_piechart"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="12dp"
         app:layout_constraintEnd_toEndOf="@id/rectangleView_StudentCenter"
-        tools:ignore="HardcodedText" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/rectangleView_StudentCenter"
+        app:layout_constraintTop_toTopOf="@id/rectangleView_StudentCenter" />
 
     <View
         android:id = "@+id/rectangleView_Library"
@@ -70,13 +78,10 @@
         android:layout_height="100dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="12dp"
-        android:gravity="center"
         app:layout_constraintEnd_toEndOf="@id/rectangleView_Library"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/rectangleView_Library"
         app:layout_constraintTop_toTopOf="@id/rectangleView_Library" />
-
-    <!-- Other Views -->
 
     <View
         android:id = "@+id/rectangleView_AcademicBuilding"
@@ -88,6 +93,7 @@
         app:layout_constraintStart_toStartOf="@id/rectangleView_StudentCenter"
         android:background="#D9D9D9"
         />
+
     <TextView
         android:id="@+id/textView_AcademicBuilding"
         android:layout_width="wrap_content"
@@ -105,6 +111,17 @@
         app:layout_constraintStart_toStartOf="@id/rectangleView_AcademicBuilding"
         app:layout_constraintEnd_toEndOf="@id/rectangleView_AcademicBuilding" />
 
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/academicBuilding_piechart"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintEnd_toEndOf="@id/rectangleView_AcademicBuilding"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/rectangleView_AcademicBuilding"
+        app:layout_constraintTop_toTopOf="@id/rectangleView_AcademicBuilding" />
+
     <View
         android:id = "@+id/rectangleView_ScienceBuilding"
         android:layout_width="162dp"
@@ -115,6 +132,7 @@
         app:layout_constraintStart_toStartOf="@id/rectangleView_Library"
         android:background="#D9D9D9"
         />
+
     <TextView
         android:id="@+id/textView_ScienceBuilding"
         android:layout_width="wrap_content"
@@ -131,6 +149,18 @@
         app:layout_constraintBottom_toBottomOf="@id/rectangleView_ScienceBuilding"
         app:layout_constraintStart_toStartOf="@id/rectangleView_ScienceBuilding"
         app:layout_constraintEnd_toEndOf="@id/rectangleView_ScienceBuilding" />
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/scienceBuilding_piechart"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintEnd_toEndOf="@id/rectangleView_ScienceBuilding"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/rectangleView_ScienceBuilding"
+        app:layout_constraintTop_toTopOf="@id/rectangleView_ScienceBuilding" />
+
     <View
         android:id = "@+id/rectangleView_SearchBuilding"
         android:layout_width="162dp"
@@ -141,6 +171,7 @@
         app:layout_constraintStart_toStartOf="@id/rectangleView_AcademicBuilding"
         android:background="@drawable/rounded_bottom_left_corners"
         />
+
     <TextView
         android:id="@+id/textView_SearchBuilding"
         android:layout_width="wrap_content"
@@ -157,6 +188,17 @@
         app:layout_constraintBottom_toBottomOf="@id/rectangleView_SearchBuilding"
         app:layout_constraintStart_toStartOf="@id/rectangleView_SearchBuilding"
         app:layout_constraintEnd_toEndOf="@id/rectangleView_SearchBuilding" />
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/searchBuilding_piechart"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintEnd_toEndOf="@id/rectangleView_SearchBuilding"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/rectangleView_SearchBuilding"
+        app:layout_constraintTop_toTopOf="@id/rectangleView_SearchBuilding" />
 
     <View
         android:id = "@+id/rectangleView_SomethingBuilding"
@@ -186,33 +228,16 @@
         app:layout_constraintStart_toStartOf="@id/rectangleView_SomethingBuilding"
         app:layout_constraintEnd_toEndOf="@id/rectangleView_SomethingBuilding"
         />
-
-
-    <!-- Button -->
-    <android.widget.Button
-        android:id="@+id/button"
-        android:layout_width="206dp"
-        android:layout_height="72dp"
-        android:layout_marginTop="72dp"
-        android:background="#00FF0000"
-        android:text="여석 확인"
-        android:paddingStart="30dp"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints" />
-
-    <android.widget.Button
-        android:id="@+id/button2"
-        android:layout_width="206dp"
-        android:layout_height="72dp"
-        android:layout_marginTop="72dp"
-        android:background="#00FF0000"
-        android:text="대기시간 확인"
-        android:paddingEnd="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingClass" />
-
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/somethingBuilding_piechart"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintEnd_toEndOf="@id/rectangleView_SomethingBuilding"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/rectangleView_SomethingBuilding"
+        app:layout_constraintTop_toTopOf="@id/rectangleView_SomethingBuilding" />
     <TextView
         android:id="@+id/textView7"
         android:layout_width="match_parent"

@@ -91,10 +91,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="12dp"
             android:layout_marginStart="19dp"
-            android:gravity="center">
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/imageView"
@@ -104,13 +104,15 @@
 
             <ImageButton
                 android:id="@+id/button"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginStart="32dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="49dp"
                 android:layout_marginBottom="64dp"
-                android:src="@drawable/myimage"
-                android:contentDescription="버튼 이미지" />
+                android:background="@android:color/transparent"
+                android:contentDescription="버튼 이미지"
+                android:src="@drawable/add" />
+
 
         </LinearLayout>
 
@@ -119,7 +121,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:layout_marginStart="30dp"
+            android:layout_marginStart="45dp"
             android:textSize="24sp"
             android:text="기타 결제" />
 
