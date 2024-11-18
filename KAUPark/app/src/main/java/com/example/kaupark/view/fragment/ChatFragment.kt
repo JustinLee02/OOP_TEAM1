@@ -13,6 +13,9 @@ import com.example.kaupark.ChatAdapter
 import com.example.kaupark.R
 import com.example.kaupark.databinding.FragmentChatBinding
 import com.example.kaupark.model.Chat
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -20,7 +23,8 @@ import java.util.Locale
 
 class ChatFragment : Fragment() {
     private lateinit var currentUser: String
-    private val firestore = FirebaseFirestore.getInstance()
+    var auth : FirebaseAuth = Firebase.auth
+    var firestore : FirebaseFirestore = FirebaseFirestore.getInstance()
     private val chatList = arrayListOf<Chat>()
     private lateinit var adapter: ChatAdapter
 

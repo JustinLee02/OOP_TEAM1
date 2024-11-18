@@ -39,7 +39,7 @@ class ChattingList : Fragment(){
 //                    val item = Person(document["participants"], document["currentTime"].toString())
 //                    personList.add(item)
                     val participants = document.get("participants") as MutableList<String>
-                    val currentTime = document.getString("currentTime")
+                    val currentTime = document.getString("currentTime").toString()
                     val item = Person(participants,currentTime)
                     personList.add(item)
                 } else {
