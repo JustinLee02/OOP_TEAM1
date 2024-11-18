@@ -31,7 +31,7 @@ class PersonsAdapter(private val personList: MutableList<Person>) : RecyclerView
 
     class Holder(private val binding: ListPersonBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(person: Person) {
-            binding.txtName.text = person.carNum
+            binding.txtName.text = person.participants[0]
             binding.txtTime.text = person.currentTime
         }
     }
