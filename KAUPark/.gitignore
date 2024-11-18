@@ -1,15 +1,43 @@
+# Gradle 관련
+.gradle/
+**/local.properties
+.gradle/caches/
+.gradle/gradle.properties
+.gradle/wrapper/
+
+# Android Studio 및 IntelliJ 관련
 *.iml
-.gradle
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
+.idea/
+.idea/caches/
+.idea/libraries/
+.idea/modules.xml
+.idea/workspace.xml
+.idea/navEditor.xml
+.idea/assetWizardSettings.xml
+
+# macOS 관련
 .DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
-local.properties
+
+# 빌드 출력물
+/build/
+**/build/
+.cxx/
+captures/
+.externalNativeBuild/
+
+# 빌드 결과물 및 바이너리 파일
+*.apk
+*.ap_
+*.dex
+*.jar
+*.keystore
+*.so
+
+# 로그 및 기타 임시 파일
+*.log
+*.lock
+*.tmp
+*.temp
+
+# OS/환경 특수 파일
+Thumbs.db
