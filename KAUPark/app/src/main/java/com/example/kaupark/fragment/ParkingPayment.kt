@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.example.kaupark.R
 import com.example.kaupark.databinding.FragmentParkingPaymentBinding
 
+
 class ParkingPayment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,3 +24,4 @@ class ParkingPayment : Fragment() {
         return binding.root
     }
 }
+
