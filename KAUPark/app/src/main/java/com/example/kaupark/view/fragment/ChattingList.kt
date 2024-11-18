@@ -31,14 +31,19 @@ class ChattingList : Fragment(){
         binding.recChatting.layoutManager = LinearLayoutManager(context)
         binding.recChatting.adapter = adapter
 
-        firestore.collection("chattingList")   // 작업할 컬렉션
+        firestore.collection("chattingLists").document("hi")   // 작업할 컬렉션
             .get()      // 문서 가져오기
-            .addOnSuccessListener { result ->
+            .addOnSuccessListener { document ->
                 // 성공할 경우
-                personList.clear()
-                for (document in result) {  // 가져온 문서들은 result에 들어감
-                    val item = Person(document["carNum"].toString(), document["currentTime"].toString())
+                if(document != null){
+//                    val item = Person(document["participants"], document["currentTime"].toString())
+//                    personList.add(item)
+                    val participants = document.get("participants") as MutableList<String>
+                    val currentTime = document.getString("currentTime")
+                    val item = Person(participants,currentTime)
                     personList.add(item)
+                } else {
+
                 }
                 adapter.notifyDataSetChanged()  // 리사이클러 뷰 갱신
             }
