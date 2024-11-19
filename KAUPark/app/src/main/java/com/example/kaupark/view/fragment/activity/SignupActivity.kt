@@ -55,7 +55,7 @@ class SignupActivity : AppCompatActivity() {
 
     private fun saveUserData(id: String, studentId: String, password: String, phoneNum: String, email: String, carNum: String) {
         val user = hashMapOf(
-            "id" to id,
+            "name" to id,
             "studentId" to studentId,
             "password" to password,
             "phoneNum" to phoneNum,
