@@ -17,6 +17,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -102,6 +103,7 @@ class ChatFragment : Fragment() {
                             firestore.collection("chattingLists")
                                 .document(document.id) // 조건에 맞는 문서 ID
                                 .collection("chats") // 하위 컬렉션 "chats"
+                                .orderBy("time", Query.Direction.ASCENDING)
                                 .get()
                                 .addOnSuccessListener { chatDocuments ->
                                     chatList.clear()
