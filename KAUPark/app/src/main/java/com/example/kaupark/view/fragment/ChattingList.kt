@@ -30,26 +30,23 @@ class ChattingList : Fragment(){
         adapter = PersonsAdapter(personList)
         binding.recChatting.layoutManager = LinearLayoutManager(context)
         binding.recChatting.adapter = adapter
-
-        firestore.collection("chattingLists").document("hi")   // 작업할 컬렉션
-            .get()      // 문서 가져오기
-            .addOnSuccessListener { document ->
+        val carNum = "9997"
+        firestore.collection("chattingLists")
+            .whereArrayContains("participants", carNum)
+            .get()
+            .addOnSuccessListener { result ->
                 // 성공할 경우
-                if(document != null){
-//                    val item = Person(document["participants"], document["currentTime"].toString())
-//                    personList.add(item)
-                    val participants = document.get("participants") as MutableList<String>
-                    val currentTime = document.getString("currentTime").toString()
-                    val item = Person(participants,currentTime)
+                for (document in result.documents) {
+                    val participants = document.get("participants") as? MutableList<String> ?: mutableListOf()
+                    val currentTime = document.getString("currentTime").orEmpty()
+                    val item = Person(participants, currentTime)
                     personList.add(item)
-                } else {
-
                 }
-                adapter.notifyDataSetChanged()  // 리사이클러 뷰 갱신
+                adapter.notifyDataSetChanged() // 리사이클러 뷰 갱신
             }
             .addOnFailureListener { exception ->
                 // 실패할 경우
-                Log.w("MainActivity", "Error getting documents: $exception")
+                Log.w("ChattingList", "Error getting documents: $exception")
             }
 
         binding.chatplusBtn.setOnClickListener {
