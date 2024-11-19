@@ -57,10 +57,11 @@ class ChatFragment : Fragment() {
 
         // 입력 버튼
         binding.btnSend.setOnClickListener {
-            val chat = Chat()
-            chat.nickname = currentUser
-            chat.contents = binding.etChatting.text.toString()
-            chat.time = SimpleDateFormat("a hh:mm", Locale.getDefault()).format(Date())
+            val chat = Chat().apply {
+                nickname = currentUser
+                contents = binding.etChatting.text.toString()
+                time = SimpleDateFormat("a hh:mm", Locale.getDefault()).format(Date())
+            }
 
             firestore.collection("chattingLists")
                 .whereArrayContains("participants",currentUser)
@@ -90,16 +91,41 @@ class ChatFragment : Fragment() {
 
             binding.etChatting.setText("")
 
-            firestore.collection("Chat")
+            firestore.collection("chattingLists")
+                .whereArrayContains("participants", currentUser) // 첫 번째 조건: 현재 사용자 포함
                 .get()
-                .addOnSuccessListener { result ->
-                    chatList.clear()
-                    for (document in result) {
-                        val item = Chat(document["nickname"].toString(), document["contents"].toString(), document["time"].toString())
-                        chatList.add(item)
+                .addOnSuccessListener { documents ->
+                    for (document in documents) {
+                        val participants = document.get("participants") as? List<String>
+                        if (participants != null && participants.contains(receiver)) { // 두 번째 조건: 상대방 포함
+                            // 조건에 맞는 문서 ID로 하위 컬렉션 데이터 가져오기
+                            firestore.collection("chattingLists")
+                                .document(document.id) // 조건에 맞는 문서 ID
+                                .collection("chats") // 하위 컬렉션 "chats"
+                                .get()
+                                .addOnSuccessListener { chatDocuments ->
+                                    chatList.clear()
+                                    for (chatDocument in chatDocuments) {
+                                        val nickname = chatDocument.getString("nickname") ?: ""
+                                        val contents = chatDocument.getString("contents") ?: ""
+                                        val time = chatDocument.getString("time") ?: ""
+
+                                        // 가져온 데이터를 리스트에 추가
+                                        chatList.add(Chat(nickname, contents, time))
+                                    }
+                                    // 어댑터 갱신
+                                    adapter.notifyDataSetChanged()
+                                }
+                                .addOnFailureListener { e ->
+                                    Log.w("Firestore", "Error getting chats: $e")
+                                }
+                        }
                     }
-                    adapter.notifyDataSetChanged()
                 }
+                .addOnFailureListener { e ->
+                    Log.w("Firestore", "Error getting documents: $e")
+                }
+
         }
 
         binding.chatToolbar.apply {
