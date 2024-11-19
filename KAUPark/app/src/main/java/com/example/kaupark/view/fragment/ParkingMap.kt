@@ -1,4 +1,4 @@
-package com.example.kaupark.fragment
+package com.example.kaupark.view.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.kaupark.R
 import com.example.kaupark.databinding.FragmentParkingMapBinding
+import com.example.kaupark.databinding.FragmentParkingMapSubBinding
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.MapFragment
@@ -76,9 +77,11 @@ class ParkingMap : Fragment(), OnMapReadyCallback {
         marker1.height = 80
 
         marker1.setOnClickListener {
-            infoWindow.open(marker1) // 클릭 시 해당 마커의 tag를 정보창에 띄움
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.subFrag, ParkingMapSubFragment())
+            infoWindow.open(marker1)
+
+            val subFragment = ParkingMapSubFragment.newInstance(marker1.captionText.toString())
+                parentFragmentManager.beginTransaction()
+                .replace(R.id.subFrag, subFragment)
                 .commit()
 
             true
@@ -94,6 +97,10 @@ class ParkingMap : Fragment(), OnMapReadyCallback {
         marker2.height = 80
         marker2.setOnClickListener {
             infoWindow.open(marker2)
+            val subFragment = ParkingMapSubFragment.newInstance(marker2.captionText.toString())
+                parentFragmentManager.beginTransaction()
+                .replace(R.id.subFrag, subFragment)
+                    .commit()
             true
         }
 
@@ -107,6 +114,10 @@ class ParkingMap : Fragment(), OnMapReadyCallback {
         marker3.height = 80
         marker3.setOnClickListener {
             infoWindow.open(marker3)
+            val subFragment = ParkingMapSubFragment.newInstance(marker3.captionText.toString())
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.subFrag, subFragment)
+                .commit()
             true
         }
 
@@ -120,6 +131,10 @@ class ParkingMap : Fragment(), OnMapReadyCallback {
         marker4.height = 80
         marker4.setOnClickListener {
             infoWindow.open(marker4)
+            val subFragment = ParkingMapSubFragment.newInstance(marker4.captionText.toString())
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.subFrag, subFragment)
+                .commit()
             true
         }
 
@@ -133,6 +148,10 @@ class ParkingMap : Fragment(), OnMapReadyCallback {
         marker5.height = 80
         marker5.setOnClickListener {
             infoWindow.open(marker5)
+            val subFragment = ParkingMapSubFragment.newInstance(marker5.captionText.toString())
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.subFrag, subFragment)
+                .commit()
             true
         }
 
@@ -146,6 +165,10 @@ class ParkingMap : Fragment(), OnMapReadyCallback {
         marker6.height = 80
         marker6.setOnClickListener {
             infoWindow.open(marker6)
+            val subFragment = ParkingMapSubFragment.newInstance(marker6.captionText.toString())
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.subFrag, subFragment)
+                .commit()
             true
         }
     }

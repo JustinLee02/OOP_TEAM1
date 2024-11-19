@@ -1,4 +1,4 @@
-package com.example.kaupark.activity
+package com.example.kaupark.view.fragment.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -22,11 +22,6 @@ class SignupActivity : AppCompatActivity() {
 
         val binding = ActivitySignupBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-//        binding.signupbuttonfinal.setOnClickListener {
-//            val intent = Intent(this, LoginActivity::class.java)
-//            startActivity(intent)
-//        }
 
         // 회원가입 부분
         auth = FirebaseAuth.getInstance()
@@ -60,16 +55,16 @@ class SignupActivity : AppCompatActivity() {
 
     private fun saveUserData(id: String, studentId: String, password: String, phoneNum: String, email: String, carNum: String) {
         val user = hashMapOf(
-            "id" to id,
+            "name" to id,
             "studentId" to studentId,
             "password" to password,
             "phoneNum" to phoneNum,
             "email" to email,
             "carNum" to carNum
         )
-
+        val userId = auth.currentUser?.uid ?: return
         firestore.collection("users")
-            .document(id)
+            .document(userId)
             .set(user)
             .addOnSuccessListener { document ->
                 Log.d("SignupActivity", "DocumentSnapshot added with ID: $id")

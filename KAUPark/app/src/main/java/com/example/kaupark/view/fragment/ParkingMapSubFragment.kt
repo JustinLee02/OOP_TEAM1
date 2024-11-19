@@ -1,4 +1,4 @@
-package com.example.kaupark.fragment
+package com.example.kaupark.view.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -19,9 +19,22 @@ class ParkingMapSubFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val binding = FragmentParkingMapSubBinding.inflate(inflater, container, false)
+
+        val tagValue = arguments?.getString("captiontext") ?: "정보 없음"
+        binding.parkinglotname.text = tagValue
+
         return binding.root
     }
 
+    companion object {
+        fun newInstance(captiontext: String): ParkingMapSubFragment {
+
+            val fragment = ParkingMapSubFragment()
+            val args = Bundle()
+            args.putString("captiontext", captiontext)
+            fragment.arguments = args
+            return fragment
+        }
+    }
 }

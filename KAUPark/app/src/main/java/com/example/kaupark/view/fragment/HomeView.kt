@@ -1,56 +1,92 @@
-package com.example.kaupark.fragment
+package com.example.kaupark.view.fragment
 
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.fragment.app.viewModels
 import com.example.kaupark.R
 import com.example.kaupark.databinding.HomeViewBinding
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
+import com.example.kaupark.viewmodel.HomeViewModel
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.MapFragment
+import java.time.LocalDate
 
 class HomeView : Fragment(), OnMapReadyCallback {
 
-    private lateinit var auth: FirebaseAuth
-    private lateinit var firestore: FirebaseFirestore
     private lateinit var binding: HomeViewBinding
+
+    // Checking current time
+    @RequiresApi(Build.VERSION_CODES.O)
+    val date: LocalDate = LocalDate.now()
+
+    // Declare viewModel
+    private val viewModel: HomeViewModel by viewModels()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        auth = FirebaseAuth.getInstance()
-        firestore = FirebaseFirestore.getInstance()
-
+        // View Binding
         binding = HomeViewBinding.inflate(inflater, container, false)
 
+        // Display current time on id: "timetext"
+        binding.timetext.text = date.toString()
+
+        //
         val mapFragment = childFragmentManager.findFragmentById(R.id.mapimage) as MapFragment?
             ?: MapFragment.newInstance().also {
                 childFragmentManager.beginTransaction().add(R.id.mapimage, it).commit()
             }
         mapFragment.getMapAsync(this)
 
-        binding.inbutton.setOnClickListener {
+        // Display ParkingMap Fragment
+        binding.transparentbutton.setOnClickListener {
             parentFragmentManager.beginTransaction()
                 .replace(R.id.main_container, ParkingMap())
                 .addToBackStack(null)
                 .commit()
         }
 
-        fetchUserInfo()
+        binding.inbutton.setOnClickListener {
+            Log.d("HomeView", "In Cliked") // Test log
+            viewModel.recordEntryTime()
+        }
+
+        binding.outbutton.setOnClickListener {
+            Log.d("HomeView", "Out Cliked") // Test log
+
+            viewModel.recordExitTime()
+        }
+        
+        viewModel.userCarNum.observe(viewLifecycleOwner) { carNum ->
+            binding.usercarnum.text = carNum
+        }
+
+        viewModel.parkingFee.observe(viewLifecycleOwner) { fee ->
+            binding.parkingfee.text = fee
+        }
+
+        viewModel.userName.observe(viewLifecycleOwner) { userName ->
+            binding.myInfo.text = "${userName} 님"
+        }
+
+        viewModel.fetchUserInfo()
 
         return binding.root
     }
@@ -62,24 +98,6 @@ class HomeView : Fragment(), OnMapReadyCallback {
         naverMap.moveCamera(cameraUpdate)
         val zoomUpdate = CameraUpdate.zoomTo(16.0)
         naverMap.moveCamera(zoomUpdate)
-    }
-
-    private fun fetchUserInfo() {
-        val userId = auth.currentUser?.uid ?: return
-        firestore.collection("users").document(userId).get()
-            .addOnSuccessListener { document ->
-                if(document != null) {
-                    val carNum = document.getString("carNum") ?: "차량 번호 없음"
-                    val name = document.getString("name") ?: "이름 없음"
-
-                    binding.usercarnum.text = carNum
-                } else {
-                    // Toast.makeText(this, "사용자 정보가 없습니다.", Toast.LENGTH_SHORT).show()
-                }
-            }
-            .addOnFailureListener { e ->
-                // Toast.makeText(this, "실패: ${e.message}", Toast.LENGTH_SHORT).show()
-            }
     }
 
 }
