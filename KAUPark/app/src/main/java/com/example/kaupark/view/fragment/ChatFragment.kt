@@ -23,6 +23,7 @@ import java.util.Locale
 
 class ChatFragment : Fragment() {
     private lateinit var currentUser: String
+    private lateinit var receiver: String
     var auth : FirebaseAuth = Firebase.auth
     var firestore : FirebaseFirestore = FirebaseFirestore.getInstance()
     private val chatList = arrayListOf<Chat>()
@@ -35,6 +36,7 @@ class ChatFragment : Fragment() {
 //            currentUser = it.getString("nickname").toString()
 //        }
         currentUser = "9997"
+        receiver = "4130"
     }
 
     override fun onCreateView(
@@ -60,7 +62,31 @@ class ChatFragment : Fragment() {
             chat.contents = binding.etChatting.text.toString()
             chat.time = SimpleDateFormat("a hh:mm", Locale.getDefault()).format(Date())
 
-            firestore.collection("Chat").document().set(chat)
+            firestore.collection("chattingLists")
+                .whereArrayContains("participants",currentUser)
+                .get()
+                .addOnSuccessListener { documents ->
+                    for (document in documents) {
+                        // 두 번째 조건 확인
+                        val participants = document.get("participants") as? List<String>
+                        if (participants != null && participants.contains(receiver)) {
+                            // 해당 문서 ID로 하위 컬렉션에 데이터 추가
+                            firestore.collection("chattingLists")
+                                .document(document.id) // 조건에 맞는 문서 ID 사용
+                                .collection("chats") // 하위 컬렉션
+                                .add(chat) // 데이터 추가
+                                .addOnSuccessListener {
+                                    Log.d("Firestore", "Chat successfully added!")
+                                }
+                                .addOnFailureListener { e ->
+                                    Log.w("Firestore", "Error adding chat", e)
+                                }
+                        }
+                    }
+                }
+                .addOnFailureListener { e ->
+                    Log.w("Firestore", "Error getting documents: $e")
+                }
 
             binding.etChatting.setText("")
 

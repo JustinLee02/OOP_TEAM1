@@ -35,8 +35,8 @@ class ChattingList : Fragment(){
             .whereArrayContains("participants", carNum)
             .get()
             .addOnSuccessListener { result ->
-                // 성공할 경우
-                for (document in result.documents) {
+                personList.clear() //클리어하는 이유는 안하면은 리스트에 중복된 값이 계속 쌓여서 그럼
+                for (document in result.documents) { //모든걸 가져와야하니까 for문
                     val participants = document.get("participants") as? MutableList<String> ?: mutableListOf()
                     val currentTime = document.getString("currentTime").orEmpty()
                     val item = Person(participants, currentTime)
