@@ -34,7 +34,6 @@ class ChattingList : Fragment(){
         val carNum = "9997"
         firestore.collection("chattingLists")
             .whereArrayContains("participants", carNum)
-            .orderBy("currentTime", Query.Direction.ASCENDING)
             .get()
             .addOnSuccessListener { result ->
                 personList.clear() //클리어하는 이유는 안하면은 리스트에 중복된 값이 계속 쌓여서 그럼
