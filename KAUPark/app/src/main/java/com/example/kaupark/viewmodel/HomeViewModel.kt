@@ -30,12 +30,13 @@ class HomeViewModel: ViewModel() {
     // Fetching user info
     // User car number, id
     fun fetchUserInfo() {
+
         val userId = auth.currentUser?.uid ?: return
         firestore.collection("users").document(userId).get()
             .addOnSuccessListener { document ->
                 if(document != null) {
                     val carNum = document.getString("carNum") ?: "차량 번호 없음"
-                    val name = document.getString("id") ?: "이름 없음"
+                    val name = document.getString("name") ?: "이름 없음"
 
                     _userCarNum.value = carNum
                     _userName.value = name
