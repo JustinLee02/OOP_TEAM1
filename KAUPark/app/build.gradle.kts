@@ -39,8 +39,6 @@ android {
     viewBinding {
         enable = true
     }
-
-
 }
 
 dependencies {
@@ -54,24 +52,20 @@ dependencies {
     implementation(libs.filament.android)
     implementation("de.hdodenhof:circleimageview:3.1.0")
     implementation(libs.firebase.auth.ktx)
-
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-
     implementation ("de.hdodenhof:circleimageview:3.1.0")
     implementation (libs.androidx.viewpager2)
     implementation("com.naver.maps:map-sdk:3.19.1")
-
     implementation(platform("com.google.firebase:firebase-bom:33.5.1")) // Firebase BOM 추가
     implementation("com.google.firebase:firebase-firestore-ktx") // Firebase Firestore 추가
     implementation("com.google.firebase:firebase-auth-ktx") // Firebase Auth 추가
     implementation ("com.google.firebase:firebase-database-ktx:20.0.4")
     implementation ("android.arch.lifecycle:extensions:1.1.1")
-
     implementation ("androidx.fragment:fragment-ktx:1.5.7'")
     implementation ("androidx.activity:activity-ktx:1.7.1")
-
+    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
 }
 
