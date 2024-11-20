@@ -19,6 +19,8 @@ import com.naver.maps.map.util.MarkerIcons
 
 class ParkingMap : Fragment(), OnMapReadyCallback {
 
+    private lateinit var binding: FragmentParkingMapBinding
+
     val marker1 = Marker() // 과학관 주차장
     val marker2 = Marker() // 운동장 주차장
     val marker3 = Marker() // 학생회관 주차장
@@ -34,7 +36,7 @@ class ParkingMap : Fragment(), OnMapReadyCallback {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = FragmentParkingMapBinding.inflate(inflater, container, false)
+        binding = FragmentParkingMapBinding.inflate(inflater, container, false)
 
         binding.maptoolbar.apply {
             setNavigationIcon(R.drawable.arrow_back)
@@ -172,4 +174,11 @@ class ParkingMap : Fragment(), OnMapReadyCallback {
             true
         }
     }
+
+    fun markerGetClicked(marker: Marker) {
+        if (marker.captionText == "과학관 주차장") {
+            
+        }
+    }
+
 }
