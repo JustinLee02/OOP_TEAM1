@@ -8,7 +8,9 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.kaupark.R
+import com.example.kaupark.data.UserPreferences
 import com.example.kaupark.databinding.ActivitySignupBinding
+import com.example.kaupark.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -16,6 +18,7 @@ class SignupActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth // Firebase 사용하는 권한
     private lateinit var firestore: FirebaseFirestore
+    private lateinit var userPreferences: UserPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +29,8 @@ class SignupActivity : AppCompatActivity() {
         // 회원가입 부분
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
+
+        userPreferences = UserPreferences.getInstance(this)
 
         val signupButton: Button = findViewById(R.id.signupbuttonfinal)
         signupButton.setOnClickListener {
@@ -43,8 +48,8 @@ class SignupActivity : AppCompatActivity() {
 
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this) { task ->
             if(task.isSuccessful) {
-                val user = auth.currentUser
-                saveUserData(id, studentId, password, phoneNum, email, carNum)
+                val user = User(id, studentId, password, phoneNum, email, carNum, 100000)
+                saveUserData(user)
                 Toast.makeText(this, "회원가입 성공!", Toast.LENGTH_SHORT).show()
                 navigateToLoginActivity()
             } else {
@@ -53,25 +58,20 @@ class SignupActivity : AppCompatActivity() {
         }
     }
 
-    private fun saveUserData(id: String, studentId: String, password: String, phoneNum: String, email: String, carNum: String) {
-        val user = hashMapOf(
-            "name" to id,
-            "studentId" to studentId,
-            "password" to password,
-            "phoneNum" to phoneNum,
-            "email" to email,
-            "carNum" to carNum
-        )
+    private fun saveUserData(user: User) {
+
         val userId = auth.currentUser?.uid ?: return
         firestore.collection("users")
             .document(userId)
             .set(user)
             .addOnSuccessListener { document ->
-                Log.d("SignupActivity", "DocumentSnapshot added with ID: $id")
+                Log.d("SignupActivity", "DocumentSnapshot added with ID:")
             }
             .addOnFailureListener { e ->
                 Log.e("SignupActivity", "문서 추가 오류", e)
             }
+
+        userPreferences.saveUser(user)
     }
 
     private fun navigateToLoginActivity() {

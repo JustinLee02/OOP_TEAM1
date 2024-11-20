@@ -1,13 +1,16 @@
 package com.example.kaupark.viewmodel
 
+import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.kaupark.data.UserPreferences
 import com.example.kaupark.model.ParkingRecord
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
-class HomeViewModel: ViewModel() {
+class HomeViewModel() : ViewModel() {
 
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
     private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
@@ -26,15 +29,27 @@ class HomeViewModel: ViewModel() {
     private val _parkingFee = MutableLiveData<String>()
     val parkingFee: LiveData<String> get() = _parkingFee
 
+    private val _parkingSpace = MutableLiveData<Int>()
+    val parkingSpace: LiveData<Int> get() = _parkingSpace
+
+    private val _isEntry = MutableLiveData<Boolean>()
+    val isEntry: LiveData<Boolean> get() = _isEntry
+
+    private val _toastMessage = MutableLiveData<String?>()
+    val toastMessage: LiveData<String?> get() = _toastMessage
+
+
+    init {
+        _isEntry.value = false
+    }
 
     // Fetching user info
     // User car number, id
     fun fetchUserInfo() {
-
         val userId = auth.currentUser?.uid ?: return
         firestore.collection("users").document(userId).get()
             .addOnSuccessListener { document ->
-                if(document != null) {
+                if (document != null) {
                     val carNum = document.getString("carNum") ?: "차량 번호 없음"
                     val name = document.getString("name") ?: "이름 없음"
 
@@ -56,15 +71,49 @@ class HomeViewModel: ViewModel() {
         val entryTime = System.currentTimeMillis()
 
         val record = ParkingRecord(entryTime = entryTime)
+        if (_isEntry.value == true) {
+            _toastMessage.value = "출차 버튼을 눌러주세요"
+        } else {
+            firestore.collection("users").document(userId)
+                .collection("parking_records").document("duration")
+                .set(record)
+                .addOnSuccessListener {
+                    _parkingRecord.value = record
+                    _isEntry.value = true
+                }
+                .addOnFailureListener {
+                    _parkingRecord.value = null
+                }
+        }
+    }
 
-        firestore.collection("users").document(userId)
-            .collection("parking_records").document("duration")
-            .set(record)
-            .addOnSuccessListener {
-                _parkingRecord.value = record
+    fun increaseCarNum(parkingLot: String) {
+        val parkingDoc = firestore.collection("parkingAvailable").document(parkingLot)
+        parkingDoc.get()
+            .addOnSuccessListener { document ->
+                if (document != null && document.exists()) {
+                    val currentLeft = document.getLong("currentLeft") ?: 0
+                    val total = document.getLong("total") ?: 0
+                    val updateCount = currentLeft + 1
+
+                    if (total < updateCount) {
+                        _toastMessage.value = "자리가 없습니다!"
+                    }
+
+                    parkingDoc.update("currentLeft", updateCount)
+                        .addOnSuccessListener {
+                            _parkingSpace.value = updateCount.toInt()
+                            _toastMessage.value = "${parkingLot}에 입차했습니다"
+                        }
+                        .addOnFailureListener { e ->
+                            Log.e("Error", "${e.message}")
+                        }
+                } else {
+
+                }
             }
-            .addOnFailureListener {
-                _parkingRecord.value = null
+            .addOnFailureListener { e ->
+                Log.e("Error", "${e.message}")
             }
     }
 
@@ -74,24 +123,56 @@ class HomeViewModel: ViewModel() {
         val userId = auth.currentUser?.uid ?: return
         val exitTime = System.currentTimeMillis()
 
-        firestore.collection("users").document(userId)
-            .collection("parking_records").document("duration")
-            .get()
-            .addOnSuccessListener { document ->
-                val entryTime = document.getLong("entryTime") ?: return@addOnSuccessListener
-                val duration = exitTime - entryTime
 
-                val updatedRecord = ParkingRecord(entryTime, exitTime, duration)
-                firestore.collection("users").document(userId)
-                    .collection("parking_records").document("duration")
-                    .set(updatedRecord)
-                    .addOnSuccessListener {
-                        _parkingRecord.value = updatedRecord
-                        calculateParkingFee(duration)
-                    }
+        if (_isEntry.value == false) {
+            _toastMessage.value = "입차 버튼을 눌러주세요"
+        } else {
+            firestore.collection("users").document(userId)
+                .collection("parking_records").document("duration")
+                .get()
+                .addOnSuccessListener { document ->
+                    val entryTime = document.getLong("entryTime") ?: return@addOnSuccessListener
+                    val duration = exitTime - entryTime
+
+                    val updatedRecord = ParkingRecord(entryTime, exitTime, duration)
+                    firestore.collection("users").document(userId)
+                        .collection("parking_records").document("duration")
+                        .set(updatedRecord)
+                        .addOnSuccessListener {
+                            _parkingRecord.value = updatedRecord
+                            calculateParkingFee(duration)
+                            _isEntry.value = true
+                        }
+                }
+                .addOnFailureListener {
+                    _parkingRecord.value = null
+                }
+        }
+
+    }
+
+    fun dereaseCarNum(parkingLot: String) {
+        val parkingDoc = firestore.collection("parkingAvailable").document(parkingLot)
+        parkingDoc.get()
+            .addOnSuccessListener { document ->
+                if (document != null && document.exists()) {
+                    val currentLeft = document.getLong("currentLeft") ?: 0
+                    val updateCount = currentLeft - 1
+
+                    parkingDoc.update("currentLeft", updateCount)
+                        .addOnSuccessListener {
+                            _parkingSpace.value = updateCount.toInt()
+                            _toastMessage.value = "${parkingLot}에서 출차했습니다"
+                        }
+                        .addOnFailureListener { e ->
+                            Log.e("Error", "${e.message}")
+                        }
+                } else {
+
+                }
             }
-            .addOnFailureListener {
-                _parkingRecord.value = null
+            .addOnFailureListener { e ->
+                Log.e("Error", "${e.message}")
             }
     }
 
