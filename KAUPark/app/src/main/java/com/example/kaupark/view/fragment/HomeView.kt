@@ -66,10 +66,19 @@ class HomeView : Fragment(), OnMapReadyCallback {
 
         binding.inbutton.setOnClickListener {
                 val parkingLot = binding.textfield.text.toString()
+                val location = when(parkingLot) {
+                    "과학관 주차장" -> "scienceBuilding"
+                    "운동장 옆 주차장" -> "somethingBuilding"
+                    "학생회관 주차장" -> "studentCenter"
+                    "도서관 주차장" -> "library"
+                    "연구동 주차장" -> "searchBuilding"
+                    "산학협력관 주차장" -> "academicBuilding"
+                    else -> ""
+                }
                 if(parkingLot.isNotBlank()) {
-                    viewModel.increaseCarNum(parkingLot)
+                    viewModel.increaseCarNum(location)
                 } else {
-                    Toast.makeText(requireContext(), "주차장 이름을 입력하세요", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "주차장 이름을 입력하세요", Toast.LENGTH_LONG).show()
                 }
                 viewModel.recordEntryTime()
         }
@@ -79,7 +88,7 @@ class HomeView : Fragment(), OnMapReadyCallback {
                 if(parkingLot.isNotBlank()) {
                     viewModel.dereaseCarNum(parkingLot)
                 } else {
-                    Toast.makeText(requireContext(), "주차장 이름을 입력하세요", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "주차장 이름을 입력하세요", Toast.LENGTH_LONG).show()
                 }
                 viewModel.recordExitTime()
         }
