@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import com.example.kaupark.R
@@ -64,14 +65,33 @@ class HomeView : Fragment(), OnMapReadyCallback {
         }
 
         binding.inbutton.setOnClickListener {
-            Log.d("HomeView", "In Cliked") // Test log
-            viewModel.recordEntryTime()
+            if (viewModel.isEntry.value == true) {
+                // 이미 입차한 상태
+                Toast.makeText(requireContext(), "출차 버튼을 눌러주세요.", Toast.LENGTH_SHORT).show()
+            } else {
+                val parkingLot = binding.textfield.text.toString()
+                if(parkingLot.isNotBlank()) {
+                    viewModel.increaseCarNum(parkingLot)
+                } else {
+                    Toast.makeText(requireContext(), "주차장 이름을 입력하세요", Toast.LENGTH_SHORT).show()
+                }
+                viewModel.recordEntryTime()
+            }
         }
 
         binding.outbutton.setOnClickListener {
-            Log.d("HomeView", "Out Cliked") // Test log
-
-            viewModel.recordExitTime()
+            if (viewModel.isEntry.value == false) {
+                // 출차할 수 없는 상태
+                Toast.makeText(requireContext(), "입차 버튼을 눌러주세요.", Toast.LENGTH_SHORT).show()
+            } else {
+                val parkingLot = binding.textfield.text.toString()
+                if(parkingLot.isNotBlank()) {
+                    viewModel.dereaseCarNum(parkingLot)
+                } else {
+                    Toast.makeText(requireContext(), "주차장 이름을 입력하세요", Toast.LENGTH_SHORT).show()
+                }
+                viewModel.recordExitTime()
+            }
         }
         
         viewModel.userCarNum.observe(viewLifecycleOwner) { carNum ->
@@ -85,6 +105,10 @@ class HomeView : Fragment(), OnMapReadyCallback {
         viewModel.userName.observe(viewLifecycleOwner) { userName ->
             binding.myInfo.text = "${userName} 님"
         }
+
+//        viewModel.parkingSpace.observe(viewLifecycleOwner) { space ->
+//            binding.textfield.text =
+//        }
 
         viewModel.fetchUserInfo()
 
