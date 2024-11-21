@@ -2,48 +2,89 @@ package com.example.kaupark.view.fragment
 
 import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.example.kaupark.databinding.ParkingAvailableBinding
-import com.github.mikephil.charting.charts.PieChart
-import com.github.mikephil.charting.data.PieEntry
+import com.example.kaupark.model.ParkingSpot
+import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
-import com.github.mikephil.charting.animation.Easing
+import com.github.mikephil.charting.data.PieEntry
+import com.google.firebase.firestore.FirebaseFirestore
 
 class ParkingAvailable : Fragment() {
 
-    private lateinit var binding: ParkingAvailableBinding
+    private val firestore = FirebaseFirestore.getInstance()
+    private val parkingSpotList = arrayListOf<ParkingSpot>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private lateinit var binding: ParkingAvailableBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
+        // ViewBinding 설정
         binding = ParkingAvailableBinding.inflate(inflater, container, false)
 
-        //binding.libraryPiechart.setUsePercentValues(true)
+        // Firestore에서 데이터 가져오기
+        loadParkingData()
 
-        // 가운데 원형 색상 변경
-        binding.libraryPiechart.setHoleColor(Color.parseColor("#D9D9D9"))
-        binding.studentCenterPiechart.setHoleColor(Color.parseColor("#D9D9D9"))
-        binding.academicBuildingPiechart.setHoleColor(Color.parseColor("#D9D9D9"))
-        binding.scienceBuildingPiechart.setHoleColor(Color.parseColor("#D9D9D9"))
-        binding.searchBuildingPiechart.setHoleColor(Color.parseColor("#D9D9D9"))
-        binding.somethingBuildingPiechart.setHoleColor(Color.parseColor("#D9D9D9"))
+        return binding.root
+    }
 
-        val entries = ArrayList<PieEntry>()
-        entries.add(PieEntry(700f))
-        entries.add(PieEntry(500f))
+    private fun loadParkingData() {
+        firestore.collection("parkingAvailable")
+            .get()
+            .addOnSuccessListener { documents ->
+                parkingSpotList.clear() // 기존 리스트 초기화
 
-        val colorsItems = ArrayList<Int>()
-        colorsItems.add(Color.parseColor("#FFFFFF"))
-        colorsItems.add(Color.parseColor("#F5D509"))
+                for (document in documents) {
+                    // Firestore 문서에서 데이터 추출
+                    val name = document.id // 건물 이름
+                    val currentLeft = document.getLong("currentLeft")?.toInt() ?: 0
+                    val total = document.getLong("total")?.toInt() ?: 0
+
+                    // ParkingSpot 객체 생성 후 리스트에 추가
+                    val parkingSpot = ParkingSpot(name, currentLeft, total)
+                    parkingSpotList.add(parkingSpot)
+                }
+
+                // PieChart에 데이터 표시
+                displayParkingData()
+            }
+            .addOnFailureListener { exception ->
+                Log.e("ParkingAvailable", "Error getting documents: ", exception)
+            }
+    }
+
+    private fun displayParkingData() {
+        // 각 주차장 데이터를 PieChart로 표현
+        for (spot in parkingSpotList) {
+            when (spot.name) {
+                "library" -> updatePieChart(binding.libraryPiechart, spot)
+                "studentCenter" -> updatePieChart(binding.studentCenterPiechart, spot)
+                "academicBuilding" -> updatePieChart(binding.academicBuildingPiechart, spot)
+                "scienceBuilding" -> updatePieChart(binding.scienceBuildingPiechart, spot)
+                "searchBuilding" -> updatePieChart(binding.searchBuildingPiechart, spot)
+                "somethingBuilding" -> updatePieChart(binding.somethingBuildingPiechart, spot)
+            }
+        }
+    }
+
+    private fun updatePieChart(pieChart: com.github.mikephil.charting.charts.PieChart, spot: ParkingSpot) {
+        // PieChart 데이터 구성
+        val entries = ArrayList<PieEntry>().apply {
+            add(PieEntry(spot.currentLeft.toFloat(), "남은 자리"))
+            add(PieEntry((spot.total - spot.currentLeft).toFloat(), "사용 중"))
+        }
+
+        val colorsItems = ArrayList<Int>().apply {
+            add(Color.parseColor("#F5D509")) // 남은 자리
+            add(Color.parseColor("#FFFFFF")) // 사용 중
+        }
 
         val pieDataSet = PieDataSet(entries, "").apply {
             colors = colorsItems
@@ -52,70 +93,17 @@ class ParkingAvailable : Fragment() {
         }
 
         val pieData = PieData(pieDataSet)
-        binding.libraryPiechart.apply {
+
+        // PieChart 설정
+        pieChart.apply {
             data = pieData
+            setHoleColor(Color.parseColor("#D9D9D9")) // 가운데 원형 색상
             description.isEnabled = false
             isRotationEnabled = false
             legend.isEnabled = false
-            setEntryLabelColor(Color.BLACK)
+            setDrawEntryLabels(false)
             animateY(1400, Easing.EaseInOutQuad)
-            animate()
+            invalidate() // 업데이트
         }
-
-        val pieData1 = PieData(pieDataSet)
-        binding.studentCenterPiechart.apply {
-            data = pieData1
-            description.isEnabled = false
-            isRotationEnabled = false
-            legend.isEnabled = false
-            setEntryLabelColor(Color.BLACK)
-            animateY(1400, Easing.EaseInOutQuad)
-            animate()
-        }
-        val pieData2 = PieData(pieDataSet)
-        binding.academicBuildingPiechart.apply {
-            data = pieData2
-            description.isEnabled = false
-            isRotationEnabled = false
-            legend.isEnabled = false
-            setEntryLabelColor(Color.BLACK)
-            animateY(1400, Easing.EaseInOutQuad)
-            animate()
-        }
-
-        val pieData3 = PieData(pieDataSet)
-        binding.scienceBuildingPiechart.apply {
-            data = pieData3
-            description.isEnabled = false
-            isRotationEnabled = false
-            legend.isEnabled = false
-            setEntryLabelColor(Color.BLACK)
-            animateY(1400, Easing.EaseInOutQuad)
-            animate()
-        }
-
-        val pieData4 = PieData(pieDataSet)
-        binding.searchBuildingPiechart.apply {
-            data = pieData4
-            description.isEnabled = false
-            isRotationEnabled = false
-            legend.isEnabled = false
-            setEntryLabelColor(Color.BLACK)
-            animateY(1400, Easing.EaseInOutQuad)
-            animate()
-        }
-
-        val pieData5 = PieData(pieDataSet)
-        binding.somethingBuildingPiechart.apply {
-            data = pieData5
-            description.isEnabled = false
-            isRotationEnabled = false
-            legend.isEnabled = false
-            setEntryLabelColor(Color.BLACK)
-            animateY(1400, Easing.EaseInOutQuad)
-            animate()
-        }
-
-        return binding.root
     }
 }
