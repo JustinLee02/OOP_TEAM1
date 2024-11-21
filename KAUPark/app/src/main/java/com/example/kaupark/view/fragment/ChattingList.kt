@@ -13,6 +13,7 @@ import com.example.kaupark.databinding.ChattingListBinding
 import com.example.kaupark.model.Person
 import com.example.kaupark.PersonsAdapter
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 
 class ChattingList : Fragment(){
 
@@ -30,26 +31,23 @@ class ChattingList : Fragment(){
         adapter = PersonsAdapter(personList)
         binding.recChatting.layoutManager = LinearLayoutManager(context)
         binding.recChatting.adapter = adapter
-
-        firestore.collection("chattingLists").document("hi")   // 작업할 컬렉션
-            .get()      // 문서 가져오기
-            .addOnSuccessListener { document ->
-                // 성공할 경우
-                if(document != null){
-//                    val item = Person(document["participants"], document["currentTime"].toString())
-//                    personList.add(item)
-                    val participants = document.get("participants") as MutableList<String>
-                    val currentTime = document.getString("currentTime").toString()
-                    val item = Person(participants,currentTime)
+        val carNum = "9997"
+        firestore.collection("chattingLists")
+            .whereArrayContains("participants", carNum)
+            .get()
+            .addOnSuccessListener { result ->
+                personList.clear() //클리어하는 이유는 안하면은 리스트에 중복된 값이 계속 쌓여서 그럼
+                for (document in result.documents) { //모든걸 가져와야하니까 for문
+                    val participants = document.get("participants") as? MutableList<String> ?: mutableListOf()
+                    val currentTime = document.getString("currentTime").orEmpty()
+                    val item = Person(participants, currentTime)
                     personList.add(item)
-                } else {
-
                 }
-                adapter.notifyDataSetChanged()  // 리사이클러 뷰 갱신
+                adapter.notifyDataSetChanged() // 리사이클러 뷰 갱신
             }
             .addOnFailureListener { exception ->
                 // 실패할 경우
-                Log.w("MainActivity", "Error getting documents: $exception")
+                Log.w("ChattingList", "Error getting documents: $exception")
             }
 
         binding.chatplusBtn.setOnClickListener {

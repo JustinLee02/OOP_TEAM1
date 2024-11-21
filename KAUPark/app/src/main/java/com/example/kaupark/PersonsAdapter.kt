@@ -30,8 +30,9 @@ class PersonsAdapter(private val personList: MutableList<Person>) : RecyclerView
     }
 
     class Holder(private val binding: ListPersonBinding) : RecyclerView.ViewHolder(binding.root) {
+        val carNum = "9997"
         fun bind(person: Person) {
-            binding.txtName.text = person.participants[0]
+            binding.txtName.text = if (person.participants[0] == carNum) person.participants[1] else person.participants[0]
             binding.txtTime.text = person.currentTime
         }
     }

@@ -48,25 +48,26 @@ class ChatPopupFragment : DialogFragment() {
 //                     * - get()으로 데이터를 가져온 후, await()를 사용하여 작업 완료를 대기
 //                     * - 현재 코루틴 내에서만 동작
 
-
                     val document = firestore.collection("users").document(userId).get().await() // document 반환되기 전까지 다음줄로 진행 X, 코루틴 내부에서만 사용할 수 있음
                     val carNum = document.getString("carNum") ?: "차량정보 없삼"
-
-                    // Person 객체 생성 및 데이터 설정
-                    val person = Person().apply {
-                        participants[0] = carNum
-                        participants[1] = binding.blankText.text.toString()
-                        currentTime = SimpleDateFormat("a hh:mm", Locale.getDefault()).format(Date())
+                    val carNum2 = binding.blankText.text.toString()
+                    val existCheck = existChat(carNum,carNum2)
+                    if (existCheck) {
+                        moveToChatFragment()
                     }
+                    else {
+                        // Person 객체 생성 및 데이터 설정
+                        val person = Person().apply {
+                            participants[0] = carNum
+                            participants[1] = binding.blankText.text.toString()
+                            currentTime = SimpleDateFormat("a hh:mm", Locale.getDefault()).format(Date())
+                        }
 
-                    // get()과 마찬가지로 비동기작업, awaiat()를 사용하여 작업 완료 대기
-                    firestore.collection("chattingLists").document().set(person).await() // Firestore 저장작업 완료까지 다음줄로 진행 X
-
+                        // get()과 마찬가지로 비동기작업, awaiat()를 사용하여 작업 완료 대기
+                        firestore.collection("chattingLists").document().set(person).await() // Firestore 저장작업 완료까지 다음줄로 진행 X
+                        moveToChatFragment()
+                    }
                     binding.blankText.text.clear()
-                    parentFragmentManager.beginTransaction()
-                        .replace(R.id.main_container, ChatFragment())
-                        .addToBackStack(null) // 뒤로 가기 버튼을 누르면 이전 Fragment로 돌아가게 함
-                        .commit()
                     dismiss()
 
                 } catch (e: Exception){
@@ -82,7 +83,38 @@ class ChatPopupFragment : DialogFragment() {
             dismiss()
         }
 
+
         return binding.root
     }
+
+    suspend fun existChat (carNum1:String, carNum2:String ):Boolean{
+
+        return try {
+            val documents = firestore.collection("chattingLists")
+                .whereArrayContains("participants", carNum1)
+                .get()
+                .await() // 작업 완료를 대기
+
+            for (document in documents) {
+                val participants = document.get("participants") as? List<String>
+                if (participants != null && participants.contains(carNum2)) {
+                    return true // 채팅 존재
+                }
+            }
+            false // 조건에 맞는 채팅 없음
+        } catch (e: Exception) {
+            Log.e("Firestore", "Error checking chat: $e")
+            false
+        }
+
+    }
+
+    private fun moveToChatFragment(){
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.main_container, ChatFragment())
+            .addToBackStack(null) // 뒤로 가기 버튼을 누르면 이전 Fragment로 돌아가게 함
+            .commit()
+    }
+
 
 }
