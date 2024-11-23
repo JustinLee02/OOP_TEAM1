@@ -35,12 +35,14 @@ class ChattingList : Fragment(){
         savedInstanceState: Bundle?
     ): View {
         val binding = ChattingListBinding.inflate(inflater, container, false)
-        adapter = PersonsAdapter(personList)
+
         binding.recChatting.layoutManager = LinearLayoutManager(context)
-        binding.recChatting.adapter = adapter
 
         lifecycleScope.launch {
             val carNum = getMyCarNum()
+            adapter = PersonsAdapter(personList,carNum)
+            binding.recChatting.adapter = adapter
+
             firestore.collection("chattingLists")
                 .whereArrayContains("participants", carNum)
                 .get()

@@ -59,7 +59,7 @@ class ChatPopupFragment : DialogFragment() {
                         Toast.makeText(context, "존재하지않는 차량번호입니다.", Toast.LENGTH_SHORT).show()
                     }
                     else if (existChat) {
-                        moveToChatFragment()
+                        moveToChatFragment(carNum1,carNum2)
                     }
                     else {
                         // Person 객체 생성 및 데이터 설정
@@ -71,7 +71,7 @@ class ChatPopupFragment : DialogFragment() {
 
                         // get()과 마찬가지로 비동기작업, awaiat()를 사용하여 작업 완료 대기
                         firestore.collection("chattingLists").document().set(person).await() // Firestore 저장작업 완료까지 다음줄로 진행 X
-                        moveToChatFragment()
+                        moveToChatFragment(carNum1,carNum2)
                     }
                     binding.blankText.text.clear()
                     dismiss()
@@ -130,9 +130,9 @@ class ChatPopupFragment : DialogFragment() {
 
     }
 
-    private fun moveToChatFragment(){
+    private fun moveToChatFragment(carNum1: String, carNum2: String){
         parentFragmentManager.beginTransaction()
-            .replace(R.id.main_container, ChatFragment())
+            .replace(R.id.main_container, ChatFragment.newInstance(carNum1,carNum2))
             .addToBackStack(null) // 뒤로 가기 버튼을 누르면 이전 Fragment로 돌아가게 함
             .commit()
     }
