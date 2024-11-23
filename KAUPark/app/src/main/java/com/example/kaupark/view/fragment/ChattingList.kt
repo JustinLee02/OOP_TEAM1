@@ -12,12 +12,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.kaupark.databinding.ChattingListBinding
 import com.example.kaupark.model.Person
 import com.example.kaupark.PersonsAdapter
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 
 class ChattingList : Fragment(){
 
     val firestore = FirebaseFirestore.getInstance()
+    var auth : FirebaseAuth = Firebase.auth
     val personList = arrayListOf<Person>()
 
     private lateinit var adapter: PersonsAdapter
@@ -71,5 +75,13 @@ class ChattingList : Fragment(){
         itemTouchHelper.attachToRecyclerView(binding.recChatting)
         return binding.root
     }
+
+//    private fun getMyCarNum():String {
+//        val userId = auth.currentUser?.uid ?: return ""
+//
+//        firestore.collection("user").document(userId).get()
+//        val carNum = document.getString("carNum")
+//        return carNum
+//    }
 
 }

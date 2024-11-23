@@ -25,7 +25,7 @@ import java.util.Locale
 class ChatFragment : Fragment() {
     private lateinit var currentUser: String
     private lateinit var receiver: String
-    var auth : FirebaseAuth = Firebase.auth
+//    var auth : FirebaseAuth = Firebase.auth
     var firestore : FirebaseFirestore = FirebaseFirestore.getInstance()
     private val chatList = arrayListOf<Chat>()
     private lateinit var adapter: ChatAdapter
