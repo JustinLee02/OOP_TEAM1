@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
 import com.example.kaupark.model.Person
@@ -49,16 +50,21 @@ class ChatPopupFragment : DialogFragment() {
 //                     * - 현재 코루틴 내에서만 동작
 
                     val document = firestore.collection("users").document(userId).get().await() // document 반환되기 전까지 다음줄로 진행 X, 코루틴 내부에서만 사용할 수 있음
-                    val carNum = document.getString("carNum") ?: "차량정보 없삼"
+                    val carNum1 = document.getString("carNum") ?: "차량정보 없삼"
                     val carNum2 = binding.blankText.text.toString()
-                    val existCheck = existChat(carNum,carNum2)
-                    if (existCheck) {
+                    val existChat = existChat(carNum1,carNum2)
+                    val existNum = existNum(carNum2)
+
+                    if (!existNum) {
+                        Toast.makeText(context, "존재하지않는 차량번호입니다.", Toast.LENGTH_SHORT).show()
+                    }
+                    else if (existChat) {
                         moveToChatFragment()
                     }
                     else {
                         // Person 객체 생성 및 데이터 설정
                         val person = Person().apply {
-                            participants[0] = carNum
+                            participants[0] = carNum1
                             participants[1] = binding.blankText.text.toString()
                             currentTime = SimpleDateFormat("a hh:mm", Locale.getDefault()).format(Date())
                         }
@@ -88,7 +94,6 @@ class ChatPopupFragment : DialogFragment() {
     }
 
     suspend fun existChat (carNum1:String, carNum2:String ):Boolean{
-
         return try {
             val documents = firestore.collection("chattingLists")
                 .whereArrayContains("participants", carNum1)
@@ -104,6 +109,22 @@ class ChatPopupFragment : DialogFragment() {
             false // 조건에 맞는 채팅 없음
         } catch (e: Exception) {
             Log.e("Firestore", "Error checking chat: $e")
+            false
+        }
+
+    }
+
+    suspend fun existNum(carNum2:String):Boolean {
+        return try {
+            val documents = firestore.collection("users")
+                .whereEqualTo("carNum",carNum2)
+                .get()
+                .await() // 작업 완료를 대기
+
+            documents.isEmpty.not()
+
+        } catch (e: Exception) {
+            Log.e("Firestore","Error checking chat: $e")
             false
         }
 
