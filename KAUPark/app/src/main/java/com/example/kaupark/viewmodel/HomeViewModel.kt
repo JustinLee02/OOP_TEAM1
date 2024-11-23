@@ -88,6 +88,17 @@ class HomeViewModel() : ViewModel() {
     }
 
     fun increaseCarNum(parkingLot: String) {
+
+        val location = when(parkingLot) {
+            "과학관 주차장" -> "scienceBuilding"
+            "운동장 옆 주차장" -> "somethingBuilding"
+            "학생회관 주차장" -> "studentCenter"
+            "도서관 주차장" -> "library"
+            "연구동 주차장" -> "searchBuilding"
+            "산학협력관 주차장" -> "academicBuilding"
+            else -> ""
+        }
+
         val parkingDoc = firestore.collection("parkingAvailable").document(parkingLot)
         parkingDoc.get()
             .addOnSuccessListener { document ->
@@ -103,7 +114,7 @@ class HomeViewModel() : ViewModel() {
                     parkingDoc.update("currentLeft", updateCount)
                         .addOnSuccessListener {
                             _parkingSpace.value = updateCount.toInt()
-                            _toastMessage.value = "${parkingLot}에 입차했습니다"
+                            _toastMessage.value = "${location}에 입차했습니다"
                         }
                         .addOnFailureListener { e ->
                             Log.e("Error", "${e.message}")
