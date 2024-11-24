@@ -13,6 +13,7 @@ import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.formatter.ValueFormatter
 import com.google.firebase.firestore.FirebaseFirestore
 
 class ParkingAvailable : Fragment() {
@@ -77,13 +78,14 @@ class ParkingAvailable : Fragment() {
     private fun updatePieChart(pieChart: com.github.mikephil.charting.charts.PieChart, spot: ParkingSpot) {
         // PieChart 데이터 구성
         val entries = ArrayList<PieEntry>().apply {
-            add(PieEntry(spot.currentLeft.toFloat(), "남은 자리"))
-            add(PieEntry((spot.total - spot.currentLeft).toFloat(), "사용 중"))
+            // 노란색: 사용 중, 하얀색: 남은 자리
+            add(PieEntry((spot.total - spot.currentLeft).toFloat(), "사용 중")) // 사용 중
+            add(PieEntry(spot.currentLeft.toFloat(), "남은 자리")) // 남은 자리
         }
 
         val colorsItems = ArrayList<Int>().apply {
-            add(Color.parseColor("#F5D509")) // 남은 자리
-            add(Color.parseColor("#FFFFFF")) // 사용 중
+            add(Color.parseColor("#F5D509")) // 사용 중 (노란색)
+            add(Color.parseColor("#FFFFFF")) // 남은 자리 (하얀색)
         }
 
         val pieDataSet = PieDataSet(entries, "").apply {
@@ -93,6 +95,13 @@ class ParkingAvailable : Fragment() {
         }
 
         val pieData = PieData(pieDataSet)
+
+        // 값 포맷터 설정 (정수형으로 표시)
+        pieData.setValueFormatter(object : ValueFormatter() {
+            override fun getFormattedValue(value: Float): String {
+                return value.toInt().toString() // 정수로 변환
+            }
+        })
 
         // PieChart 설정
         pieChart.apply {

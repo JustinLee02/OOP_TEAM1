@@ -7,10 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.example.kaupark.R
-import com.example.kaupark.data.ParkingClass
 import com.example.kaupark.databinding.FragmentParkingMapBinding
-import com.example.kaupark.databinding.FragmentParkingMapSubBinding
-import com.example.kaupark.viewmodel.HomeViewModel
 import com.example.kaupark.viewmodel.ParkingMapViewModel
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
@@ -18,8 +15,6 @@ import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.overlay.InfoWindow
-import com.naver.maps.map.overlay.Marker
-import com.naver.maps.map.util.MarkerIcons
 
 class ParkingMap : Fragment(), OnMapReadyCallback {
 
@@ -38,16 +33,16 @@ class ParkingMap : Fragment(), OnMapReadyCallback {
     ): View? {
         binding = FragmentParkingMapBinding.inflate(inflater, container, false)
 
-        binding.maptoolbar.apply {
+        binding.toolbarParkingmap.apply {
             setNavigationIcon(R.drawable.arrow_back)
             setNavigationOnClickListener {
                 parentFragmentManager.popBackStack()
             }
         }
 
-        val mapFragment = childFragmentManager.findFragmentById(R.id.mapmain) as? MapFragment
+        val mapFragment = childFragmentManager.findFragmentById(R.id.containerview_parkingmap) as? MapFragment
             ?: MapFragment.newInstance().also {
-                childFragmentManager.beginTransaction().replace(R.id.mapmain, it).commit()
+                childFragmentManager.beginTransaction().replace(R.id.containerview_parkingmap, it).commit()
             } // 지도 객체 생성
         mapFragment.getMapAsync(this) // async로 지도 초기화
 
@@ -87,7 +82,7 @@ class ParkingMap : Fragment(), OnMapReadyCallback {
         viewModel.selectedParkingLot.observe(viewLifecycleOwner) { parkingLot ->
             val subFragment = ParkingMapSubFragment.newInstance(parkingLot)
             parentFragmentManager.beginTransaction()
-                .replace(R.id.subFrag, subFragment)
+                .replace(R.id.framelayout_parkingsub, subFragment)
                 .commit()
         }
     }
