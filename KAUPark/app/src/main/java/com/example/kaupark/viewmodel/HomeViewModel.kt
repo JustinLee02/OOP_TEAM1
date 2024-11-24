@@ -105,7 +105,7 @@ class HomeViewModel() : ViewModel() {
                 if (document != null && document.exists()) {
                     val currentLeft = document.getLong("currentLeft") ?: 0
                     val total = document.getLong("total") ?: 0
-                    val updateCount = currentLeft + 1
+                    val updateCount = currentLeft - 1
 
                     if (total < updateCount) {
                         _toastMessage.value = "자리가 없습니다!"
@@ -168,7 +168,7 @@ class HomeViewModel() : ViewModel() {
             .addOnSuccessListener { document ->
                 if (document != null && document.exists()) {
                     val currentLeft = document.getLong("currentLeft") ?: 0
-                    val updateCount = currentLeft - 1
+                    val updateCount = currentLeft + 1
 
                     parkingDoc.update("currentLeft", updateCount)
                         .addOnSuccessListener {
