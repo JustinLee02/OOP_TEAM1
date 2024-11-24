@@ -7,7 +7,6 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.kaupark.ChatAdapter
 import com.example.kaupark.R
 import com.example.kaupark.databinding.FragmentChatBinding
 

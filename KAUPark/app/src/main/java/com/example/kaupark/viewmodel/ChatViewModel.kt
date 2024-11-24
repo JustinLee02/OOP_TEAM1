@@ -5,9 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.example.kaupark.model.Chat
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
-import java.text.SimpleDateFormat
 import java.util.Date
-import java.util.Locale
 
 class ChatViewModel : ViewModel() {
 
@@ -19,7 +17,7 @@ class ChatViewModel : ViewModel() {
         val chat = Chat().apply {
             nickname = currentUser
             contents = message
-            time = SimpleDateFormat("a hh:mm", Locale.getDefault()).format(Date())
+            time = Date()
         }
 
         firestore.collection("chattingLists")
@@ -55,23 +53,27 @@ class ChatViewModel : ViewModel() {
                 for (document in documents) {
                     val participants = document.get("participants") as? List<String>
                     if (participants != null && participants.contains(receiver)) {
+                        // 실시간 리스너 추가
                         firestore.collection("chattingLists")
                             .document(document.id)
                             .collection("chats")
                             .orderBy("time", Query.Direction.ASCENDING)
-                            .get()
-                            .addOnSuccessListener { chatDocuments ->
-                                val loadedChats = mutableListOf<Chat>()
-                                for (chatDocument in chatDocuments) {
-                                    val nickname = chatDocument.getString("nickname") ?: ""
-                                    val contents = chatDocument.getString("contents") ?: ""
-                                    val time = chatDocument.getString("time") ?: ""
-                                    loadedChats.add(Chat(nickname, contents, time))
+                            .addSnapshotListener { chatDocuments, e ->
+                                if (e != null) {
+                                    Log.w("Firestore", "Error listening to chat updates", e)
+                                    return@addSnapshotListener
                                 }
-                                _chatList.value = loadedChats
-                            }
-                            .addOnFailureListener { e ->
-                                Log.w("Firestore", "Error getting chats: $e")
+
+                                if (chatDocuments != null) {
+                                    val loadedChats = mutableListOf<Chat>()
+                                    for (chatDocument in chatDocuments) {
+                                        val nickname = chatDocument.getString("nickname") ?: ""
+                                        val contents = chatDocument.getString("contents") ?: ""
+                                        val time = chatDocument.getDate("time")
+                                        loadedChats.add(Chat(nickname, contents, time))
+                                    }
+                                    _chatList.value = loadedChats // 실시간으로 UI 업데이트
+                                }
                             }
                     }
                 }
@@ -80,4 +82,5 @@ class ChatViewModel : ViewModel() {
                 Log.w("Firestore", "Error getting documents: $e")
             }
     }
+
 }
