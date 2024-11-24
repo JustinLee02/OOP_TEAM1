@@ -86,7 +86,7 @@ class HomeView : Fragment(), OnMapReadyCallback {
         binding.outbutton.setOnClickListener {
                 val parkingLot = binding.textfield.text.toString()
                 if(parkingLot.isNotBlank()) {
-                    viewModel.dereaseCarNum(parkingLot)
+                    viewModel.decreaseCarNum(parkingLot)
                 } else {
                     Toast.makeText(requireContext(), "주차장 이름을 입력하세요", Toast.LENGTH_LONG).show()
                 }
