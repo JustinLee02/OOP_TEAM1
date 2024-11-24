@@ -8,7 +8,7 @@
     android:id="@+id/fragment_chat">
 
     <androidx.appcompat.widget.Toolbar
-        android:id = "@+id/chat_toolbar"
+        android:id = "@+id/toolbar_chat"
         android:layout_width="match_parent"
         android:layout_height="72dp"
         android:background="#40368A"
@@ -19,14 +19,14 @@
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_list"
+        android:id="@+id/recyclerview_chat"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="#93A1CA"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/chat_toolbar" />
+        app:layout_constraintTop_toBottomOf="@id/toolbar_chat" />
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -39,7 +39,7 @@
         app:layout_constraintVertical_weight="1">
 
         <EditText
-            android:id="@+id/et_chatting"
+            android:id="@+id/edittext_message"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -53,12 +53,12 @@
             android:scrollHorizontally="false"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btn_send"
+            app:layout_constraintEnd_toStartOf="@+id/button_sendmessage"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/btn_send"
+            android:id="@+id/button_sendmessage"
             style="@android:style/Widget.Material.Light.Button.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
