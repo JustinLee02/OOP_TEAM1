@@ -13,9 +13,6 @@ import com.example.kaupark.ChatAdapter
 import com.example.kaupark.R
 import com.example.kaupark.databinding.FragmentChatBinding
 import com.example.kaupark.model.Chat
-import com.google.firebase.Firebase
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import java.text.SimpleDateFormat

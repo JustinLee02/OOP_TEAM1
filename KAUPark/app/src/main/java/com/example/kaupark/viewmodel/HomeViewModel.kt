@@ -105,20 +105,20 @@ class HomeViewModel() : ViewModel() {
                 if (document != null && document.exists()) {
                     val currentLeft = document.getLong("currentLeft") ?: 0
                     val total = document.getLong("total") ?: 0
-                    val updateCount = currentLeft - 1
+                    var updateCount = currentLeft - 1
 
-                    if (total < updateCount) {
+                    if (currentLeft.toInt() == 0) {
                         _toastMessage.value = "자리가 없습니다!"
+                    } else {
+                        parkingDoc.update("currentLeft", updateCount)
+                            .addOnSuccessListener {
+                                _parkingSpace.value = updateCount.toInt()
+                                _toastMessage.value = "${location}에 입차했습니다"
+                            }
+                            .addOnFailureListener { e ->
+                                Log.e("Error", "${e.message}")
+                            }
                     }
-
-                    parkingDoc.update("currentLeft", updateCount)
-                        .addOnSuccessListener {
-                            _parkingSpace.value = updateCount.toInt()
-                            _toastMessage.value = "${location}에 입차했습니다"
-                        }
-                        .addOnFailureListener { e ->
-                            Log.e("Error", "${e.message}")
-                        }
                 } else {
 
                 }
@@ -162,7 +162,7 @@ class HomeViewModel() : ViewModel() {
 
     }
 
-    fun dereaseCarNum(parkingLot: String) {
+    fun decreaseCarNum(parkingLot: String) {
         val parkingDoc = firestore.collection("parkingAvailable").document(parkingLot)
         parkingDoc.get()
             .addOnSuccessListener { document ->
