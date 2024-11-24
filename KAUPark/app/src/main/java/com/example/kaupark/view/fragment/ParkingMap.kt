@@ -33,7 +33,7 @@ class ParkingMap : Fragment(), OnMapReadyCallback {
     ): View? {
         binding = FragmentParkingMapBinding.inflate(inflater, container, false)
 
-        binding.maptoolbar.apply {
+        binding.toolbarParkingmap.apply {
             setNavigationIcon(R.drawable.arrow_back)
             setNavigationOnClickListener {
                 parentFragmentManager.popBackStack()
