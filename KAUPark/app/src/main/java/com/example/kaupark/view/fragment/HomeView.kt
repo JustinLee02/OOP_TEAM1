@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import com.example.kaupark.R
+import com.example.kaupark.ToastHelper
 import com.example.kaupark.databinding.HomeViewBinding
 import com.example.kaupark.viewmodel.HomeViewModel
 import com.naver.maps.geometry.LatLng
@@ -77,7 +78,7 @@ class HomeView : Fragment(), OnMapReadyCallback {
                 if(parkingLot.isNotBlank()) {
                     viewModel.increaseCarNum(location)
                 } else {
-                    Toast.makeText(requireContext(), "주차장 이름을 입력하세요", Toast.LENGTH_LONG).show()
+                    ToastHelper.showToast(requireContext(), "주차장 이름을 입력하세요")
                 }
                 viewModel.recordEntryTime()
         }
@@ -87,7 +88,7 @@ class HomeView : Fragment(), OnMapReadyCallback {
                 if(parkingLot.isNotBlank()) {
                     viewModel.decreaseCarNum(parkingLot)
                 } else {
-                    Toast.makeText(requireContext(), "주차장 이름을 입력하세요", Toast.LENGTH_LONG).show()
+                    ToastHelper.showToast(requireContext(), "주차장 이름을 입력하세요")
                 }
                 viewModel.recordExitTime()
         }
@@ -106,13 +107,10 @@ class HomeView : Fragment(), OnMapReadyCallback {
 
         viewModel.toastMessage.observe(viewLifecycleOwner) { message ->
             message?.let {
-                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                // Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                ToastHelper.showToast(requireContext(), it)
             }
         }
-
-//        viewModel.parkingSpace.observe(viewLifecycleOwner) { space ->
-//            binding.textfield.text =
-//        }
 
         viewModel.fetchUserInfo()
 

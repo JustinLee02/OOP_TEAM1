@@ -89,7 +89,7 @@
                 android:layout_height="60dp"
                 android:layout_marginStart="23dp"
                 android:layout_marginTop="0dp"
-                android:src="@drawable/user"
+                android:src="@drawable/kau_logo"
                 app:layout_constraintStart_toEndOf="@id/view_userview"
                 app:layout_constraintTop_toTopOf="@id/view_userview" />
 

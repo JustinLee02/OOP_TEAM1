@@ -5,7 +5,7 @@ import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.kaupark.data.UserPreferences
+import com.example.kaupark.data.MyApp
 import com.example.kaupark.model.ParkingRecord
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -113,7 +113,7 @@ class HomeViewModel() : ViewModel() {
                         parkingDoc.update("currentLeft", updateCount)
                             .addOnSuccessListener {
                                 _parkingSpace.value = updateCount.toInt()
-                                _toastMessage.value = "${location}에 입차했습니다"
+                                _toastMessage.value = "${parkingLot}에 입차했습니다"
                             }
                             .addOnFailureListener { e ->
                                 Log.e("Error", "${e.message}")
