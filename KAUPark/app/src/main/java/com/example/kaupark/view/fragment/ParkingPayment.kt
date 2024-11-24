@@ -56,7 +56,7 @@ class ParkingPayment : Fragment() {
 
     private fun processPayment() {
         // 정기권 체크박스 상태 확인
-        val isRegularSelected = binding.root.findViewById<CheckBox>(R.id.checkBox1).isChecked
+        val isRegularSelected = binding.radioRegular.isChecked // binding을 사용하여 RadioButton 찾기
 
         if (isRegularSelected) {
             val cost = 60000 // 정기권 결제 금액
@@ -85,5 +85,4 @@ class ParkingPayment : Fragment() {
                 Toast.makeText(requireContext(), "결제 처리 중 문제가 발생했습니다.", Toast.LENGTH_SHORT).show()
             }
     }
-
 }

@@ -67,19 +67,25 @@
             android:text="결제 종류"
             android:textSize="24sp" />
 
-        <CheckBox
-            android:id ="@+id/checkBox1"
+        <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
-            android:text="정기권 결제 (한학기 60,000원)" />
+            android:orientation="vertical">
 
-        <CheckBox
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
-            android:text="현장 요금 결제" />
+            <RadioButton
+                android:id="@+id/radio_regular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="정기권 결제 (한학기 60,000원)"
+                android:layout_marginTop="7dp" />
 
+            <RadioButton
+                android:id="@+id/radio_on_site"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="현장 요금 결제"
+                android:layout_marginTop="7dp" />
+        </RadioGroup>
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
