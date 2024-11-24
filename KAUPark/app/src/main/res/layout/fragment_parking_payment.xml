@@ -132,23 +132,34 @@
             android:textSize="24sp"
             android:text="기타 결제" />
 
-        <CheckBox
+        <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
-            android:text="토스페이" />
+            android:orientation="vertical">
 
-        <CheckBox
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
-            android:text="네이버페이" />
+            <RadioButton
+                android:id="@+id/radio_toss_pay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:text="토스페이" />
 
-        <CheckBox
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
-            android:text="무통장결제" />
+            <RadioButton
+                android:id="@+id/radio_naver_pay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:text="네이버페이" />
+
+            <RadioButton
+                android:id="@+id/radio_bank_transfer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:text="무통장결제" />
+
+        </RadioGroup>
+
 
         <android.widget.Button
             android:id="@+id/button2"
