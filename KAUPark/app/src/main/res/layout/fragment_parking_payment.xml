@@ -107,7 +107,8 @@
                 android:id="@+id/imageView"
                 android:layout_width="278dp"
                 android:layout_height="161dp"
-                android:src="@drawable/image" />
+                android:src="@drawable/image"
+                android:background="@drawable/rounded_all_corners_card"/>
 
             <ImageButton
                 android:id="@+id/button"
