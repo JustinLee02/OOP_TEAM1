@@ -8,12 +8,12 @@ import com.example.kaupark.model.Person
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 
-class PersonsAdapter(private val personList: MutableList<Person>) : RecyclerView.Adapter<PersonsAdapter.Holder>() {
+class PersonsAdapter(private val personList: MutableList<Person>,private val carNum:String) : RecyclerView.Adapter<PersonsAdapter.Holder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding = ListPersonBinding.inflate(LayoutInflater.from(parent.context))
-        return Holder(binding)
+        return Holder(binding,carNum)
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
@@ -29,8 +29,7 @@ class PersonsAdapter(private val personList: MutableList<Person>) : RecyclerView
         }
     }
 
-    class Holder(private val binding: ListPersonBinding) : RecyclerView.ViewHolder(binding.root) {
-        val carNum = "9997"
+    class Holder(private val binding: ListPersonBinding,private val carNum:String) : RecyclerView.ViewHolder(binding.root) {
         fun bind(person: Person) {
             binding.txtName.text = if (person.participants[0] == carNum) person.participants[1] else person.participants[0]
             binding.txtTime.text = person.currentTime

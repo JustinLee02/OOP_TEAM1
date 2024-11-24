@@ -25,7 +25,6 @@ import java.util.Locale
 class ChatFragment : Fragment() {
     private lateinit var currentUser: String
     private lateinit var receiver: String
-    var auth : FirebaseAuth = Firebase.auth
     var firestore : FirebaseFirestore = FirebaseFirestore.getInstance()
     private val chatList = arrayListOf<Chat>()
     private lateinit var adapter: ChatAdapter
@@ -33,17 +32,15 @@ class ChatFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-//        arguments?.let {
-//            currentUser = it.getString("nickname").toString()
-//        }
-        currentUser = "9997"
-        receiver = "4130"
+        currentUser = arguments?.getString("currentUser").toString()
+        receiver = arguments?.getString("receiver").toString()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         val binding = FragmentChatBinding.inflate(inflater, container, false)
         Toast.makeText(context, "현재 닉네임은 ${currentUser}입니다.", Toast.LENGTH_SHORT).show()
 
@@ -141,6 +138,22 @@ class ChatFragment : Fragment() {
             .addOnFailureListener { e ->
                 Log.w("Firestore", "Error getting documents: $e")
             }
+    }
+
+    companion object {
+
+        @JvmStatic
+        fun newInstance(carNum1: String, carNum2: String) =
+            ChatFragment().apply {
+                arguments = Bundle().apply{
+                    carNum1.let {
+                        putString("currentUser",it)
+                    }
+                    carNum2.let {
+                        putString("receiver",it)
+                    }
+                }
+        }
     }
 
 }
