@@ -38,7 +38,7 @@ class ChatPopupFragment : DialogFragment() {
         val binding = FragmentChatPopupBinding.inflate(inflater, container, false)
 
 
-        binding.sendBtn.setOnClickListener {
+        binding.buttonSendpopup.setOnClickListener {
             lifecycleScope.launch { // 코루틴 내에서 비동기 작업 처리, 하단에 await()를 사용하기 위해 코루틴 블럭을 만들어 준다고 생각하면 될 듯
                 try {
                     val userId = auth.currentUser?.uid ?: return@launch
@@ -51,7 +51,7 @@ class ChatPopupFragment : DialogFragment() {
 
                     val document = firestore.collection("users").document(userId).get().await() // document 반환되기 전까지 다음줄로 진행 X, 코루틴 내부에서만 사용할 수 있음
                     val carNum1 = document.getString("carNum") ?: "차량정보 없삼"
-                    val carNum2 = binding.blankText.text.toString()
+                    val carNum2 = binding.edittextBlank.text.toString()
                     val existChat = existChat(carNum1,carNum2)
                     val existNum = existNum(carNum2)
 
@@ -65,7 +65,7 @@ class ChatPopupFragment : DialogFragment() {
                         // Person 객체 생성 및 데이터 설정
                         val person = Person().apply {
                             participants[0] = carNum1
-                            participants[1] = binding.blankText.text.toString()
+                            participants[1] = binding.edittextBlank.text.toString()
                             currentTime = SimpleDateFormat("a hh:mm", Locale.getDefault()).format(Date())
                         }
 
@@ -73,7 +73,7 @@ class ChatPopupFragment : DialogFragment() {
                         firestore.collection("chattingLists").document().set(person).await() // Firestore 저장작업 완료까지 다음줄로 진행 X
                         moveToChatFragment(carNum1,carNum2)
                     }
-                    binding.blankText.text.clear()
+                    binding.edittextBlank.text.clear()
                     dismiss()
 
                 } catch (e: Exception){
@@ -85,7 +85,7 @@ class ChatPopupFragment : DialogFragment() {
 
         }
 
-        binding.closeBtn.setOnClickListener{
+        binding.buttonClosepopup.setOnClickListener{
             dismiss()
         }
 

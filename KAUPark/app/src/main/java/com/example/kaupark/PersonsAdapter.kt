@@ -31,8 +31,8 @@ class PersonsAdapter(private val personList: MutableList<Person>,private val car
 
     class Holder(private val binding: ListPersonBinding,private val carNum:String, private val onItemClick: (Person) -> Unit) : RecyclerView.ViewHolder(binding.root) {
         fun bind(person: Person) {
-            binding.txtName.text = if (person.participants[0] == carNum) person.participants[1] else person.participants[0]
-            binding.txtTime.text = person.currentTime
+            binding.textviewPersonname.text = if (person.participants[0] == carNum) person.participants[1] else person.participants[0]
+            binding.textviewListtime.text = person.currentTime
             binding.root.setOnClickListener {
                 onItemClick(person)
             }

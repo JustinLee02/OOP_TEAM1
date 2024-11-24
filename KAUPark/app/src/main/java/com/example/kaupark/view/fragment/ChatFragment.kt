@@ -44,20 +44,20 @@ class ChatFragment : Fragment() {
         val binding = FragmentChatBinding.inflate(inflater, container, false)
         Toast.makeText(context, "현재 닉네임은 ${currentUser}입니다.", Toast.LENGTH_SHORT).show()
 
-        binding.rvList.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        binding.recyclerviewChat.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         adapter = ChatAdapter(currentUser, chatList)
-        binding.rvList.adapter = adapter
+        binding.recyclerviewChat.adapter = adapter
 
 
-        binding.etChatting.addTextChangedListener { text ->
-            binding.btnSend.isEnabled = text.toString() != ""
+        binding.edittextMessage.addTextChangedListener { text ->
+            binding.buttonSendmessage.isEnabled = text.toString() != ""
         }
         callMessage()
         // 입력 버튼
-        binding.btnSend.setOnClickListener {
+        binding.buttonSendmessage.setOnClickListener {
             val chat = Chat().apply {
                 nickname = currentUser
-                contents = binding.etChatting.text.toString()
+                contents = binding.edittextMessage.text.toString()
                 time = SimpleDateFormat("a hh:mm", Locale.getDefault()).format(Date())
             }
 
@@ -87,12 +87,12 @@ class ChatFragment : Fragment() {
                     Log.w("Firestore", "Error getting documents: $e")
                 }
 
-            binding.etChatting.setText("")
+            binding.edittextMessage.setText("")
             callMessage()
 
         }
 
-        binding.chatToolbar.apply {
+        binding.toolbarChat.apply {
             setNavigationIcon(R.drawable.arrow_back)
             setNavigationOnClickListener{
                 parentFragmentManager.popBackStack()

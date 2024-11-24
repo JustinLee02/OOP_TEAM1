@@ -31,9 +31,9 @@ class ChatAdapter(val currentUser: String, val itemList: ArrayList<Chat>): Recyc
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val card: CardView = itemView.findViewById(R.id.chat_card_view)
-        val nickname: TextView = itemView.findViewById(R.id.chat_tv_nickname)
-        val contents: TextView = itemView.findViewById(R.id.chat_tv_contents)
-        val time: TextView = itemView.findViewById(R.id.chat_tv_time)
+        val nickname: TextView = itemView.findViewById(R.id.textview_nickname)
+        val contents: TextView = itemView.findViewById(R.id.textview_contents)
+        val time: TextView = itemView.findViewById(R.id.textview_messagetime)
     }
 
 

@@ -10,7 +10,7 @@
     <!-- 전송 버튼 추가 -->
 
     <View
-        android:id="@+id/view"
+        android:id="@+id/view_popup"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:background="@color/kaucolor"
@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/popup_title"
+        android:id="@+id/textview_popuptitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -33,7 +33,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <android.widget.Button
-        android:id="@+id/close_btn"
+        android:id="@+id/button_closepopup"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginEnd="8dp"
@@ -44,34 +44,34 @@
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/popup_title"
+        app:layout_constraintStart_toEndOf="@+id/textview_popuptitle"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/user_name"
+        android:id="@+id/textview_namepopup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="30dp"
         android:text="수신인 : "
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view" />
+        app:layout_constraintTop_toBottomOf="@+id/view_popup" />
 
     <EditText
-        android:id="@+id/blank_text"
+        android:id="@+id/edittext_blank"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="-8dp"
         android:ems="10"
         android:inputType="text"
         android:hint="차량번호"
-        app:layout_constraintBottom_toBottomOf="@+id/user_name"
+        app:layout_constraintBottom_toBottomOf="@+id/textview_namepopup"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.36"
-        app:layout_constraintStart_toEndOf="@+id/user_name" />
+        app:layout_constraintStart_toEndOf="@+id/textview_namepopup" />
 
     <android.widget.Button
-        android:id="@+id/send_btn"
+        android:id="@+id/button_sendpopup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -83,6 +83,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/blank_text" />
+        app:layout_constraintTop_toBottomOf="@+id/edittext_blank" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
