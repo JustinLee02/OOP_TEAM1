@@ -5,12 +5,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.kaupark.R
 import com.example.kaupark.databinding.FragmentParkingPaymentBinding
 import com.google.firebase.firestore.FirebaseFirestore
+import com.denzcoskun.imageslider.ImageSlider
+import com.denzcoskun.imageslider.constants.ScaleTypes
+import com.denzcoskun.imageslider.models.SlideModel
 
 class ParkingPayment : Fragment() {
 
@@ -25,9 +27,20 @@ class ParkingPayment : Fragment() {
     ): View {
         binding = FragmentParkingPaymentBinding.inflate(inflater, container, false)
 
+        // ImageSlider 초기화
+        val imageSlider = binding.root.findViewById<ImageSlider>(R.id.image_slider)
+        val imageList = ArrayList<SlideModel>()
+
+        // 이미지 추가 (로컬 리소스 또는 URL 사용 가능)
+        imageList.add(SlideModel(R.drawable.image1, "카드1", ScaleTypes.FIT))
+        imageList.add(SlideModel(R.drawable.image2, "카드2", ScaleTypes.FIT))
+        imageList.add(SlideModel(R.drawable.image3, "카드3", ScaleTypes.FIT))
+
+        // 슬라이더에 이미지 리스트 설정
+        imageSlider.setImageList(imageList)
+
         // 결제 버튼 클릭 이벤트
         binding.button2.setOnClickListener {
-            // Firebase에서 deposit 값을 불러온 후 결제 처리
             loadDeposit {
                 processPayment()
             }
