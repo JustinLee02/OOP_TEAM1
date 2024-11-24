@@ -140,6 +140,8 @@ class ChatFragment : Fragment() {
             }
     }
 
+
+
     companion object {
 
         @JvmStatic

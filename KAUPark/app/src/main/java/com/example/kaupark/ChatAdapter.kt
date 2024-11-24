@@ -35,4 +35,6 @@ class ChatAdapter(val currentUser: String, val itemList: ArrayList<Chat>): Recyc
         val contents: TextView = itemView.findViewById(R.id.chat_tv_contents)
         val time: TextView = itemView.findViewById(R.id.chat_tv_time)
     }
+
+
 }

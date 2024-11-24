@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.kaupark.databinding.ChattingListBinding
 import com.example.kaupark.model.Person
 import com.example.kaupark.PersonsAdapter
+import com.example.kaupark.R
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
@@ -40,7 +41,10 @@ class ChattingList : Fragment(){
 
         lifecycleScope.launch {
             val carNum = getMyCarNum()
-            adapter = PersonsAdapter(personList,carNum)
+            adapter = PersonsAdapter(personList, carNum) { person ->
+                val receiver = if (person.participants[0] == carNum) person.participants[1] else person.participants[0]
+                moveToChatFragment(carNum,receiver)
+            }
             binding.recChatting.adapter = adapter
 
             firestore.collection("chattingLists")
@@ -84,6 +88,13 @@ class ChattingList : Fragment(){
 
         itemTouchHelper.attachToRecyclerView(binding.recChatting)
         return binding.root
+    }
+
+    private fun moveToChatFragment(carNum1: String, carNum2: String){
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.main_container, ChatFragment.newInstance(carNum1,carNum2))
+            .addToBackStack(null)
+            .commit()
     }
 
     private suspend fun getMyCarNum():String {
