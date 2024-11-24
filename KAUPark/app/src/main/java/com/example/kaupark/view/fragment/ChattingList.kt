@@ -1,6 +1,7 @@
 package com.example.kaupark.view.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -75,7 +76,13 @@ class ChattingList : Fragment() {
                 moveToChatFragment(carNum, receiver)
             }
             binding.recChatting.adapter = adapter
-            viewModel.fetchChattingList()
+            viewLifecycleOwner.lifecycleScope.launch {
+                try {
+                    viewModel.fetchChattingList() // suspend function 호출
+                } catch (e: Exception) {
+                    Log.e("ChattingList", "Error fetching chatting list", e)
+                }
+            }
         }
 
         viewModel.personList.observe(viewLifecycleOwner) { updatedList ->
