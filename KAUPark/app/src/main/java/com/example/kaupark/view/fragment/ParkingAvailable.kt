@@ -84,13 +84,13 @@ class ParkingAvailable : Fragment() {
         }
 
         val colorsItems = ArrayList<Int>().apply {
-            add(Color.parseColor("#F5D509")) // 사용 중 (노란색)
-            add(Color.parseColor("#FFFFFF")) // 남은 자리 (하얀색)
+            add(Color.parseColor("#FFFFFF")) // 사용 중 (하얀색)
+            add(Color.parseColor("#40368A")) // 남은 자리 (파란색)
         }
 
         val pieDataSet = PieDataSet(entries, "").apply {
             colors = colorsItems
-            valueTextColor = Color.BLACK
+            valueTextColor = Color.BLACK // 기본 텍스트 색상 설정
             valueTextSize = 16f
         }
 
