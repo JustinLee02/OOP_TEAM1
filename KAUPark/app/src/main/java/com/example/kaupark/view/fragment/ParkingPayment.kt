@@ -33,6 +33,17 @@ class ParkingPayment : Fragment() {
             }
         }
 
+        // 정기권 결제 RadioButton 클릭 이벤트
+        binding.radioRegular.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                // 정기권 결제 선택 시 60,000원 표시
+                binding.button2.text = "60,000원 결제하기"
+            } else {
+                // 선택하지 않으면 공백으로 처리
+                binding.button2.text = "결제하기"
+            }
+        }
+
         return binding.root
     }
 
