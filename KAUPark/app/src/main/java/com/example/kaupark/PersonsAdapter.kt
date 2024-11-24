@@ -29,6 +29,12 @@ class PersonsAdapter(private val personList: MutableList<Person>,private val car
         }
     }
 
+    fun updateData(newList: List<Person>) {
+        personList.clear()
+        personList.addAll(newList)
+        notifyDataSetChanged()
+    }
+
     class Holder(private val binding: ListPersonBinding,private val carNum:String, private val onItemClick: (Person) -> Unit) : RecyclerView.ViewHolder(binding.root) {
         fun bind(person: Person) {
             binding.textviewPersonname.text = if (person.participants[0] == carNum) person.participants[1] else person.participants[0]
