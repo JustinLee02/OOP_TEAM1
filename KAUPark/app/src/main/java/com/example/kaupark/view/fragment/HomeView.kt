@@ -2,7 +2,6 @@ package com.example.kaupark.view.fragment
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -47,25 +46,25 @@ class HomeView : Fragment(), OnMapReadyCallback {
         binding = HomeViewBinding.inflate(inflater, container, false)
 
         // Display current time on id: "timetext"
-        binding.timetext.text = date.toString()
+        binding.textviewCurrenttime.text = date.toString()
 
         //
-        val mapFragment = childFragmentManager.findFragmentById(R.id.mapimage) as MapFragment?
+        val mapFragment = childFragmentManager.findFragmentById(R.id.containerview_mapimage) as MapFragment?
             ?: MapFragment.newInstance().also {
-                childFragmentManager.beginTransaction().add(R.id.mapimage, it).commit()
+                childFragmentManager.beginTransaction().add(R.id.containerview_mapimage, it).commit()
             }
         mapFragment.getMapAsync(this)
 
         // Display ParkingMap Fragment
-        binding.transparentbutton.setOnClickListener {
+        binding.buttonTransparent.setOnClickListener {
             parentFragmentManager.beginTransaction()
                 .replace(R.id.main_container, ParkingMap())
                 .addToBackStack(null)
                 .commit()
         }
 
-        binding.inbutton.setOnClickListener {
-                val parkingLot = binding.textfield.text.toString()
+        binding.buttonIn.setOnClickListener {
+                val parkingLot = binding.edittextTextfield.text.toString()
                 val location = when(parkingLot) {
                     "과학관 주차장" -> "scienceBuilding"
                     "운동장 옆 주차장" -> "somethingBuilding"
@@ -83,8 +82,8 @@ class HomeView : Fragment(), OnMapReadyCallback {
                 viewModel.recordEntryTime()
         }
 
-        binding.outbutton.setOnClickListener {
-                val parkingLot = binding.textfield.text.toString()
+        binding.buttonOut.setOnClickListener {
+                val parkingLot = binding.edittextTextfield.text.toString()
                 if(parkingLot.isNotBlank()) {
                     viewModel.decreaseCarNum(parkingLot)
                 } else {
@@ -94,15 +93,15 @@ class HomeView : Fragment(), OnMapReadyCallback {
         }
         
         viewModel.userCarNum.observe(viewLifecycleOwner) { carNum ->
-            binding.usercarnum.text = carNum
+            binding.textviewUsercarnum.text = carNum
         }
 
         viewModel.parkingFee.observe(viewLifecycleOwner) { fee ->
-            binding.parkingfee.text = fee
+            binding.textviewParkingfee.text = fee
         }
 
         viewModel.userName.observe(viewLifecycleOwner) { userName ->
-            binding.myInfo.text = "${userName} 님"
+            binding.textviewMyinfo.text = "${userName} 님"
         }
 
         viewModel.toastMessage.observe(viewLifecycleOwner) { message ->
