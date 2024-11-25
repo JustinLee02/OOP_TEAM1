@@ -89,7 +89,7 @@ class HomeViewModel() : ViewModel() {
 
     fun increaseCarNum(parkingLot: String) {
 
-        val location = when(parkingLot) {
+        val location = when (parkingLot) {
             "과학관 주차장" -> "scienceBuilding"
             "운동장 옆 주차장" -> "somethingBuilding"
             "학생회관 주차장" -> "studentCenter"
@@ -191,15 +191,32 @@ class HomeViewModel() : ViewModel() {
     private fun calculateParkingFee(durationMillis: Long) {
         val durationSecs = durationMillis / 1000
         val durationMins = durationSecs / 60
+        val userId = auth.currentUser?.uid ?: return
 
-        _parkingFee.value = when {
-            durationMins < 30 -> "30분 무료 ${durationMins}분 주차중"
-            durationMins < 60 -> "2000원 ${durationMins}분 주차중"
-            else -> {
-                val additionalFee = ((durationMins - 60) / 30) * 500
-                "${2000 + additionalFee}원 ${durationMins}분 주차중"
+        val parkingData = mapOf(
+            "durationSecs" to durationSecs
+        )
+
+        firestore.collection("users").document(userId).collection("parking_records")
+            .document("duration")
+            .set(parkingData)
+            .addOnSuccessListener {
+                Log.d("Firebase", "Parking duration updated successfully")
             }
-        }
+            .addOnFailureListener { e ->
+                Log.e("Firebase", "Error updating parking duration: ${e.message}")
+            }
+
+
+//        _parkingFee.value = when {
+//            durationMins < 30 -> "30분 무료 ${durationMins}분 주차중"
+//            durationMins < 60 -> "2000원 ${durationMins}분 주차중"
+//            else -> {
+//                val additionalFee = ((durationMins - 60) / 30) * 500
+//                "${2000 + additionalFee}원 ${durationMins}분 주차중"
+//            }
+//        }
+        _parkingFee.value = "${durationSecs * 100}원"
     }
 
 }
