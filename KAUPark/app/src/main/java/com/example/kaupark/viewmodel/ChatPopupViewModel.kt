@@ -56,7 +56,7 @@ class ChatPopupViewModel : ViewModel() {
         try {
             val person = Person(
                 participants = mutableListOf(carNum1, carNum2),
-                currentTime = SimpleDateFormat("a hh:mm", Locale.getDefault()).format(Date())
+                currentTime = Date()
             )
 
             firestore.collection("chattingLists").document().set(person).await()
