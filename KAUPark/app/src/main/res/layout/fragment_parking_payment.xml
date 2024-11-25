@@ -81,13 +81,14 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="19dp"
             android:layout_marginTop="12dp"
-            android:gravity="center"
+            android:gravity="start"
             android:orientation="horizontal">
 
             <com.denzcoskun.imageslider.ImageSlider
                 android:id="@+id/image_slider"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="200dp"
+                android:layout_weight="1"
                 app:iss_auto_cycle="true"
                 app:iss_period="3000"
                 app:iss_delay="1000"
@@ -100,7 +101,7 @@
                 android:id="@+id/button"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="49dp"
                 android:layout_marginBottom="64dp"
                 android:background="@android:color/transparent"

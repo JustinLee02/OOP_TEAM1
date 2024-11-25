@@ -19,6 +19,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 class ParkingAvailable : Fragment() {
 
     private val firestore = FirebaseFirestore.getInstance()
+    // ParkingSpot은 name, currentleft, total로 이루어져있음
+    // ParkingSpotList는 ParkingSpot으로 이루어져 있음
     private val parkingSpotList = arrayListOf<ParkingSpot>()
 
     private lateinit var binding: ParkingAvailableBinding
@@ -27,40 +29,40 @@ class ParkingAvailable : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // ViewBinding 설정
+
         binding = ParkingAvailableBinding.inflate(inflater, container, false)
-
-        // Firestore에서 데이터 가져오기
         loadParkingData()
-
         return binding.root
     }
 
     private fun loadParkingData() {
         firestore.collection("parkingAvailable")
+            // parkingAvailable 컬렉션에 있는 모든 문서 가져오기
             .get()
+            // documents는 parkingAvailable의 각각의 문서를 나타냄
             .addOnSuccessListener { documents ->
-                parkingSpotList.clear() // 기존 리스트 초기화
+                parkingSpotList.clear()
 
+                // documents안에 있는 원소들을 순회
                 for (document in documents) {
-                    // Firestore 문서에서 데이터 추출
-                    val name = document.id // 건물 이름
+
+                    // firebase에 있는 값 세팅
+                    val name = document.id
                     val currentLeft = document.getLong("currentLeft")?.toInt() ?: 0
                     val total = document.getLong("total")?.toInt() ?: 0
 
-                    // ParkingSpot 객체 생성 후 리스트에 추가
+                    // 위에 있는 값드을 담고 있는 객체 생성
                     val parkingSpot = ParkingSpot(name, currentLeft, total)
+                    // 리스트에 추가
                     parkingSpotList.add(parkingSpot)
                 }
 
-                // PieChart에 데이터 표시
                 displayParkingData()
             }
             .addOnFailureListener { exception ->
                 Log.e("ParkingAvailable", "Error getting documents: ", exception)
             }
     }
-
     private fun displayParkingData() {
         // 각 주차장 데이터를 PieChart로 표현
         for (spot in parkingSpotList) {
@@ -78,35 +80,36 @@ class ParkingAvailable : Fragment() {
     private fun updatePieChart(pieChart: com.github.mikephil.charting.charts.PieChart, spot: ParkingSpot) {
         // PieChart 데이터 구성
         val entries = ArrayList<PieEntry>().apply {
-            // 노란색: 사용 중, 하얀색: 남은 자리
-            add(PieEntry((spot.total - spot.currentLeft).toFloat(), "사용 중")) // 사용 중
-            add(PieEntry(spot.currentLeft.toFloat(), "남은 자리")) // 남은 자리
+
+            // 남색부분 : total - currentleft, 현재 주차되어있는 공간 개수
+            add(PieEntry((spot.total - spot.currentLeft).toFloat(), "사용 중"))
+            // 흰색부분 : 현재 남아있는 공간 개수
+            add(PieEntry(spot.currentLeft.toFloat(), "남은 자리"))
         }
 
         val colorsItems = ArrayList<Int>().apply {
-            add(Color.parseColor("#40368A")) // 사용 중 (하얀색)
-            add(Color.parseColor("#FFFFFF")) // 남은 자리 (파란색)
+            add(Color.parseColor("#40368A"))
+            add(Color.parseColor("#FFFFFF"))
         }
 
         val pieDataSet = PieDataSet(entries, "").apply {
             colors = colorsItems
-            valueTextColor = Color.WHITE // 기본 텍스트 색상 설정
+            valueTextColor = Color.WHITE
             valueTextSize = 16f
         }
 
+        //파이차트에 표시할 데이터 생성
         val pieData = PieData(pieDataSet)
 
-        // 값 포맷터 설정 (정수형으로 표시)
         pieData.setValueFormatter(object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
-                return value.toInt().toString() // 정수로 변환
+                return value.toInt().toString()
             }
         })
 
-        // PieChart 설정
         pieChart.apply {
             data = pieData
-            setHoleColor(Color.parseColor("#D9D9D9")) // 가운데 원형 색상
+            setHoleColor(Color.parseColor("#D9D9D9"))
             description.isEnabled = false
             isRotationEnabled = false
             legend.isEnabled = false
@@ -115,4 +118,6 @@ class ParkingAvailable : Fragment() {
             invalidate() // 업데이트
         }
     }
+
 }
+

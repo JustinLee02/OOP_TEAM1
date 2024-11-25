@@ -27,32 +27,40 @@ class ParkingPayment : Fragment() {
     ): View {
         binding = FragmentParkingPaymentBinding.inflate(inflater, container, false)
 
-        // ImageSlider 초기화
         val imageSlider = binding.root.findViewById<ImageSlider>(R.id.image_slider)
         val imageList = ArrayList<SlideModel>()
 
-        // 이미지 추가 (로컬 리소스 또는 URL 사용 가능)
         imageList.add(SlideModel(R.drawable.image1, "카드1", ScaleTypes.FIT))
         imageList.add(SlideModel(R.drawable.image2, "카드2", ScaleTypes.FIT))
         imageList.add(SlideModel(R.drawable.image3, "카드3", ScaleTypes.FIT))
 
-        // 슬라이더에 이미지 리스트 설정
         imageSlider.setImageList(imageList)
 
-        // 결제 버튼 클릭 이벤트
+        // 결제하기 버튼의 id : button2
         binding.button2.setOnClickListener {
             loadDeposit {
                 processPayment()
             }
         }
 
-        // 정기권 결제 RadioButton 클릭 이벤트
+        // 정기권 결제 버튼의 id : radioRegular
         binding.radioRegular.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                // 정기권 결제 선택 시 60,000원 표시
-                binding.button2.text = "60,000원 결제하기"
+                loadDuration { duration ->
+                    binding.button2.text = "60000원 결제하기"
+                }
             } else {
-                // 선택하지 않으면 공백으로 처리
+                binding.button2.text = "결제하기"
+            }
+        }
+
+        // 현장 요금 결제 버튼의 id : radioOnSite
+        binding.radioOnSite.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                loadDuration { duration ->
+                    binding.button2.text = "${duration}원 결제하기"
+                }
+            } else {
                 binding.button2.text = "결제하기"
             }
         }
@@ -61,52 +69,75 @@ class ParkingPayment : Fragment() {
     }
 
     private fun loadDeposit(onDepositLoaded: () -> Unit) {
-        firestore.collection("users") // Firebase에 있는 컬렉션 이름 (예: "users")
-            .document(userDocumentId) // 특정 사용자 문서 ID
+        firestore.collection("users")
+            .document(userDocumentId)
             .get()
             .addOnSuccessListener { document ->
                 if (document != null && document.contains("deposit")) {
                     deposit = document.getLong("deposit")?.toInt() ?: 0
                     Log.d("ParkingPayment", "Current deposit: $deposit")
-                    onDepositLoaded()  // deposit이 로드된 후 결제 처리
+                    onDepositLoaded()
                 } else {
                     Log.e("ParkingPayment", "No deposit field found.")
                 }
             }
-            .addOnFailureListener { exception ->
-                Log.e("ParkingPayment", "Error getting deposit: ", exception)
-            }
     }
 
     private fun processPayment() {
-        // 정기권 체크박스 상태 확인
-        val isRegularSelected = binding.radioRegular.isChecked // binding을 사용하여 RadioButton 찾기
 
+        val isRegularSelected = binding.radioRegular.isChecked
+        val isOnSiteSelected = binding.radioOnSite.isChecked
+
+        // 정기권 결제가 선택되어야됨
         if (isRegularSelected) {
-            val cost = 60000 // 정기권 결제 금액
+            val cost = 60000
             if (deposit >= cost) {
-                // 잔액 차감 후 업데이트
                 val newDeposit = deposit - cost
                 updateDeposit(newDeposit)
             } else {
                 Toast.makeText(requireContext(), "잔액이 부족합니다.", Toast.LENGTH_SHORT).show()
             }
+        }
+
+        // 현장결제가 선택되어야됨
+        else if (isOnSiteSelected) {
+            loadDuration { duration ->
+                if (deposit >= duration) {
+                    val newDeposit = deposit - duration
+                    updateDeposit(newDeposit)
+                } else {
+                    Toast.makeText(requireContext(), "잔액이 부족합니다.", Toast.LENGTH_SHORT).show()
+                }
+            }
         } else {
-            Toast.makeText(requireContext(), "정기권 결제를 선택하세요.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "정기권 또는 현장 결제를 선택하세요.", Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun updateDeposit(newDeposit: Int) {
         firestore.collection("users")
-            .document(userDocumentId) // 특정 사용자 문서 ID
+            .document(userDocumentId)
             .update("deposit", newDeposit)
             .addOnSuccessListener {
-                deposit = newDeposit // 로컬 변수 업데이트
+                deposit = newDeposit
                 Toast.makeText(requireContext(), "결제가 완료되었습니다.", Toast.LENGTH_SHORT).show()
             }
-            .addOnFailureListener { exception ->
-                Log.e("ParkingPayment", "Error updating deposit: ", exception)
-                Toast.makeText(requireContext(), "결제 처리 중 문제가 발생했습니다.", Toast.LENGTH_SHORT).show()
-            }
     }
+
+    private fun loadDuration(onDurationLoaded: (Int) -> Unit) {
+        firestore.collection("users")
+            .document(userDocumentId)
+            .collection("parking_records")
+            .document("duration")
+            .get()
+            .addOnSuccessListener { document ->
+                if (document != null && document.contains("duration")) {
+                    val duration = document.getLong("duration")?.toInt() ?: 0
+                    Log.d("ParkingPayment", "Duration: $duration")
+                    onDurationLoaded(duration)
+                }
+            }
+
+    }
+
 }
