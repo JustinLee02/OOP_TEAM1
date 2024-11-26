@@ -31,6 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="0dp"
+            android:background="@color/white"
             app:layout_constraintStart_toStartOf="@id/scrollview_home"
             app:layout_constraintTop_toTopOf="@+id/scrollview_home"
 
@@ -149,8 +150,8 @@
                 app:layout_constraintTop_toBottomOf="@id/containerview_mapimage"
                 app:layout_constraintStart_toStartOf="@id/containerview_mapimage"
                 app:layout_constraintEnd_toEndOf="@id/containerview_mapimage"
-                android:background="@color/white"
-                android:hint="주차장을 선택하세요"
+                android:background="@drawable/rounded_all_corners"
+                android:hint="\t주차장을 선택하세요"
                 android:textColorHint="@android:color/darker_gray"
                 android:textSize="12sp"
                 />
