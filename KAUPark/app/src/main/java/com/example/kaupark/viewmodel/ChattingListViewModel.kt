@@ -1,6 +1,5 @@
 package com.example.kaupark.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -30,24 +29,19 @@ class ChattingListViewModel : ViewModel() {
     suspend fun fetchChattingList() {
 
         val currentCarNum = _carNum.value ?: return
-        try{
-            val result = firestore.collection("chattingLists")
-                .whereArrayContains("participants", currentCarNum)
-                .orderBy("currentTime", Query.Direction.DESCENDING)
-                .get()
-                .await()
+        val result = firestore.collection("chattingLists")
+            .whereArrayContains("participants", currentCarNum)
+            .orderBy("currentTime", Query.Direction.DESCENDING)
+            .get()
+            .await()
 
-            val personItems = result.documents.mapNotNull { document -> //null이 아닌 애들로만 리스트를 다시 만듦
+            val personItems = result.documents.mapNotNull { document ->
                 val participants = document.get("participants") as? MutableList<String> ?: mutableListOf()
                 val currentTime = document.getDate("currentTime") ?: Date()
                 Person(participants, currentTime)
             }
-            _personList.value = personItems
 
-        } catch (e: Exception) {
-            Log.e("Firestore", "Error checking chatlist existence: $e")
-        }
-
+        _personList.value = personItems
 
     }
 
