@@ -8,7 +8,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.kaupark.R
-import com.example.kaupark.data.UserPreferences
+import com.example.kaupark.data.MyApp
 import com.example.kaupark.databinding.ActivitySignupBinding
 import com.example.kaupark.model.User
 import com.google.firebase.auth.FirebaseAuth
@@ -18,7 +18,6 @@ class SignupActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth // Firebase 사용하는 권한
     private lateinit var firestore: FirebaseFirestore
-    private lateinit var userPreferences: UserPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,8 +28,6 @@ class SignupActivity : AppCompatActivity() {
         // 회원가입 부분
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
-
-        userPreferences = UserPreferences.getInstance(this)
 
         val signupButton: Button = findViewById(R.id.signupbuttonfinal)
         signupButton.setOnClickListener {
@@ -65,13 +62,12 @@ class SignupActivity : AppCompatActivity() {
             .document(userId)
             .set(user)
             .addOnSuccessListener { document ->
+                MyApp.prefs.setString("uid", userId)
                 Log.d("SignupActivity", "DocumentSnapshot added with ID:")
             }
             .addOnFailureListener { e ->
                 Log.e("SignupActivity", "문서 추가 오류", e)
             }
-
-        userPreferences.saveUser(user)
     }
 
     private fun navigateToLoginActivity() {
