@@ -96,7 +96,6 @@
                 app:iss_unselected_dot="@drawable/default_unselected_dot"
                 />
 
-
             <ImageButton
                 android:id="@+id/button"
                 android:layout_width="100dp"
