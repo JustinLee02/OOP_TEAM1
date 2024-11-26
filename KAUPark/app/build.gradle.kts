@@ -66,6 +66,7 @@ dependencies {
     implementation ("androidx.fragment:fragment-ktx:1.5.7'")
     implementation ("androidx.activity:activity-ktx:1.7.1")
     implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
+    implementation ("com.github.denzcoskun:ImageSlideshow:0.1.2")
 
 
 }
