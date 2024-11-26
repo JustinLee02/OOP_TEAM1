@@ -8,9 +8,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
-import java.text.SimpleDateFormat
 import java.util.Date
-import java.util.Locale
 
 class ChatPopupViewModel : ViewModel() {
     private val auth: FirebaseAuth = Firebase.auth
@@ -29,7 +27,7 @@ class ChatPopupViewModel : ViewModel() {
                 .get()
                 .await()
 
-            documents.any { document ->
+            documents.any { document -> //document를 돌면서 조건만족하는거 하나라도 있으면 true
                 val participants = document.get("participants") as? List<String>
                 participants?.contains(carNum2) == true
             }
@@ -54,10 +52,10 @@ class ChatPopupViewModel : ViewModel() {
 
     suspend fun createChat(carNum1: String, carNum2: String) {
         try {
-            val person = Person(
-                participants = mutableListOf(carNum1, carNum2),
+            val person = Person().apply {
+                participants = mutableListOf(carNum1, carNum2)
                 currentTime = Date()
-            )
+            }
 
             firestore.collection("chattingLists").document().set(person).await()
         } catch (e: Exception) {
