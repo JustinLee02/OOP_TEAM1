@@ -27,7 +27,6 @@ class ChattingListViewModel : ViewModel() {
     }
 
     suspend fun fetchChattingList() {
-
         val currentCarNum = _carNum.value ?: return
         val result = firestore.collection("chattingLists")
             .whereArrayContains("participants", currentCarNum)
