@@ -204,6 +204,7 @@
                 android:layout_marginStart="21dp"
                 android:layout_marginTop="27dp"
                 android:text="예상 요금"
+                android:fontFamily="@font/pretendard_bold"
                 android:textColor="@color/black"
                 app:layout_constraintStart_toEndOf="@id/imageview_parkinglogo"
                 app:layout_constraintTop_toTopOf="@id/view_fee" />
@@ -215,6 +216,7 @@
                 android:layout_marginStart="43dp"
                 android:layout_marginTop="0dp"
                 android:text="0원"
+                android:fontFamily="@font/pretendard_bold"
                 app:layout_constraintStart_toEndOf="@id/textview_expectedfee"
                 app:layout_constraintTop_toTopOf="@id/textview_expectedfee" />
 

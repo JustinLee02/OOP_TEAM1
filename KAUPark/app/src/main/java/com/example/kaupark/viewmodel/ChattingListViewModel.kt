@@ -41,7 +41,7 @@ class ChattingListViewModel : ViewModel() {
                 _personList.value = personItems
             }
             .addOnFailureListener { exception ->
-                // 실패 처리 (필요시)
+                // 실패 처리
             }
     }
 
