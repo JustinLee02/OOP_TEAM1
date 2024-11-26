@@ -76,7 +76,11 @@ class ChattingList : Fragment() {
                 moveToChatFragment(carNum, receiver)
             }
             binding.recChatting.adapter = adapter
-            viewModel.fetchChattingList()
+
+            lifecycleScope.launch {
+                viewModel.fetchChattingList()
+            }
+
         }
 
         viewModel.personList.observe(viewLifecycleOwner) { updatedList ->

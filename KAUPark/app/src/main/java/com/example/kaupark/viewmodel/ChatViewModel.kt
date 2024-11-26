@@ -53,7 +53,6 @@ class ChatViewModel : ViewModel() {
                 for (document in documents) {
                     val participants = document.get("participants") as? List<String>
                     if (participants != null && participants.contains(receiver)) {
-                        // 실시간 리스너 추가
                         firestore.collection("chattingLists")
                             .document(document.id)
                             .collection("chats")
@@ -72,7 +71,7 @@ class ChatViewModel : ViewModel() {
                                         val time = chatDocument.getDate("time")
                                         loadedChats.add(Chat(nickname, contents, time))
                                     }
-                                    _chatList.value = loadedChats // 실시간으로 UI 업데이트
+                                    _chatList.value = loadedChats
                                 }
                             }
                     }

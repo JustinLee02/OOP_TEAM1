@@ -1,5 +1,6 @@
 package com.example.kaupark.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -26,23 +27,28 @@ class ChattingListViewModel : ViewModel() {
         _carNum.value = document.getString("carNum") ?: ""
     }
 
-    fun fetchChattingList() {
+    suspend fun fetchChattingList() {
+
         val currentCarNum = _carNum.value ?: return
-        firestore.collection("chattingLists")
-            .whereArrayContains("participants", currentCarNum)
-            .orderBy("currentTime", Query.Direction.DESCENDING)
-            .get()
-            .addOnSuccessListener { result ->
-                val personItems = result.documents.mapNotNull { document ->
-                    val participants = document.get("participants") as? MutableList<String> ?: mutableListOf()
-                    val currentTime = document.getDate("currentTime") ?: Date()
-                    Person(participants, currentTime)
-                }
-                _personList.value = personItems
+        try{
+            val result = firestore.collection("chattingLists")
+                .whereArrayContains("participants", currentCarNum)
+                .orderBy("currentTime", Query.Direction.DESCENDING)
+                .get()
+                .await()
+
+            val personItems = result.documents.mapNotNull { document ->
+                val participants = document.get("participants") as? MutableList<String> ?: mutableListOf()
+                val currentTime = document.getDate("currentTime") ?: Date()
+                Person(participants, currentTime)
             }
-            .addOnFailureListener { exception ->
-                // 실패 처리 (필요시)
-            }
+            _personList.value = personItems
+
+        } catch (e: Exception) {
+            Log.e("Firestore", "Error checking chatlist existence: $e")
+        }
+
+
     }
 
     fun removePerson(position: Int) {

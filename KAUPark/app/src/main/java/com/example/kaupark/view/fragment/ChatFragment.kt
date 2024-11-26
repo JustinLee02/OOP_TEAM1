@@ -34,12 +34,7 @@ class ChatFragment : Fragment() {
         binding.recyclerviewChat.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
         chatViewModel.loadMessages(currentUser, receiver)
-
-        chatViewModel.chatList.observe(viewLifecycleOwner, Observer { chatList ->
-            adapter = ChatAdapter(currentUser, ArrayList(chatList))
-            binding.recyclerviewChat.adapter = adapter
-            adapter.notifyDataSetChanged()
-        })
+        setUpObservers()
 
         binding.edittextMessage.addTextChangedListener { text ->
             binding.buttonSendmessage.isEnabled = text.toString().isNotEmpty()
@@ -57,6 +52,14 @@ class ChatFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    private fun setUpObservers() {
+        chatViewModel.chatList.observe(viewLifecycleOwner, Observer { chatList ->
+            adapter = ChatAdapter(currentUser, ArrayList(chatList))
+            binding.recyclerviewChat.adapter = adapter
+            adapter.notifyDataSetChanged()
+        })
     }
 
     companion object {
