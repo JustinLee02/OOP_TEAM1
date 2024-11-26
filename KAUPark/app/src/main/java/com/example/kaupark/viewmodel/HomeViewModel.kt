@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModel
 import com.example.kaupark.model.ParkingRecord
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.naver.maps.map.overlay.Marker
+import com.example.kaupark.data.ParkingClass
 
 class HomeViewModel() : ViewModel() {
 
@@ -36,9 +38,19 @@ class HomeViewModel() : ViewModel() {
     private val _toastMessage = MutableLiveData<String?>()
     val toastMessage: LiveData<String?> get() = _toastMessage
 
+    private val _markers = MutableLiveData<List<Marker>>()
+    val markers: LiveData<List<Marker>> get() = _markers
+
+    private val _selectedParkingLot = MutableLiveData<String>()
+    val selectedParkingLot: LiveData<String> get() = _selectedParkingLot
+
+    private val _parkingRatio = MutableLiveData<String>()
+    val parkingRatio: LiveData<String> get() = _parkingRatio
+
 
     init {
         _isEntry.value = false
+        loadMarkers()
     }
 
     // Fetching user info
@@ -97,7 +109,7 @@ class HomeViewModel() : ViewModel() {
             else -> ""
         }
 
-        val parkingDoc = firestore.collection("parkingAvailable").document(parkingLot)
+        val parkingDoc = firestore.collection("parkingAvailable").document(location)
         parkingDoc.get()
             .addOnSuccessListener { document ->
                 if (document != null && document.exists()) {
@@ -214,6 +226,55 @@ class HomeViewModel() : ViewModel() {
 //            }
 //        }
         _parkingFee.value = "${durationSecs * 100}원"
+    }
+
+    private fun loadMarkers() {
+        val markerList = ParkingClass().getMarker()
+        _markers.value = markerList
+        updateMarkersWithParkingRatios(markerList)
+    }
+
+    private fun updateMarkersWithParkingRatios(markerList: List<Marker>) {
+        markerList.forEach { marker ->
+            val parkingLot = marker.captionText
+            val docName = when (parkingLot) {
+                "과학관 주차장" -> "scienceBuilding"
+                "운동장 옆 주차장" -> "somethingBuilding"
+                "학생회관 주차장" -> "studentCenter"
+                "도서관 주차장" -> "library"
+                "연구동 주차장" -> "searchBuilding"
+                "산학협력관 주차장" -> "academicBuilding"
+                else -> "unknown"
+            }
+
+            getParkingLotRatio(docName) { result ->
+                marker.tag = result
+            }
+        }
+    }
+
+    private fun getParkingLotRatio(parkingLot: String, callback: (String) -> Unit) {
+        firestore.collection("parkingAvailable").document(parkingLot)
+            .get()
+            .addOnSuccessListener { document ->
+                val currentLeft = document.getLong("currentLeft")?.toDouble() ?: 0.0
+                val total = document.getLong("total")?.toDouble() ?: 0.0
+                val ratio: Double = ((total - currentLeft) / total) * 100
+                val result = when {
+                    ratio <= 50 -> "여유"
+                    ratio <= 75 -> "보통"
+                    ratio <= 90 -> "혼잡"
+                    else -> "만차"
+                }
+                callback(result)
+            }
+            .addOnFailureListener { e ->
+                Log.e("Firebase Error", "Error getting parking lot ratio: ${e.message}")
+            }
+    }
+
+    fun selectMarker(marker: Marker) {
+        _selectedParkingLot.value = marker.captionText
     }
 
 }
