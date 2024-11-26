@@ -35,7 +35,7 @@
         android:id="@+id/studentid"
         android:layout_width="179dp"
         android:layout_height="41dp"
-        android:text="학번/교번"
+        android:text="이메일"
         android:textStyle="bold"
         android:textSize="34sp"
         android:layout_marginTop="76dp"

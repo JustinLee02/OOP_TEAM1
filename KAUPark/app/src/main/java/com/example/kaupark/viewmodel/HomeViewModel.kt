@@ -1,11 +1,9 @@
 package com.example.kaupark.viewmodel
 
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.kaupark.data.MyApp
 import com.example.kaupark.model.ParkingRecord
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -190,7 +188,6 @@ class HomeViewModel() : ViewModel() {
     // Calculating Parking Fee
     private fun calculateParkingFee(durationMillis: Long) {
         val durationSecs = durationMillis / 1000
-        val durationMins = durationSecs / 60
         val userId = auth.currentUser?.uid ?: return
 
         val parkingData = mapOf(
