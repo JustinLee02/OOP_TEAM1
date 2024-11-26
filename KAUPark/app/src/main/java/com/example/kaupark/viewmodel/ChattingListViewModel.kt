@@ -27,23 +27,39 @@ class ChattingListViewModel : ViewModel() {
     }
 
     suspend fun fetchChattingList() {
-        // Firestore에서 chattingLists 컬렉션을 가져오고, currentTime을 기준으로 정렬
-        val snapshot = firestore.collection("chattingLists")
-            .orderBy("currentTime", Query.Direction.DESCENDING)  // 시간순으로 정렬
+//        // Firestore에서 chattingLists 컬렉션을 가져오고, currentTime을 기준으로 정렬
+//        val snapshot = firestore.collection("chattingLists")
+//            .orderBy("currentTime", Query.Direction.DESCENDING)  // 시간순으로 정렬
+//            .get()
+//            .await()
+//
+//        val personItems = snapshot.documents.mapNotNull { document ->
+//            val participants = document.get("participants") as? List<String> ?: emptyList()
+//            val currentTime = document.getDate("currentTime") ?: Date() // Timestamp를 Date로 변환
+//
+//            Person(participants.toMutableList(), currentTime)
+//        }
+//
+//
+//
+//        // 정렬된 리스트를 _personList에 할당
+//        _personList.value = personItems
+        val currentCarNum = _carNum.value ?: return
+        firestore.collection("chattingLists")
+            .whereArrayContains("participants", currentCarNum)
+            // .orderBy("currentTime", Query.Direction.DESCENDING)
             .get()
-            .await()
-
-        val personItems = snapshot.documents.mapNotNull { document ->
-            val participants = document.get("participants") as? List<String> ?: emptyList()
-            val currentTime = document.getDate("currentTime") ?: Date() // Timestamp를 Date로 변환
-
-            Person(participants.toMutableList(), currentTime)
-        }
-
-
-
-        // 정렬된 리스트를 _personList에 할당
-        _personList.value = personItems
+            .addOnSuccessListener { result ->
+                val personItems = result.documents.mapNotNull { document ->
+                    val participants = document.get("participants") as? MutableList<String> ?: mutableListOf()
+                    val currentTime = document.getDate("currentTime") ?: Date()
+                    Person(participants, currentTime)
+                }
+                _personList.value = personItems
+            }
+            .addOnFailureListener { exception ->
+                // 실패 처리 (필요시)
+            }
     }
 
     fun removePerson(position: Int) {
