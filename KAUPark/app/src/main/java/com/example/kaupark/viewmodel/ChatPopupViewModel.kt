@@ -27,7 +27,7 @@ class ChatPopupViewModel : ViewModel() {
                 .get()
                 .await()
 
-            documents.any { document ->
+            documents.any { document -> //document를 돌면서 조건만족하는거 하나라도 있으면 true
                 val participants = document.get("participants") as? List<String>
                 participants?.contains(carNum2) == true
             }
