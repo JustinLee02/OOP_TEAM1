@@ -96,10 +96,9 @@ class ParkingAvailable : Fragment() {
             colors = colorsItems
             valueTextColor = Color.WHITE
             valueTextSize = 16f
-            setDrawValues(false) // 테두리 숫자 제거
+            setDrawValues(false)
         }
 
-        // 파이차트에 표시할 데이터 생성
         val pieData = PieData(pieDataSet)
 
         pieChart.apply {
@@ -108,16 +107,15 @@ class ParkingAvailable : Fragment() {
             description.isEnabled = false
             isRotationEnabled = false
             legend.isEnabled = false
-            setDrawEntryLabels(false) // 항목 이름도 표시하지 않음
+            setDrawEntryLabels(false)
             animateY(1400, Easing.EaseInOutQuad)
 
-            // 중앙 텍스트 설정 (한 줄로 변경)
             val centerText = "${spot.currentLeft}  / ${spot.total} "
-            setCenterText(centerText) // 텍스트 설정
-            setCenterTextColor(Color.BLACK) // 텍스트 색상
-            setCenterTextSize(12f) // 텍스트 크기 (조정)
+            setCenterText(centerText)
+            setCenterTextColor(Color.BLACK)
+            setCenterTextSize(12f)
 
-            invalidate() // 업데이트
+            invalidate()
         }
     }
 

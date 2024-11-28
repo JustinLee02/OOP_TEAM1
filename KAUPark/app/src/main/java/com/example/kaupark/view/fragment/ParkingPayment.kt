@@ -18,7 +18,7 @@ class ParkingPayment : Fragment() {
     private lateinit var binding: FragmentParkingPaymentBinding
     private val firestore = FirebaseFirestore.getInstance()
     private var deposit = 0
-    private val userDocumentId = "PfANoIw3kBX8V2BmfgAsDz6Rf423" // 사용자 문서 ID
+    private val userDocumentId = "PfANoIw3kBX8V2BmfgAsDz6Rf423"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
