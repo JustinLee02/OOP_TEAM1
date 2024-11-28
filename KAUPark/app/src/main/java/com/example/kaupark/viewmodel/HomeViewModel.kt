@@ -1,11 +1,9 @@
 package com.example.kaupark.viewmodel
 
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.kaupark.data.UserPreferences
 import com.example.kaupark.model.ParkingRecord
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -89,7 +87,7 @@ class HomeViewModel() : ViewModel() {
 
     fun increaseCarNum(parkingLot: String) {
 
-        val location = when(parkingLot) {
+        val location = when (parkingLot) {
             "과학관 주차장" -> "scienceBuilding"
             "운동장 옆 주차장" -> "somethingBuilding"
             "학생회관 주차장" -> "studentCenter"
@@ -105,20 +103,20 @@ class HomeViewModel() : ViewModel() {
                 if (document != null && document.exists()) {
                     val currentLeft = document.getLong("currentLeft") ?: 0
                     val total = document.getLong("total") ?: 0
-                    val updateCount = currentLeft - 1
+                    var updateCount = currentLeft - 1
 
-                    if (total < updateCount) {
+                    if (currentLeft.toInt() == 0) {
                         _toastMessage.value = "자리가 없습니다!"
+                    } else {
+                        parkingDoc.update("currentLeft", updateCount)
+                            .addOnSuccessListener {
+                                _parkingSpace.value = updateCount.toInt()
+                                _toastMessage.value = "${parkingLot}에 입차했습니다"
+                            }
+                            .addOnFailureListener { e ->
+                                Log.e("Error", "${e.message}")
+                            }
                     }
-
-                    parkingDoc.update("currentLeft", updateCount)
-                        .addOnSuccessListener {
-                            _parkingSpace.value = updateCount.toInt()
-                            _toastMessage.value = "${location}에 입차했습니다"
-                        }
-                        .addOnFailureListener { e ->
-                            Log.e("Error", "${e.message}")
-                        }
                 } else {
 
                 }
@@ -162,7 +160,7 @@ class HomeViewModel() : ViewModel() {
 
     }
 
-    fun dereaseCarNum(parkingLot: String) {
+    fun decreaseCarNum(parkingLot: String) {
         val parkingDoc = firestore.collection("parkingAvailable").document(parkingLot)
         parkingDoc.get()
             .addOnSuccessListener { document ->
@@ -190,16 +188,32 @@ class HomeViewModel() : ViewModel() {
     // Calculating Parking Fee
     private fun calculateParkingFee(durationMillis: Long) {
         val durationSecs = durationMillis / 1000
-        val durationMins = durationSecs / 60
+        val userId = auth.currentUser?.uid ?: return
 
-        _parkingFee.value = when {
-            durationMins < 30 -> "30분 무료 ${durationMins}분 주차중"
-            durationMins < 60 -> "2000원 ${durationMins}분 주차중"
-            else -> {
-                val additionalFee = ((durationMins - 60) / 30) * 500
-                "${2000 + additionalFee}원 ${durationMins}분 주차중"
+        val parkingData = mapOf(
+            "durationSecs" to durationSecs
+        )
+
+        firestore.collection("users").document(userId).collection("parking_records")
+            .document("duration")
+            .set(parkingData)
+            .addOnSuccessListener {
+                Log.d("Firebase", "Parking duration updated successfully")
             }
-        }
+            .addOnFailureListener { e ->
+                Log.e("Firebase", "Error updating parking duration: ${e.message}")
+            }
+
+
+//        _parkingFee.value = when {
+//            durationMins < 30 -> "30분 무료 ${durationMins}분 주차중"
+//            durationMins < 60 -> "2000원 ${durationMins}분 주차중"
+//            else -> {
+//                val additionalFee = ((durationMins - 60) / 30) * 500
+//                "${2000 + additionalFee}원 ${durationMins}분 주차중"
+//            }
+//        }
+        _parkingFee.value = "${durationSecs * 100}원"
     }
 
 }

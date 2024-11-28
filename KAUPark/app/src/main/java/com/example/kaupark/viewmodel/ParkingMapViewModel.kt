@@ -5,13 +5,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.kaupark.data.ParkingClass
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.naver.maps.map.overlay.Marker
 
 class ParkingMapViewModel(): ViewModel() {
 
-    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
     private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
 
     private val parkingClass = ParkingClass()
@@ -64,7 +62,7 @@ class ParkingMapViewModel(): ViewModel() {
             .addOnSuccessListener { document ->
                 val currentLeft = document.getLong("currentLeft")?.toDouble() ?: 0.0
                 val total = document.getLong("total")?.toDouble() ?: 0.0
-                val ratio: Double = (currentLeft / total) * 100
+                val ratio: Double = ((total - currentLeft) / total) * 100
                 val result = when {
                     ratio <= 50 -> "여유"
                     ratio <= 75 -> "보통"

@@ -1,4 +1,4 @@
-package com.example.kaupark.view.fragment.activity
+package com.example.kaupark.view.activity
 
 
 import android.os.Bundle
@@ -8,10 +8,6 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.kaupark.R
 import com.example.kaupark.databinding.ActivityBottomNavigationBinding
-import com.example.kaupark.databinding.ChattingListBinding
-import com.example.kaupark.databinding.HomeViewBinding
-import com.example.kaupark.view.fragment.ChatFragment
-import com.example.kaupark.view.fragment.ChatPopupFragment
 import com.example.kaupark.view.fragment.ChattingList
 import com.example.kaupark.view.fragment.HomeView
 import com.example.kaupark.view.fragment.ParkingAvailable

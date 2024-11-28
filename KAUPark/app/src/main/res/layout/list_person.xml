@@ -9,7 +9,7 @@
     app:layout_constraintEnd_toEndOf="parent">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageview_person"
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:layout_marginStart="8dp"
@@ -21,7 +21,7 @@
         app:srcCompat="@drawable/user" />
 
     <TextView
-        android:id="@+id/txt_name"
+        android:id="@+id/textview_personname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -32,20 +32,20 @@
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@+id/imageview_person"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/txt_message"
+        android:id="@+id/textview_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="새로운 메세지가 왔습니다."
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/txt_name" />
+        app:layout_constraintStart_toStartOf="@+id/textview_personname" />
 
     <TextView
-        android:id="@+id/txt_time"
+        android:id="@+id/textview_listtime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
