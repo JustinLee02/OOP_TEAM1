@@ -110,10 +110,13 @@ class ParkingAvailable : Fragment() {
             setDrawEntryLabels(false)
             animateY(1400, Easing.EaseInOutQuad)
 
+            setHoleRadius(70f)
+            setTransparentCircleRadius(75f)
+
             val centerText = "${spot.currentLeft}  / ${spot.total} "
             setCenterText(centerText)
             setCenterTextColor(Color.BLACK)
-            setCenterTextSize(12f)
+            setCenterTextSize(15f)
 
             invalidate()
         }
