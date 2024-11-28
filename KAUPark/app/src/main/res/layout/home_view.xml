@@ -31,6 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="0dp"
+            android:background="@color/white"
             app:layout_constraintStart_toStartOf="@id/scrollview_home"
             app:layout_constraintTop_toTopOf="@+id/scrollview_home"
 
@@ -123,24 +124,14 @@
                 android:id="@+id/containerview_mapimage"
                 android:name="com.naver.maps.map.MapFragment"
                 android:layout_width="370dp"
-                android:layout_height="337dp"
+                android:layout_height="618dp"
                 android:layout_marginStart="0dp"
                 android:layout_marginTop="11dp"
                 app:layout_constraintStart_toStartOf="@id/textview_maptextview"
                 app:layout_constraintTop_toBottomOf="@id/textview_maptextview" />
 
-            <android.widget.Button
-                android:id="@+id/button_transparent"
-                android:layout_width="370dp"
-                android:layout_height="337dp"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="0dp"
-                android:background="@android:color/transparent"
-                app:layout_constraintStart_toStartOf="@id/containerview_mapimage"
-                app:layout_constraintTop_toTopOf="@id/containerview_mapimage" />
-
-            <EditText
-                android:id="@+id/edittext_textfield"
+            <Spinner
+                android:id="@+id/spinner_parkinglot"
                 android:layout_width="370dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="0dp"
@@ -149,9 +140,10 @@
                 app:layout_constraintTop_toBottomOf="@id/containerview_mapimage"
                 app:layout_constraintStart_toStartOf="@id/containerview_mapimage"
                 app:layout_constraintEnd_toEndOf="@id/containerview_mapimage"
-                android:background="@color/white"
-                android:hint="주차장을 선택하세요"
-                android:textColorHint="@android:color/darker_gray"
+                android:dropDownWidth="match_parent"
+                android:spinnerMode="dropdown"
+                android:background="@drawable/rounded_all_corners"
+
                 android:textSize="12sp"
                 />
 
@@ -163,7 +155,7 @@
                 android:layout_marginTop="18dp"
                 android:text="입차"
                 app:layout_constraintStart_toStartOf="@id/containerview_mapimage"
-                app:layout_constraintTop_toBottomOf="@id/edittext_textfield" />
+                app:layout_constraintTop_toBottomOf="@id/spinner_parkinglot" />
 
             <android.widget.Button
                 android:id="@+id/button_out"
