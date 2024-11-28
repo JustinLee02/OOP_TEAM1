@@ -7,19 +7,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kaupark.R
 import com.example.kaupark.databinding.FragmentParkingPaymentBinding
+import com.example.kaupark.view.adapter.ImageAdapter
 import com.google.firebase.firestore.FirebaseFirestore
-import com.denzcoskun.imageslider.ImageSlider
-import com.denzcoskun.imageslider.constants.ScaleTypes
-import com.denzcoskun.imageslider.models.SlideModel
 
 class ParkingPayment : Fragment() {
 
     private lateinit var binding: FragmentParkingPaymentBinding
     private val firestore = FirebaseFirestore.getInstance()
     private var deposit = 0
-    private val userDocumentId = "PfANoIw3kBX8V2BmfgAsDz6Rf423" // 사용자 문서 ID
+    private val userDocumentId = "PfANoIw3kBX8V2BmfgAsDz6Rf423"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,34 +26,47 @@ class ParkingPayment : Fragment() {
     ): View {
         binding = FragmentParkingPaymentBinding.inflate(inflater, container, false)
 
-        val imageSlider = binding.root.findViewById<ImageSlider>(R.id.image_slider)
-        val imageList = ArrayList<SlideModel>()
+        // 이미지 리스트 생성
+        val imageList = listOf(
+            R.drawable.image1, R.drawable.image2, R.drawable.image3,
+            R.drawable.image4, R.drawable.image5, R.drawable.image6,
+            R.drawable.image7, R.drawable.image8, R.drawable.image9,
+        )
 
-        imageList.add(SlideModel(R.drawable.image1, "카드1", ScaleTypes.FIT))
-        imageList.add(SlideModel(R.drawable.image2, "카드2", ScaleTypes.FIT))
-        imageList.add(SlideModel(R.drawable.image3, "카드3", ScaleTypes.FIT))
+        // RecyclerView 설정
+        setupRecyclerView(imageList)
 
-        imageSlider.setImageList(imageList)
-
-        // 결제하기 버튼의 id : button2
+        // 결제 버튼 로직
         binding.button2.setOnClickListener {
             loadDeposit {
                 processPayment()
             }
         }
 
-        // 정기권 결제 버튼의 id : radioRegular
+        // 정기권 및 현장 요금 선택에 따른 결제 버튼 텍스트 변경
+        setupRadioButtons()
+
+        return binding.root
+    }
+
+    private fun setupRecyclerView(imageList: List<Int>) {
+        val recyclerView = binding.imageRecyclerView
+        recyclerView.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        recyclerView.adapter = ImageAdapter(requireContext(), imageList)
+    }
+
+    private fun setupRadioButtons() {
+        // 정기권 결제 버튼
         binding.radioRegular.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                loadDuration { duration ->
-                    binding.button2.text = "60000원 결제하기"
-                }
+                binding.button2.text = "60000원 결제하기"
             } else {
                 binding.button2.text = "결제하기"
             }
         }
 
-        // 현장 요금 결제 버튼의 id : radioOnSite
+        // 현장 요금 결제 버튼
         binding.radioOnSite.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 loadDuration { duration ->
@@ -64,8 +76,6 @@ class ParkingPayment : Fragment() {
                 binding.button2.text = "결제하기"
             }
         }
-
-        return binding.root
     }
 
     private fun loadDeposit(onDepositLoaded: () -> Unit) {
@@ -84,11 +94,9 @@ class ParkingPayment : Fragment() {
     }
 
     private fun processPayment() {
-
         val isRegularSelected = binding.radioRegular.isChecked
         val isOnSiteSelected = binding.radioOnSite.isChecked
 
-        // 정기권 결제가 선택되어야됨
         if (isRegularSelected) {
             val cost = 60000
             if (deposit >= cost) {
@@ -97,10 +105,7 @@ class ParkingPayment : Fragment() {
             } else {
                 Toast.makeText(requireContext(), "잔액이 부족합니다.", Toast.LENGTH_SHORT).show()
             }
-        }
-
-        // 현장결제가 선택되어야됨
-        else if (isOnSiteSelected) {
+        } else if (isOnSiteSelected) {
             loadDuration { duration ->
                 if (deposit >= duration) {
                     val newDeposit = deposit - duration
@@ -137,7 +142,5 @@ class ParkingPayment : Fragment() {
                     onDurationLoaded(duration)
                 }
             }
-
     }
-
 }
