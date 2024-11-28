@@ -67,7 +67,7 @@ dependencies {
     implementation ("androidx.activity:activity-ktx:1.7.1")
     implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
     implementation ("com.github.denzcoskun:ImageSlideshow:0.1.2")
-
-
+    implementation ("com.github.bumptech.glide:glide:4.11.0")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.11.0")
 }
 
