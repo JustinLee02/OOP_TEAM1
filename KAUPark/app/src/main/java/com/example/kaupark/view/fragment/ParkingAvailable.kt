@@ -34,7 +34,8 @@ class ParkingAvailable : Fragment() {
         loadParkingData()
         return binding.root
     }
-
+    // 남색 : 현재 주차되어있는 여석 개수
+    // 흰색 : 남은 여석
     private fun loadParkingData() {
         firestore.collection("parkingAvailable")
             // parkingAvailable 컬렉션에 있는 모든 문서 가져오기
@@ -80,7 +81,6 @@ class ParkingAvailable : Fragment() {
     private fun updatePieChart(pieChart: com.github.mikephil.charting.charts.PieChart, spot: ParkingSpot) {
         // PieChart 데이터 구성
         val entries = ArrayList<PieEntry>().apply {
-
             // 남색부분 : total - currentleft, 현재 주차되어있는 공간 개수
             add(PieEntry((spot.total - spot.currentLeft).toFloat(), "사용 중"))
             // 흰색부분 : 현재 남아있는 공간 개수
@@ -96,16 +96,11 @@ class ParkingAvailable : Fragment() {
             colors = colorsItems
             valueTextColor = Color.WHITE
             valueTextSize = 16f
+            setDrawValues(false) // 테두리 숫자 제거
         }
 
-        //파이차트에 표시할 데이터 생성
+        // 파이차트에 표시할 데이터 생성
         val pieData = PieData(pieDataSet)
-
-        pieData.setValueFormatter(object : ValueFormatter() {
-            override fun getFormattedValue(value: Float): String {
-                return value.toInt().toString()
-            }
-        })
 
         pieChart.apply {
             data = pieData
@@ -113,8 +108,15 @@ class ParkingAvailable : Fragment() {
             description.isEnabled = false
             isRotationEnabled = false
             legend.isEnabled = false
-            setDrawEntryLabels(false)
+            setDrawEntryLabels(false) // 항목 이름도 표시하지 않음
             animateY(1400, Easing.EaseInOutQuad)
+
+            // 중앙 텍스트 설정 (한 줄로 변경)
+            val centerText = "${spot.currentLeft}  / ${spot.total} "
+            setCenterText(centerText) // 텍스트 설정
+            setCenterTextColor(Color.BLACK) // 텍스트 색상
+            setCenterTextSize(12f) // 텍스트 크기 (조정)
+
             invalidate() // 업데이트
         }
     }
