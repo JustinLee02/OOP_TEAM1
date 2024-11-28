@@ -1,4 +1,4 @@
-package com.example.kaupark.view.fragment.activity
+package com.example.kaupark.view.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,6 +7,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.kaupark.R
+import com.example.kaupark.ToastHelper
 import com.example.kaupark.databinding.ActivityLoginBinding
 import com.google.firebase.auth.FirebaseAuth
 
@@ -19,11 +20,6 @@ class LoginActivity : AppCompatActivity() {
 
         val binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-//        binding.signinbutton.setOnClickListener {
-//            val intent = Intent(this, BottomNavigationActivity::class.java)
-//            startActivity(intent)
-//        }
 
         binding.signupbutton.setOnClickListener {
             val intent = Intent(this, SignupActivity::class.java)
@@ -46,7 +42,7 @@ class LoginActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if(task.isSuccessful) {
                     val user = auth.currentUser
-                    Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
+                    ToastHelper.showToast(this, "로그인 성공")
                     navigateToHomeActivity()
                 } else {
                     Toast.makeText(this, "로그인 실패: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
