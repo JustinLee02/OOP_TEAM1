@@ -13,14 +13,14 @@
         android:theme="@style/Theme.KAUPark"
         tools:targetApi="31">
         <activity
-            android:name=".view.fragment.activity.SignupActivity"
+            android:name=".view.activity.SignupActivity"
             android:exported="false" />
         <!-- Remove the MAIN and LAUNCHER intent-filter from BottomNavigationActivity -->
         <activity
-            android:name=".view.fragment.activity.BottomNavigationActivity"
+            android:name=".view.activity.BottomNavigationActivity"
             android:exported="true" /> <!-- Set HomeActivity as the initial activity with MAIN and LAUNCHER intent-filter -->
         <activity
-            android:name=".view.fragment.activity.LoginActivity"
+            android:name=".view.activity.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
