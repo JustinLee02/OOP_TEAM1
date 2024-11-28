@@ -66,6 +66,13 @@ class HomeView : Fragment(), OnMapReadyCallback {
 //                .commit()
 //        }
 
+        binding.buttonManageprofile.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.main_container, ManageProfile())
+                .addToBackStack(null)
+                .commit()
+        }
+
         val parkingLots = listOf(
             "과학관 주차장",
             "운동장 옆 주차장",
