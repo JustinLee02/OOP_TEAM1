@@ -98,7 +98,6 @@ class HomeView : Fragment(), OnMapReadyCallback {
             } else {
                 ToastHelper.showToast(requireContext(), "주차장을 선택하세요")
             }
-            viewModel.recordEntryTime()
         }
 
         binding.buttonOut.setOnClickListener {

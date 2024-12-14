@@ -79,13 +79,16 @@ class HomeViewModel() : ViewModel() {
     fun recordEntryTime() {
         val userId = auth.currentUser?.uid ?: return
         val entryTime = System.currentTimeMillis()
+        val currentDate = android.text.format.DateFormat.format("yyyy-MM-dd", entryTime).toString()
 
-        val record = ParkingRecord(entryTime = entryTime)
+        val record = ParkingRecord(entryTime = entryTime, date = currentDate)
         if (_isEntry.value == true) {
             _toastMessage.value = "출차 버튼을 눌러주세요"
         } else {
+            val documentId = entryTime.toString()
+
             firestore.collection("users").document(userId)
-                .collection("parking_records").document("duration")
+                .collection("parking_records").document(documentId)
                 .set(record)
                 .addOnSuccessListener {
                     _parkingRecord.value = record
@@ -149,15 +152,20 @@ class HomeViewModel() : ViewModel() {
             _toastMessage.value = "입차 버튼을 눌러주세요"
         } else {
             firestore.collection("users").document(userId)
-                .collection("parking_records").document("duration")
+                .collection("parking_records")
+                .orderBy("entryTime", com.google.firebase.firestore.Query.Direction.DESCENDING)
+                .limit(1)
                 .get()
-                .addOnSuccessListener { document ->
-                    val entryTime = document.getLong("entryTime") ?: return@addOnSuccessListener
+                .addOnSuccessListener { documents ->
+                    val document = documents.firstOrNull()
+                    val entryTime = document?.getLong("entryTime") ?: return@addOnSuccessListener
                     val duration = exitTime - entryTime
+                    val date = document.getString("date")
 
-                    val updatedRecord = ParkingRecord(entryTime, exitTime, duration)
+                    val updatedRecord = ParkingRecord(entryTime, exitTime, duration, date)
+                    val documentId = entryTime.toString()
                     firestore.collection("users").document(userId)
-                        .collection("parking_records").document("duration")
+                        .collection("parking_records").document(documentId)
                         .set(updatedRecord)
                         .addOnSuccessListener {
                             _parkingRecord.value = updatedRecord
