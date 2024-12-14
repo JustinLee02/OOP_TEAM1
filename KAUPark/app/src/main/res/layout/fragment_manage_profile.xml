@@ -63,15 +63,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/imageview_userimage" />
 
-            <Button
-                android:id="@+id/button_change"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="0dp"
-                app:layout_constraintStart_toEndOf="@id/textview_myprofile"
-                app:layout_constraintTop_toTopOf="@id/textview_myprofile" />
-
             <TextView
                 android:id="@+id/textview_myname"
                 android:layout_width="37dp"
