@@ -5,8 +5,8 @@
     android:id="@+id/manage_profile"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.fragment.ManageProfile"
-    android:background="@color/white">
+    android:background="@color/white"
+    tools:context=".view.fragment.ManageProfile">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_setting"
@@ -15,15 +15,15 @@
         android:layout_marginTop="0dp"
         android:background="#40368A"
         app:layout_constraintTop_toTopOf="@id/manage_profile">
-        
+
         <TextView
             android:layout_width="123dp"
             android:layout_height="29dp"
             android:layout_gravity="center"
+            android:fontFamily="@font/pretendard_semibold"
             android:text="프로필 편집"
             android:textColor="@color/white"
-            android:textSize="24sp"
-            android:fontFamily="@font/pretendard_semibold"/>
+            android:textSize="24sp" />
     </androidx.appcompat.widget.Toolbar>
 
     <ScrollView
@@ -31,220 +31,224 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="0dp"
-        app:layout_constraintTop_toBottomOf="@id/toolbar_setting"
+        android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:scrollbars="vertical">
+        app:layout_constraintTop_toBottomOf="@id/toolbar_setting">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/scrollview_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/imageview_userimage"
-        android:layout_width="121dp"
-        android:layout_height="121dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginStart="145dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:src="@drawable/user"/>
+            <ImageView
+                android:id="@+id/imageview_userimage"
+                android:layout_width="121dp"
+                android:layout_height="121dp"
+                android:layout_marginStart="145dp"
+                android:layout_marginTop="48dp"
+                android:src="@drawable/user"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textview_myprofile"
-        android:layout_width="61dp"
-        android:layout_height="25dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginStart="18dp"
-        app:layout_constraintTop_toBottomOf="@id/imageview_userimage"
-        app:layout_constraintStart_toStartOf="parent"
-        android:text="내 정보"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:fontFamily="@font/pretendard_semibold"/>
+            <TextView
+                android:id="@+id/textview_myprofile"
+                android:layout_width="61dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="내 정보"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/imageview_userimage" />
 
-    <TextView
-        android:id="@+id/textview_myname"
-        android:layout_width="37dp"
-        android:layout_height="17dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginStart="12dp"
-        app:layout_constraintTop_toBottomOf="@id/textview_myprofile"
-        app:layout_constraintStart_toStartOf="@id/textview_myprofile"
-        android:text="이름"
-        android:textColor="@color/black"
-        android:textSize="14sp"
-        android:fontFamily="@font/pretendard_semibold"/>
-    
-    <EditText
-        android:id="@+id/edittext_name"
-        android:layout_width="266dp"
-        android:layout_height="34dp"
-        android:layout_marginTop="-9dp"
-        android:layout_marginStart="33dp"
-        app:layout_constraintTop_toTopOf="@id/textview_myname"
-        app:layout_constraintStart_toEndOf="@id/textview_myname"
-        android:paddingLeft="5dp"
-        android:paddingEnd="5dp"
-        android:hint="이수현"
-        android:textColorHint="@color/black"
-        android:textColor="@color/black"
-        android:textSize="12sp"
-        android:fontFamily="@font/pretendard_semibold"
-        android:drawableEnd="@drawable/name_edittext"
-        android:background="@drawable/edittext_rounded_all_corners"
-        />
+            <Button
+                android:id="@+id/button_change"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="0dp"
+                app:layout_constraintStart_toEndOf="@id/textview_myprofile"
+                app:layout_constraintTop_toTopOf="@id/textview_myprofile" />
 
-    <TextView
-        android:id="@+id/textview_studentId"
-        android:layout_width="37dp"
-        android:layout_height="17dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginStart="0dp"
-        app:layout_constraintTop_toBottomOf="@id/textview_myname"
-        app:layout_constraintStart_toStartOf="@id/textview_myname"
-        android:text="학번"
-        android:textColor="@color/black"
-        android:textSize="14sp"
-        android:fontFamily="@font/pretendard_semibold"/>
+            <TextView
+                android:id="@+id/textview_myname"
+                android:layout_width="37dp"
+                android:layout_height="17dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="이름"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@id/textview_myprofile"
+                app:layout_constraintTop_toBottomOf="@id/textview_myprofile" />
 
-    <EditText
-        android:id="@+id/edittext_studentId"
-        android:layout_width="266dp"
-        android:layout_height="34dp"
-        android:layout_marginTop="-9dp"
-        android:layout_marginStart="0dp"
-        app:layout_constraintTop_toTopOf="@id/textview_studentId"
-        app:layout_constraintStart_toStartOf="@id/edittext_name"
-        android:paddingLeft="5dp"
-        android:paddingEnd="5dp"
-        android:hint="2021121141"
-        android:textColorHint="@color/black"
-        android:textColor="@color/black"
-        android:textSize="12sp"
-        android:fontFamily="@font/pretendard_semibold"
-        android:drawableEnd="@drawable/studentid_edittext"
-        android:background="@drawable/edittext_rounded_all_corners"
-        />
+            <EditText
+                android:id="@+id/edittext_name"
+                android:layout_width="266dp"
+                android:layout_height="34dp"
+                android:layout_marginStart="33dp"
+                android:layout_marginTop="-9dp"
+                android:background="@drawable/edittext_rounded_all_corners"
+                android:drawableEnd="@drawable/name_edittext"
+                android:fontFamily="@font/pretendard_semibold"
+                android:hint="이수현"
+                android:paddingLeft="5dp"
+                android:paddingEnd="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
+                android:textSize="12sp"
+                app:layout_constraintStart_toEndOf="@id/textview_myname"
+                app:layout_constraintTop_toTopOf="@id/textview_myname" />
 
-    <TextView
-        android:id="@+id/textview_email"
-        android:layout_width="58dp"
-        android:layout_height="17dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginStart="0dp"
-        app:layout_constraintTop_toBottomOf="@id/textview_studentId"
-        app:layout_constraintStart_toStartOf="@id/textview_studentId"
-        android:text="E-mail"
-        android:textColor="@color/black"
-        android:textSize="14sp"
-        android:fontFamily="@font/pretendard_semibold"/>
+            <TextView
+                android:id="@+id/textview_studentId"
+                android:layout_width="37dp"
+                android:layout_height="17dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="40dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="학번"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@id/textview_myname"
+                app:layout_constraintTop_toBottomOf="@id/textview_myname" />
 
-    <EditText
-        android:id="@+id/edittext_email"
-        android:layout_width="266dp"
-        android:layout_height="34dp"
-        android:layout_marginTop="-9dp"
-        android:layout_marginStart="0dp"
-        app:layout_constraintTop_toTopOf="@id/textview_email"
-        app:layout_constraintStart_toStartOf="@id/edittext_studentId"
-        android:paddingLeft="5dp"
-        android:paddingEnd="5dp"
-        android:hint="lsoo0827@gmail.com"
-        android:textColorHint="@color/black"
-        android:textColor="@color/black"
-        android:textSize="12sp"
-        android:fontFamily="@font/pretendard_semibold"
-        android:drawableEnd="@drawable/email_edittext"
-        android:background="@drawable/edittext_rounded_all_corners"
-        />
+            <EditText
+                android:id="@+id/edittext_studentId"
+                android:layout_width="266dp"
+                android:layout_height="34dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="-9dp"
+                android:background="@drawable/edittext_rounded_all_corners"
+                android:drawableEnd="@drawable/studentid_edittext"
+                android:fontFamily="@font/pretendard_semibold"
+                android:hint="2021121141"
+                android:paddingLeft="5dp"
+                android:paddingEnd="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="@id/edittext_name"
+                app:layout_constraintTop_toTopOf="@id/textview_studentId" />
 
-    <TextView
-        android:id="@+id/textview_phone"
-        android:layout_width="58dp"
-        android:layout_height="17dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginStart="0dp"
-        app:layout_constraintTop_toBottomOf="@id/textview_email"
-        app:layout_constraintStart_toStartOf="@id/textview_email"
-        android:text="전화번호"
-        android:textColor="@color/black"
-        android:textSize="14sp"
-        android:fontFamily="@font/pretendard_semibold"/>
+            <TextView
+                android:id="@+id/textview_email"
+                android:layout_width="58dp"
+                android:layout_height="17dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="40dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="E-mail"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@id/textview_studentId"
+                app:layout_constraintTop_toBottomOf="@id/textview_studentId" />
 
-    <EditText
-        android:id="@+id/edittext_phone"
-        android:layout_width="266dp"
-        android:layout_height="34dp"
-        android:layout_marginTop="-9dp"
-        android:layout_marginStart="0dp"
-        app:layout_constraintTop_toTopOf="@id/textview_phone"
-        app:layout_constraintStart_toStartOf="@id/edittext_email"
-        android:paddingLeft="5dp"
-        android:paddingEnd="5dp"
-        android:hint="01086246741"
-        android:textColorHint="@color/black"
-        android:textColor="@color/black"
-        android:textSize="12sp"
-        android:fontFamily="@font/pretendard_semibold"
-        android:drawableEnd="@drawable/phone_edittext"
-        android:background="@drawable/edittext_rounded_all_corners"
-        />
+            <EditText
+                android:id="@+id/edittext_email"
+                android:layout_width="266dp"
+                android:layout_height="34dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="-9dp"
+                android:background="@drawable/edittext_rounded_all_corners"
+                android:drawableEnd="@drawable/email_edittext"
+                android:fontFamily="@font/pretendard_semibold"
+                android:hint="lsoo0827@gmail.com"
+                android:paddingLeft="5dp"
+                android:paddingEnd="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="@id/edittext_studentId"
+                app:layout_constraintTop_toTopOf="@id/textview_email" />
 
-    <TextView
-        android:id="@+id/textview_carnum"
-        android:layout_width="58dp"
-        android:layout_height="17dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginStart="0dp"
-        app:layout_constraintTop_toBottomOf="@id/textview_phone"
-        app:layout_constraintStart_toStartOf="@id/textview_phone"
-        android:text="차량번호"
-        android:textColor="@color/black"
-        android:textSize="14sp"
-        android:fontFamily="@font/pretendard_semibold"/>
+            <TextView
+                android:id="@+id/textview_phone"
+                android:layout_width="58dp"
+                android:layout_height="17dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="40dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="전화번호"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@id/textview_email"
+                app:layout_constraintTop_toBottomOf="@id/textview_email" />
 
-    <EditText
-        android:id="@+id/edittext_carnum"
-        android:layout_width="266dp"
-        android:layout_height="34dp"
-        android:layout_marginTop="-9dp"
-        android:layout_marginStart="0dp"
-        app:layout_constraintTop_toTopOf="@id/textview_carnum"
-        app:layout_constraintStart_toStartOf="@id/edittext_phone"
-        android:paddingLeft="5dp"
-        android:paddingEnd="5dp"
-        android:hint="51가 4130"
-        android:textColorHint="@color/black"
-        android:textColor="@color/black"
-        android:textSize="12sp"
-        android:fontFamily="@font/pretendard_semibold"
-        android:drawableEnd="@drawable/car_edittext"
-        android:background="@drawable/edittext_rounded_all_corners"
-        />
+            <EditText
+                android:id="@+id/edittext_phone"
+                android:layout_width="266dp"
+                android:layout_height="34dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="-9dp"
+                android:background="@drawable/edittext_rounded_all_corners"
+                android:drawableEnd="@drawable/phone_edittext"
+                android:fontFamily="@font/pretendard_semibold"
+                android:hint="01086246741"
+                android:paddingLeft="5dp"
+                android:paddingEnd="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="@id/edittext_email"
+                app:layout_constraintTop_toTopOf="@id/textview_phone" />
 
-    <TextView
-        android:id="@+id/textview_parkingrecord"
-        android:layout_width="82dp"
-        android:layout_height="25dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginStart="0dp"
-        app:layout_constraintTop_toBottomOf="@id/textview_carnum"
-        app:layout_constraintStart_toStartOf="@id/textview_myprofile"
-        android:text="주차 기록"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:fontFamily="@font/pretendard_semibold"/>
+            <TextView
+                android:id="@+id/textview_carnum"
+                android:layout_width="58dp"
+                android:layout_height="17dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="40dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="차량번호"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@id/textview_phone"
+                app:layout_constraintTop_toBottomOf="@id/textview_phone" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview_parkingrecord"
-        android:layout_width="336dp"
-        android:layout_height="160dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginStart="30dp"
-        android:paddingBottom="12dp"
-        app:layout_constraintTop_toBottomOf="@id/textview_parkingrecord"
-        app:layout_constraintStart_toStartOf="parent"/>
+            <EditText
+                android:id="@+id/edittext_carnum"
+                android:layout_width="266dp"
+                android:layout_height="34dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="-9dp"
+                android:background="@drawable/edittext_rounded_all_corners"
+                android:drawableEnd="@drawable/car_edittext"
+                android:fontFamily="@font/pretendard_semibold"
+                android:hint="51가 4130"
+                android:paddingLeft="5dp"
+                android:paddingEnd="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="@id/edittext_phone"
+                app:layout_constraintTop_toTopOf="@id/textview_carnum" />
+
+            <TextView
+                android:id="@+id/textview_parkingrecord"
+                android:layout_width="82dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="40dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="주차 기록"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="@id/textview_myprofile"
+                app:layout_constraintTop_toBottomOf="@id/textview_carnum" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview_parkingrecord"
+                android:layout_width="336dp"
+                android:layout_height="160dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="24dp"
+                android:paddingBottom="12dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textview_parkingrecord" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

@@ -3,6 +3,7 @@ package com.example.kaupark
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.kaupark.databinding.ParkingrecordRecyclerLayoutBinding
 import com.example.kaupark.model.ParkingItem
 
@@ -12,6 +13,11 @@ class ParkingRecordAdapter(private val parkingItems: List<ParkingItem>): Recycle
             binding.textviewTime.text = item.date
             binding.textviewWon.text = item.fee
             binding.textviewClock.text = item.duration
+
+            Glide.with(binding.imageviewCarGif.context)
+                .asGif()
+                .load(R.drawable.cargif)
+                .into(binding.imageviewCarGif)
         }
     }
 
