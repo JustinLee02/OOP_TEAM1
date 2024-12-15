@@ -45,7 +45,7 @@ class HomeView : Fragment(), OnMapReadyCallback {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         // View Binding
         binding = HomeViewBinding.inflate(inflater, container, false)
