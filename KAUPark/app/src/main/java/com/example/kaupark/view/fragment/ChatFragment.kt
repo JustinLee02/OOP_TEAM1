@@ -7,10 +7,12 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kaupark.R
 import com.example.kaupark.databinding.FragmentChatBinding
 import com.example.kaupark.view.adapter.ChatAdapter
+import kotlinx.coroutines.launch
 
 class ChatFragment : Fragment() {
 
