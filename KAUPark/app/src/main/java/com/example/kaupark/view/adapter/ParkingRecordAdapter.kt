@@ -1,23 +1,24 @@
-package com.example.kaupark
+package com.example.kaupark.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.kaupark.databinding.ParkingrecordRecyclerLayoutBinding
-import com.example.kaupark.model.ParkingItem
+import com.example.kaupark.R
+import com.example.kaupark.databinding.RecyclerviewParkingrecordBinding
+import com.example.kaupark.model.ParkingItemModel
 
 /**
  * 주차 기록을 표시하기 위한 RecyclerView 어댑터 클래스
  * @param parkingItems 주차 기록 데이터를 담고 있는 리스트
  */
-class ParkingRecordAdapter(var parkingItems: List<ParkingItem>): RecyclerView.Adapter<ParkingRecordAdapter.ParkingViewHolder>() {
+class ParkingRecordAdapter(var parkingItems: List<ParkingItemModel>): RecyclerView.Adapter<ParkingRecordAdapter.ParkingViewHolder>() {
     /**
      * RecyclerView의 각 아이템 뷰를 관리하는 ViewHolder 클래스
      * @param binding 아이템 뷰와 연결된 ViewBinding 객체
      */
-    inner class ParkingViewHolder(private val binding: ParkingrecordRecyclerLayoutBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: ParkingItem) {
+    inner class ParkingViewHolder(private val binding: RecyclerviewParkingrecordBinding): RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: ParkingItemModel) {
             binding.textviewTime.text = item.date // 날짜
             binding.textviewWon.text = item.fee // 요금
             binding.textviewClock.text = item.duration // 주차 시간
@@ -25,7 +26,7 @@ class ParkingRecordAdapter(var parkingItems: List<ParkingItem>): RecyclerView.Ad
             // Glide를 사용해 GIF 이미지를 ImageView에 로드
             Glide.with(binding.imageviewCarGif.context)
                 .asGif()
-                .load(R.drawable.cargif)
+                .load(R.drawable.gif_car)
                 .into(binding.imageviewCarGif)
         }
     }
@@ -37,7 +38,7 @@ class ParkingRecordAdapter(var parkingItems: List<ParkingItem>): RecyclerView.Ad
      * @return 생성된 ViewHolder 객체
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ParkingViewHolder {
-        val binding = ParkingrecordRecyclerLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = RecyclerviewParkingrecordBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ParkingViewHolder(binding)
     }
 

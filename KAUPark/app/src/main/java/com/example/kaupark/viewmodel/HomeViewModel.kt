@@ -4,18 +4,18 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.kaupark.model.ParkingRecord
+import com.example.kaupark.data.ParkingClass
+import com.example.kaupark.model.ParkingRecordModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.naver.maps.map.overlay.Marker
-import com.example.kaupark.data.ParkingClass
 
 
 /**
  * HomewViewModel
  * Description: HomeView Fragment와 연결되어 LiveData를 통해 데이터 변경을 UI에 반영
  */
-class HomeViewModel() : ViewModel() {
+class HomeViewModel: ViewModel() {
 
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
     private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
@@ -27,8 +27,8 @@ class HomeViewModel() : ViewModel() {
     private val _userName = MutableLiveData<String>() // 사용자의 이름
     val userName: LiveData<String> get() = _userName
 
-    private val _parkingRecord = MutableLiveData<ParkingRecord?>() // 주차 기록
-    val parkingRecord: LiveData<ParkingRecord?> get() = _parkingRecord
+    private val _parkingRecord = MutableLiveData<ParkingRecordModel?>() // 주차 기록
+    val parkingRecord: LiveData<ParkingRecordModel?> get() = _parkingRecord
 
     private val _parkingFee = MutableLiveData<String>() // 주차 요금
     val parkingFee: LiveData<String> get() = _parkingFee
@@ -91,7 +91,7 @@ class HomeViewModel() : ViewModel() {
         val entryTime = System.currentTimeMillis()
         val currentDate = android.text.format.DateFormat.format("yyyy-MM-dd", entryTime).toString() // 현재 날짜 포맷팅
 
-        val record = ParkingRecord(entryTime = entryTime, date = currentDate) // 주차 기록 객체 생성
+        val record = ParkingRecordModel(entryTime = entryTime, date = currentDate) // 주차 기록 객체 생성
         if (_isEntry.value == true) {
             _toastMessage.value = "출차 버튼을 눌러주세요"
         } else {
@@ -176,7 +176,7 @@ class HomeViewModel() : ViewModel() {
                     val duration = exitTime - entryTime
                     val date = document.getString("date")
 
-                    val updatedRecord = ParkingRecord(entryTime, exitTime, duration, date)
+                    val updatedRecord = ParkingRecordModel(entryTime, exitTime, duration, date)
                     val documentId = entryTime.toString()
                     firestore.collection("users").document(userId)
                         .collection("parking_records").document(documentId)

@@ -16,7 +16,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 
-class ParkingPayment : Fragment() {
+class ParkingPaymentFragment : Fragment() {
 
     private lateinit var binding: FragmentParkingPaymentBinding
     private val parkingPaymentViewModel: ParkingPaymentViewModel by activityViewModels()
@@ -31,9 +31,9 @@ class ParkingPayment : Fragment() {
 
         // 이미지 리스트 생성
         val imageList = listOf(
-            R.drawable.image1, R.drawable.image2, R.drawable.image3,
-            R.drawable.image4, R.drawable.image5, R.drawable.image6,
-            R.drawable.image7, R.drawable.image8, R.drawable.image9,
+            R.drawable.image_card1, R.drawable.image_card2, R.drawable.image_card3,
+            R.drawable.image_card4, R.drawable.image_card5, R.drawable.image_card6,
+            R.drawable.image_card7, R.drawable.image_card8, R.drawable.image_card9,
         )
 
         // RecyclerView 설정

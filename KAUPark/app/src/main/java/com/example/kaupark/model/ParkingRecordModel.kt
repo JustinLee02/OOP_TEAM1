@@ -1,8 +1,6 @@
 package com.example.kaupark.model
 
-import kotlin.time.Duration
-
-data class ParkingRecord(
+data class ParkingRecordModel(
     val entryTime: Long? = null,
     val exitTime: Long? = null,
     val duration: Long? = null,

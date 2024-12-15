@@ -1,10 +1,11 @@
-package com.example.kaupark
+package com.example.kaupark.utils
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import com.example.kaupark.R
 
 object ToastHelper {
     fun showToast(context: Context, message: String, duration: Int = Toast.LENGTH_LONG) {

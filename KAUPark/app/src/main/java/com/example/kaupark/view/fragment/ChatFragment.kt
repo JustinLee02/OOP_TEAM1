@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kaupark.R
 import com.example.kaupark.databinding.FragmentChatBinding
+import com.example.kaupark.view.adapter.ChatAdapter
 import kotlinx.coroutines.launch
 
 class ChatFragment : Fragment() {
@@ -36,10 +37,7 @@ class ChatFragment : Fragment() {
 
         binding.recyclerviewChat.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
-        lifecycleScope.launch {
-            chatViewModel.loadMessages(currentUser, receiver)
-        }
-
+        chatViewModel.loadMessages(currentUser, receiver)
         setUpObservers()
 
         binding.edittextMessage.addTextChangedListener { text ->
@@ -48,16 +46,14 @@ class ChatFragment : Fragment() {
 
         binding.buttonSendmessage.setOnClickListener {
             val message = binding.edittextMessage.text.toString()
-            lifecycleScope.launch {
-                chatViewModel.sendMessage(currentUser, receiver, message)
-            }
+            chatViewModel.sendMessage(currentUser, receiver, message)
             binding.edittextMessage.setText("")
         }
 
         binding.toolbarChat.title = receiver
         binding.toolbarChat.setTitleTextColor(ContextCompat.getColor(requireContext(), android.R.color.white))
 
-        binding.toolbarChat.setNavigationIcon(R.drawable.arrow_back)
+        binding.toolbarChat.setNavigationIcon(R.drawable.icon_arrow_back)
         binding.toolbarChat.setNavigationOnClickListener {
             parentFragmentManager.popBackStack()
         }

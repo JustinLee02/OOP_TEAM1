@@ -1,3 +1,5 @@
+package com.example.kaupark.view.adapter
+
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
@@ -6,17 +8,17 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kaupark.R
-import com.example.kaupark.model.Chat
+import com.example.kaupark.model.ChatModel
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class ChatAdapter(private val currentUser: String, private val itemList: ArrayList<Chat>) :
+class ChatAdapter(private val currentUser: String, private val itemList: ArrayList<ChatModel>) :
     RecyclerView.Adapter<ChatAdapter.ViewHolder>() {
 
     private val dateFormat = SimpleDateFormat("yyyy-MM-dd a hh:mm", Locale.getDefault()) // 클래스 수준에서 정의
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.chat_layout, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.fragment_chat_layout, parent, false)
         return ViewHolder(view)
     }
 
@@ -36,7 +38,7 @@ class ChatAdapter(private val currentUser: String, private val itemList: ArrayLi
         holder.time.text = chat.time?.let { dateFormat.format(it) } ?: "Unknown"
     }
 
-    fun updateList(newList: List<Chat>) {
+    fun updateList(newList: List<ChatModel>) {
         itemList.clear()
         itemList.addAll(newList)
         notifyDataSetChanged()
