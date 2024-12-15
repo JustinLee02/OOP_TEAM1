@@ -33,6 +33,16 @@ class ManageProfile : Fragment() {
             adapter = ParkingRecordAdapter(emptyList()) // 초기에는 빈 리스트
         }
 
+        viewModel.fetchUserInfo()
+
+        viewModel.userInfo.observe(viewLifecycleOwner) { userInfo ->
+            binding.edittextName.hint = userInfo.name
+            binding.edittextStudentId.hint = userInfo.studentId
+            binding.edittextEmail.hint = userInfo.email
+            binding.edittextPhone.hint = userInfo.phoneNum
+            binding.edittextCarnum.hint = userInfo.carNum
+        }
+
         viewModel.parkingItems.observe(viewLifecycleOwner) { parkingItems ->
             (binding.recyclerviewParkingrecord.adapter as ParkingRecordAdapter).apply {
                 this.parkingItems = parkingItems // RecyclerView 데이터 갱신

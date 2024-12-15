@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.kaupark.model.ParkingItem
+import com.example.kaupark.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -15,8 +16,29 @@ class ManageProfileViewModel(): ViewModel() {
     private val _parkingItems = MutableLiveData<List<ParkingItem>>()
     val parkingItems: LiveData<List<ParkingItem>> get() = _parkingItems
 
+    private val _userInfo = MutableLiveData<User>()
+    val userInfo: LiveData<User> get() = _userInfo
+
     private val _toastMessage = MutableLiveData<String?>()
     val toastMessage: LiveData<String?> get() = _toastMessage
+
+    fun fetchUserInfo() {
+        val userId = auth.currentUser?.uid ?: return
+
+        firestore.collection("users")
+            .document(userId)
+            .get()
+            .addOnSuccessListener { document ->
+                val name = document.getString("name")
+                val studentId = document.getString("studentId")
+                val email = document.getString("email")
+                val phoneNum = document.getString("phoneNum")
+                val carNum = document.getString("carNum")
+                val userInfo = User(name = name!!, studentId = studentId!!, email = email!!, phoneNum = phoneNum!!, carNum = carNum!!, password = "", deposit = 0)
+                _userInfo.value = userInfo
+            }
+    }
+
 
     fun fetchParkingRecords() {
         val userId = auth.currentUser?.uid ?: return // 현재 로그인한 사용자의 ID 가져오기
