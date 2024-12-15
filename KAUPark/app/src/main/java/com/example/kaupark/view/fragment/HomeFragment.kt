@@ -77,7 +77,8 @@ class HomeFragment: Fragment(), OnMapReadyCallback {
         )
 
         // ArrayAdapter 를 사용해 Spinner 에 주차장 리스트를 설정.
-        // parkingLots 배열을 dropdown 항목에 연결
+        // 리스트 각 항복의 레이아웃 지정, 어댑터가 사용할 리스트 지정
+        // 드롭다운 레이아웃 지정
         val adapter = ArrayAdapter(
             requireContext(), android.R.layout.simple_spinner_item, parkingLots).also { arrayAdapter ->  
                 arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -88,23 +89,17 @@ class HomeFragment: Fragment(), OnMapReadyCallback {
         // 입차 버튼 클릭 이벤트 처리.
         binding.buttonIn.setOnClickListener {
             val parkingLot = binding.spinnerParkinglot.selectedItem?.toString()
-
-            if (!parkingLot.isNullOrBlank()) {
+            if (parkingLot != null) {
                 viewModel.increaseCarNum(parkingLot)
-                viewModel.recordEntryTime()
-            } else {
-                ToastHelper.showToast(requireContext(), "주차장을 선택하세요")
             }
         }
 
         // 출차 버튼 클릭 이벤트 처리.
         binding.buttonOut.setOnClickListener {
             val parkingLot = binding.spinnerParkinglot.selectedItem?.toString()
-            if(!parkingLot.isNullOrBlank()) {
+            if (parkingLot != null) {
                 viewModel.decreaseCarNum(parkingLot)
                 viewModel.recordExitTime()
-            } else {
-                ToastHelper.showToast(requireContext(), "주차장 이름을 입력하세요")
             }
         }
 

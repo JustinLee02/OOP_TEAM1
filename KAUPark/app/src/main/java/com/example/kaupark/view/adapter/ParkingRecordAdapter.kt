@@ -14,7 +14,8 @@ import com.example.kaupark.model.ParkingItemModel
  */
 class ParkingRecordAdapter(var parkingItems: List<ParkingItemModel>): RecyclerView.Adapter<ParkingRecordAdapter.ParkingViewHolder>() {
     /**
-     * RecyclerView의 각 아이템 뷰를 관리하는 ViewHolder 클래스
+     * RecyclerView의 각 항목을 관리하는 ViewHolder 클래스
+     * 항목 하나하나의 UI를 관리함
      * @param binding 아이템 뷰와 연결된 ViewBinding 객체
      */
     inner class ParkingViewHolder(private val binding: RecyclerviewParkingrecordBinding): RecyclerView.ViewHolder(binding.root) {
@@ -32,7 +33,7 @@ class ParkingRecordAdapter(var parkingItems: List<ParkingItemModel>): RecyclerVi
     }
 
     /**
-     * 새로운 ViewHolder 객체를 생성
+     * 새로운 ViewHolder 객체를 생성 (새로운 항목을 추가할 때 호출됨)
      * @param parent RecyclerView의 부모 ViewGroup
      * @param viewType 뷰 타입 (현재는 동일한 뷰 타입만 사용)
      * @return 생성된 ViewHolder 객체
