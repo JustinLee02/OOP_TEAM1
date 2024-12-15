@@ -85,6 +85,7 @@ class ParkingAvailable : Fragment() {
                 "searchBuilding" -> binding.imageButton6.visibility = if (spot.currentLeft == 0) View.VISIBLE else View.GONE
                 "somethingBuilding" -> binding.imageButton7.visibility = if (spot.currentLeft == 0) View.VISIBLE else View.GONE
             }
+
         }
     }
 
@@ -97,12 +98,27 @@ class ParkingAvailable : Fragment() {
     private fun showQueueDialog(parkingName: String) {
         val builder = androidx.appcompat.app.AlertDialog.Builder(requireContext())
         builder.setTitle("대기열 등록")
-        builder.setMessage("$parkingName 주차장의 대기열에 등록하시겠습니까?")
+
+        // 건물 이름에 맞는 메시지 생성
+        val message = when(parkingName) {
+            "library" -> "도서관 주차장의 대기열에 등록하시겠습니까?"
+            "studentCenter" -> "학생회관 주차장의 대기열에 등록하시겠습니까?"
+            "academicBuilding" -> "산학협력관 주차장의 대기열에 등록하시겠습니까?"
+            "scienceBuilding" -> "과학관 주차장의 대기열에 등록하시겠습니까?"
+            "searchBuilding" -> "연구동 주차장의 대기열에 등록하시겠습니까?"
+            "somethingBuilding" -> "운동장 옆 주차장의 대기열에 등록하시겠습니까?"
+            else -> "$parkingName 주차장의 대기열에 등록하시겠습니까?"
+        }
+
+        builder.setMessage(message)
+
         builder.setPositiveButton("확인") { dialog, _ ->
             // 대기열 등록 처리 로직 추가
             dialog.dismiss()
         }
+
         builder.setNegativeButton("취소") { dialog, _ -> dialog.dismiss() }
+
         builder.create().show()
     }
 

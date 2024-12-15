@@ -76,10 +76,10 @@ class ParkingPaymentViewModel : ViewModel() {
             .document("duration")
             .get()
             .addOnSuccessListener { document ->
-                if (document != null && document.contains("duration")) {
-                    val duration = document.getLong("duration")?.toInt() ?: 0
+                if (document != null && document.contains("durationSecs")) {
+                    val duration = document.getLong("durationSecs")?.toInt() ?: 0
                     Log.d("ParkingPayment", "Duration: $duration")
-                    onDurationLoaded(duration)
+                    onDurationLoaded(duration*100)
                 }
             }
     }
