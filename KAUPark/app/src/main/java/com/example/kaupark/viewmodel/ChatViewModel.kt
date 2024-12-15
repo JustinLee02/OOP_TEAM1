@@ -33,6 +33,18 @@ class ChatViewModel : ViewModel() {
                             .add(chat)
                             .addOnSuccessListener {
                                 Log.d("Firestore", "Chat successfully added!")
+                                firestore.collection("chattingLists")
+                                    .document(document.id)
+                                    .update(
+                                        "currentTime", chat.time,
+                                        "lastMessage", chat.contents
+                                    )
+                                    .addOnSuccessListener {
+                                        Log.d("Firestore", "currentTime successfully updated!")
+                                    }
+                                    .addOnFailureListener { e ->
+                                        Log.w("Firestore", "Error updating currentTime: $e")
+                                    }
                             }
                             .addOnFailureListener { e ->
                                 Log.w("Firestore", "Error adding chat", e)

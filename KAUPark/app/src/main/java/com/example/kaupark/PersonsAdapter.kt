@@ -44,6 +44,8 @@ class PersonsAdapter(private val personList: MutableList<Person>,private val car
             val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()) // 원하는 날짜 형식으로 변경 가능
             binding.textviewListtime.text = dateFormat.format(person.currentTime)
 
+            binding.textviewMessage.text = person.lastMessage ?: "null"
+
             binding.root.setOnClickListener {
                 onItemClick(person)
             }

@@ -56,7 +56,7 @@ class ChatFragment : Fragment() {
 
     private fun setUpObservers() {
         chatViewModel.chatList.observe(viewLifecycleOwner, Observer { chatList ->
-            if (adapter == null) { // nullable 타입으로 체크
+            if (adapter == null) {
                 adapter = ChatAdapter(currentUser, ArrayList(chatList))
                 binding.recyclerviewChat.adapter = adapter
             } else {

@@ -37,7 +37,9 @@ class ChattingListViewModel : ViewModel() {
             val personItems = result.documents.mapNotNull { document ->
                 val participants = document.get("participants") as? MutableList<String> ?: mutableListOf()
                 val currentTime = document.getDate("currentTime") ?: Date()
-                Person(participants, currentTime)
+                val lastMessage = document.getString("lastMessage") ?: "새로운 메세지가 왔습니다"
+
+                Person(participants, currentTime,lastMessage)
             }
 
         _personList.value = personItems
