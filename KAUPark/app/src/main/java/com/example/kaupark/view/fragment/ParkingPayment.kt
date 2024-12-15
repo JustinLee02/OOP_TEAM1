@@ -12,6 +12,7 @@ import com.example.kaupark.R
 import com.example.kaupark.databinding.FragmentParkingPaymentBinding
 import com.example.kaupark.view.adapter.ImageAdapter
 import com.example.kaupark.viewmodel.ParkingPaymentViewModel
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 
@@ -19,7 +20,8 @@ class ParkingPayment : Fragment() {
 
     private lateinit var binding: FragmentParkingPaymentBinding
     private val parkingPaymentViewModel: ParkingPaymentViewModel by activityViewModels()
-    private val db = FirebaseFirestore.getInstance()
+    private val firestore = FirebaseFirestore.getInstance()
+    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,6 +55,7 @@ class ParkingPayment : Fragment() {
 
         // 정기권 및 현장 요금 선택에 따른 결제 버튼 텍스트 변경
         setupRadioButtons()
+
 
         // 결제 결과를 UI에 반영
         parkingPaymentViewModel.paymentResult.observe(viewLifecycleOwner) { result ->
@@ -94,7 +97,9 @@ class ParkingPayment : Fragment() {
     // 최신 duration 값을 Firebase에서 가져오는 함수
     private fun loadLatestDuration(callback: (Int) -> Unit) {
         // Firestore에서 데이터를 가져오기
-        db.collection("parking")  // 컬렉션 이름에 맞게 수정
+        val userId = auth?.currentUser?.uid ?: return
+        firestore.collection("users").document(userId)
+            .collection("parking_records")
             .orderBy("entryTime", Query.Direction.DESCENDING)  // 가장 최신 문서부터 정렬
             .limit(1)  // 가장 최신 한 문서만 가져오기
             .get()
@@ -102,7 +107,8 @@ class ParkingPayment : Fragment() {
                 if (!documents.isEmpty) {
                     val latestDocument = documents.documents[0]
                     val duration = latestDocument.getLong("duration")?.toInt() ?: 0
-                    callback(duration)  // 최신 duration 값을 callback으로 전달
+                    val durationSecs = duration / 1000
+                    callback(durationSecs * 100)  // 최신 duration 값을 callback으로 전달
                 } else {
                     callback(0)  // 문서가 없다면 기본값 0
                 }
