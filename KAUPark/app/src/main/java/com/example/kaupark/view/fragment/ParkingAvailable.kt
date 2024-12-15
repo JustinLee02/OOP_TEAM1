@@ -7,83 +7,124 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.kaupark.databinding.ParkingAvailableBinding
 import com.example.kaupark.model.ParkingSpot
+import com.example.kaupark.viewmodel.ParkingAvailableViewModel
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
-import com.github.mikephil.charting.formatter.ValueFormatter
-import com.google.firebase.firestore.FirebaseFirestore
+import androidx.lifecycle.Observer
 
 class ParkingAvailable : Fragment() {
 
-    private val firestore = FirebaseFirestore.getInstance()
-    // ParkingSpot은 name, currentleft, total로 이루어져있음
-    // ParkingSpotList는 ParkingSpot으로 이루어져 있음
-    private val parkingSpotList = arrayListOf<ParkingSpot>()
-
     private lateinit var binding: ParkingAvailableBinding
+    private lateinit var viewModel: ParkingAvailableViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         binding = ParkingAvailableBinding.inflate(inflater, container, false)
-        loadParkingData()
+
+        // ViewModel 초기화
+        viewModel = ViewModelProvider(this).get(ParkingAvailableViewModel::class.java)
+
+        // 데이터 로딩
+        viewModel.loadParkingData()
+
+        // 데이터 변화 관찰
+        viewModel.parkingSpotList.observe(viewLifecycleOwner, Observer { parkingSpotList ->
+            displayParkingData(parkingSpotList)
+        })
+
+        // 에러 메시지 관찰
+        viewModel.errorMessage.observe(viewLifecycleOwner, Observer { error ->
+            Log.e("ParkingAvailable", error)
+        })
+
         return binding.root
     }
-    // 남색 : 현재 주차되어있는 여석 개수
-    // 흰색 : 남은 여석
-    private fun loadParkingData() {
-        firestore.collection("parkingAvailable")
-            // parkingAvailable 컬렉션에 있는 모든 문서 가져오기
-            .get()
-            // documents는 parkingAvailable의 각각의 문서를 나타냄
-            .addOnSuccessListener { documents ->
-                parkingSpotList.clear()
 
-                // documents안에 있는 원소들을 순회
-                for (document in documents) {
-
-                    // firebase에 있는 값 세팅
-                    val name = document.id
-                    val currentLeft = document.getLong("currentLeft")?.toInt() ?: 0
-                    val total = document.getLong("total")?.toInt() ?: 0
-
-                    // 위에 있는 값드을 담고 있는 객체 생성
-                    val parkingSpot = ParkingSpot(name, currentLeft, total)
-                    // 리스트에 추가
-                    parkingSpotList.add(parkingSpot)
-                }
-
-                displayParkingData()
-            }
-            .addOnFailureListener { exception ->
-                Log.e("ParkingAvailable", "Error getting documents: ", exception)
-            }
-    }
-    private fun displayParkingData() {
-        // 각 주차장 데이터를 PieChart로 표현
+    private fun displayParkingData(parkingSpotList: List<ParkingSpot>) {
         for (spot in parkingSpotList) {
             when (spot.name) {
-                "library" -> updatePieChart(binding.libraryPiechart, spot)
-                "studentCenter" -> updatePieChart(binding.studentCenterPiechart, spot)
-                "academicBuilding" -> updatePieChart(binding.academicBuildingPiechart, spot)
-                "scienceBuilding" -> updatePieChart(binding.scienceBuildingPiechart, spot)
-                "searchBuilding" -> updatePieChart(binding.searchBuildingPiechart, spot)
-                "somethingBuilding" -> updatePieChart(binding.somethingBuildingPiechart, spot)
+                "library" -> {
+                    updatePieChart(binding.libraryPiechart, spot)
+                    setupQueueButton(binding.imageButton3, spot)
+                }
+                "studentCenter" -> {
+                    updatePieChart(binding.studentCenterPiechart, spot)
+                    setupQueueButton(binding.imageButton2, spot)
+                }
+                "academicBuilding" -> {
+                    updatePieChart(binding.academicBuildingPiechart, spot)
+                    setupQueueButton(binding.imageButton4, spot)
+                }
+                "scienceBuilding" -> {
+                    updatePieChart(binding.scienceBuildingPiechart, spot)
+                    setupQueueButton(binding.imageButton5, spot)
+                }
+                "searchBuilding" -> {
+                    updatePieChart(binding.searchBuildingPiechart, spot)
+                    setupQueueButton(binding.imageButton6, spot)
+                }
+                "somethingBuilding" -> {
+                    updatePieChart(binding.somethingBuildingPiechart, spot)
+                    setupQueueButton(binding.imageButton7, spot)
+                }
             }
+
+            // 주차 자리 현황에 따른 버튼 visibility 조정
+            when (spot.name) {
+                "library" -> binding.imageButton3.visibility = if (spot.currentLeft == 0) View.VISIBLE else View.GONE
+                "studentCenter" -> binding.imageButton2.visibility = if (spot.currentLeft == 0) View.VISIBLE else View.GONE
+                "academicBuilding" -> binding.imageButton4.visibility = if (spot.currentLeft == 0) View.VISIBLE else View.GONE
+                "scienceBuilding" -> binding.imageButton5.visibility = if (spot.currentLeft == 0) View.VISIBLE else View.GONE
+                "searchBuilding" -> binding.imageButton6.visibility = if (spot.currentLeft == 0) View.VISIBLE else View.GONE
+                "somethingBuilding" -> binding.imageButton7.visibility = if (spot.currentLeft == 0) View.VISIBLE else View.GONE
+            }
+
         }
     }
 
+    private fun setupQueueButton(button: View, spot: ParkingSpot) {
+        button.setOnClickListener {
+            showQueueDialog(spot.name)
+        }
+    }
+
+    private fun showQueueDialog(parkingName: String) {
+        val builder = androidx.appcompat.app.AlertDialog.Builder(requireContext())
+        builder.setTitle("대기열 등록")
+
+        // 건물 이름에 맞는 메시지 생성
+        val message = when(parkingName) {
+            "library" -> "도서관 주차장의 대기열에 등록하시겠습니까?"
+            "studentCenter" -> "학생회관 주차장의 대기열에 등록하시겠습니까?"
+            "academicBuilding" -> "산학협력관 주차장의 대기열에 등록하시겠습니까?"
+            "scienceBuilding" -> "과학관 주차장의 대기열에 등록하시겠습니까?"
+            "searchBuilding" -> "연구동 주차장의 대기열에 등록하시겠습니까?"
+            "somethingBuilding" -> "운동장 옆 주차장의 대기열에 등록하시겠습니까?"
+            else -> "$parkingName 주차장의 대기열에 등록하시겠습니까?"
+        }
+
+        builder.setMessage(message)
+
+        builder.setPositiveButton("확인") { dialog, _ ->
+            // 대기열 등록 처리 로직 추가
+            dialog.dismiss()
+        }
+
+        builder.setNegativeButton("취소") { dialog, _ -> dialog.dismiss() }
+
+        builder.create().show()
+    }
+
     private fun updatePieChart(pieChart: com.github.mikephil.charting.charts.PieChart, spot: ParkingSpot) {
-        // PieChart 데이터 구성
         val entries = ArrayList<PieEntry>().apply {
-            // 남색부분 : total - currentleft, 현재 주차되어있는 공간 개수
             add(PieEntry((spot.total - spot.currentLeft).toFloat(), "사용 중"))
-            // 흰색부분 : 현재 남아있는 공간 개수
             add(PieEntry(spot.currentLeft.toFloat(), "남은 자리"))
         }
 
@@ -121,6 +162,4 @@ class ParkingAvailable : Fragment() {
             invalidate()
         }
     }
-
 }
-
