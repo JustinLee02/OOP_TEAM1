@@ -50,7 +50,17 @@ class ChattingList : Fragment() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.bindingAdapterPosition
-                viewModel.removePerson(position)
+                val person = viewModel.personList.value?.get(position) ?: return
+
+// 해당 문서를 Firestore에서 삭제
+                val carNum = viewModel.carNum.value ?: return
+                val receiver = if (person.participants[0] == carNum) person.participants[1] else person.participants[0]
+
+                lifecycleScope.launch {
+                    // chattingLists에서 해당 문서 삭제
+                    viewModel.deleteChattingList(person, receiver) // Firestore에서 삭제
+                    viewModel.removePerson(position) // 로컬 리스트에서 삭제
+                }
             }
         })
 
