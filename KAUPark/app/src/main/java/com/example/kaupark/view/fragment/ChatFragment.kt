@@ -7,9 +7,11 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kaupark.R
 import com.example.kaupark.databinding.FragmentChatBinding
+import kotlinx.coroutines.launch
 
 class ChatFragment : Fragment() {
 
@@ -34,7 +36,10 @@ class ChatFragment : Fragment() {
 
         binding.recyclerviewChat.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
-        chatViewModel.loadMessages(currentUser, receiver)
+        lifecycleScope.launch {
+            chatViewModel.loadMessages(currentUser, receiver)
+        }
+
         setUpObservers()
 
         binding.edittextMessage.addTextChangedListener { text ->
@@ -43,7 +48,9 @@ class ChatFragment : Fragment() {
 
         binding.buttonSendmessage.setOnClickListener {
             val message = binding.edittextMessage.text.toString()
-            chatViewModel.sendMessage(currentUser, receiver, message)
+            lifecycleScope.launch {
+                chatViewModel.sendMessage(currentUser, receiver, message)
+            }
             binding.edittextMessage.setText("")
         }
 
