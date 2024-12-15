@@ -55,18 +55,34 @@ class ParkingAvailable : Fragment() {
     }
 
     private fun displayParkingData() {
-        // 각 주차장 데이터를 PieChart로 표현
         for (spot in parkingSpotList) {
             when (spot.name) {
-                "library" -> updatePieChart(binding.libraryPiechart, spot)
-                "studentCenter" -> updatePieChart(binding.studentCenterPiechart, spot)
-                "academicBuilding" -> updatePieChart(binding.academicBuildingPiechart, spot)
-                "scienceBuilding" -> updatePieChart(binding.scienceBuildingPiechart, spot)
-                "searchBuilding" -> updatePieChart(binding.searchBuildingPiechart, spot)
-                "somethingBuilding" -> updatePieChart(binding.somethingBuildingPiechart, spot)
+                "library" -> {
+                    updatePieChart(binding.libraryPiechart, spot)
+                    setupQueueButton(binding.imageButton3, spot)
+                }
+                "studentCenter" -> {
+                    updatePieChart(binding.studentCenterPiechart, spot)
+                    setupQueueButton(binding.imageButton2, spot)
+                }
+                "academicBuilding" -> {
+                    updatePieChart(binding.academicBuildingPiechart, spot)
+                    setupQueueButton(binding.imageButton4, spot)
+                }
+                "scienceBuilding" -> {
+                    updatePieChart(binding.scienceBuildingPiechart, spot)
+                    setupQueueButton(binding.imageButton5, spot)
+                }
+                "searchBuilding" -> {
+                    updatePieChart(binding.searchBuildingPiechart, spot)
+                    setupQueueButton(binding.imageButton6, spot)
+                }
+                "somethingBuilding" -> {
+                    updatePieChart(binding.somethingBuildingPiechart, spot)
+                    setupQueueButton(binding.imageButton7, spot)
+                }
             }
 
-            // currentLeft가 0이면 이미지 버튼을 보이게 한다.
             if (spot.currentLeft == 0) {
                 when (spot.name) {
                     "library" -> binding.imageButton3.visibility = View.VISIBLE
@@ -77,7 +93,6 @@ class ParkingAvailable : Fragment() {
                     "somethingBuilding" -> binding.imageButton7.visibility = View.VISIBLE
                 }
             } else {
-                // currentLeft가 0이 아니면 이미지 버튼을 숨긴다.
                 when (spot.name) {
                     "library" -> binding.imageButton3.visibility = View.GONE
                     "studentCenter" -> binding.imageButton2.visibility = View.GONE
@@ -89,6 +104,27 @@ class ParkingAvailable : Fragment() {
             }
         }
     }
+
+    private fun setupQueueButton(button: View, spot: ParkingSpot) {
+        button.setOnClickListener {
+            showQueueDialog(spot.name)
+        }
+    }
+
+    private fun showQueueDialog(parkingName: String) {
+        val builder = androidx.appcompat.app.AlertDialog.Builder(requireContext())
+        builder.setTitle("대기열 등록")
+        builder.setMessage("$parkingName 주차장의 대기열에 등록하시겠습니까?")
+        builder.setPositiveButton("확인") { dialog, _ ->
+            // 대기열 등록 처리 로직 추가
+            dialog.dismiss()
+        }
+        builder.setNegativeButton("취소") { dialog, _ ->
+            dialog.dismiss()
+        }
+        builder.create().show()
+    }
+
 
     private fun updatePieChart(pieChart: com.github.mikephil.charting.charts.PieChart, spot: ParkingSpot) {
         val entries = ArrayList<PieEntry>().apply {
