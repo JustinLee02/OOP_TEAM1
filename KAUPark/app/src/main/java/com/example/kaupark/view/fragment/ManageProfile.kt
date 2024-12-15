@@ -25,7 +25,7 @@ class ManageProfile : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentManageProfileBinding.inflate(inflater, container, false)
 
         binding.recyclerviewParkingrecord.apply {
