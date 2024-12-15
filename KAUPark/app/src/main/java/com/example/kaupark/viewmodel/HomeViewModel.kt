@@ -1,11 +1,9 @@
 package com.example.kaupark.viewmodel
 
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.kaupark.ToastHelper
 import com.example.kaupark.model.ParkingRecord
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -17,7 +15,6 @@ import com.example.kaupark.data.ParkingClass
  * HomewViewModel
  * Description: HomeView Fragment와 연결되어 LiveData를 통해 데이터 변경을 UI에 반영
  */
-
 class HomeViewModel() : ViewModel() {
 
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()

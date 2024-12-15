@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import com.example.kaupark.R
@@ -27,7 +26,6 @@ import java.time.LocalDate
  * Description: 메인 화면 역할을 하는 Fragment로, 주차장 정보를 보여주고 지도와 사용자 상호작용을 처리.
  * Implements OnMapReadyCallback: 네이버 맵 초기화 및 마커를 관리.
  */
-
 class HomeView : Fragment(), OnMapReadyCallback {
 
     private lateinit var binding: HomeViewBinding
@@ -128,7 +126,6 @@ class HomeView : Fragment(), OnMapReadyCallback {
 
         viewModel.toastMessage.observe(viewLifecycleOwner) { message ->
             message?.let {
-                // Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
                 ToastHelper.showToast(requireContext(), it)
             }
         }
@@ -185,5 +182,4 @@ class HomeView : Fragment(), OnMapReadyCallback {
         val zoomUpdate = CameraUpdate.zoomTo(15.8) // Zoom 레벨 설정
         naverMap.moveCamera(zoomUpdate)
     }
-
 }
