@@ -37,10 +37,8 @@ class HomeView : Fragment(), OnMapReadyCallback {
     // HomeViewModel 을 Fragment 에 연결. ViewModel 은 데이터를 관리하고 UI로 동기화
     private val viewModel: HomeViewModel by viewModels()
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -56,10 +54,8 @@ class HomeView : Fragment(), OnMapReadyCallback {
         binding.textviewCurrenttime.text = date.toString()
 
         // 지도를 초기화하고 Fragment와 연결
-        val mapFragment = childFragmentManager.findFragmentById(R.id.containerview_mapimage) as MapFragment?
-            ?: MapFragment.newInstance().also {
-                childFragmentManager.beginTransaction().add(R.id.containerview_mapimage, it).commit()
-            }
+        val mapFragment = childFragmentManager.findFragmentById(R.id.containerview_mapimage)
+                as MapFragment? ?: MapFragment.newInstance()
         mapFragment.getMapAsync(this)
 
         // buttonMangeProfile 버튼 클릭 시 ManageProfile Fragment 로 이동
@@ -81,6 +77,7 @@ class HomeView : Fragment(), OnMapReadyCallback {
         )
 
         // ArrayAdapter 를 사용해 Spinner 에 주차장 리스트를 설정.
+        // parkingLots 배열을 dropdown 항목에 연결
         val adapter = ArrayAdapter(
             requireContext(), android.R.layout.simple_spinner_item, parkingLots).also { arrayAdapter ->  
                 arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -105,10 +102,10 @@ class HomeView : Fragment(), OnMapReadyCallback {
             val parkingLot = binding.spinnerParkinglot.selectedItem?.toString()
             if(!parkingLot.isNullOrBlank()) {
                 viewModel.decreaseCarNum(parkingLot)
+                viewModel.recordExitTime()
             } else {
                 ToastHelper.showToast(requireContext(), "주차장 이름을 입력하세요")
             }
-            viewModel.recordExitTime()
         }
 
         // ViewModel의 LiveData 관찰을 통해 UI를 업데이트.
@@ -151,10 +148,10 @@ class HomeView : Fragment(), OnMapReadyCallback {
         }
 
         // InfoWindow 설정 (마커 클릭 시 표시되는 정보창).
-        val infoWindow = InfoWindow().apply {
-            adapter = object : InfoWindow.DefaultTextAdapter(requireContext()) {
-                override fun getText(infoWindow: InfoWindow): CharSequence {
-                    return infoWindow.marker?.tag as? CharSequence ?: "정보 없음"
+        val infoWindow = InfoWindow().apply { // InfoWindow() : 네이버 지도에서 제공하는 객체, 마커를 클릭했을 때 정보를 보여주는 창
+            adapter = object : InfoWindow.DefaultTextAdapter(requireContext()) { // 텍스트 어댑터 클래스 상속 (익명 객체)
+                override fun getText(infoWindow: InfoWindow): String {
+                    return infoWindow.marker?.tag as? String ?: "정보 없음"
                 }
             }
         }
@@ -179,6 +176,7 @@ class HomeView : Fragment(), OnMapReadyCallback {
         val initialPosition = LatLng(37.6000000, 126.8656335) // 위도 경도 지정
         val cameraUpdate = CameraUpdate.scrollTo(initialPosition)
         naverMap.moveCamera(cameraUpdate)
+
         val zoomUpdate = CameraUpdate.zoomTo(15.8) // Zoom 레벨 설정
         naverMap.moveCamera(zoomUpdate)
     }
