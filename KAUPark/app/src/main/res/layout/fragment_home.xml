@@ -5,7 +5,7 @@
     android:id="@+id/frameLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.fragment.HomeView">
+    tools:context=".view.fragment.HomeFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_home"
@@ -90,7 +90,7 @@
                 android:layout_height="60dp"
                 android:layout_marginStart="23dp"
                 android:layout_marginTop="0dp"
-                android:src="@drawable/kau_logo"
+                android:src="@drawable/image_kau_logo"
                 app:layout_constraintStart_toEndOf="@id/view_userview"
                 app:layout_constraintTop_toTopOf="@id/view_userview" />
 
@@ -192,7 +192,7 @@
                 android:layout_height="30dp"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="24dp"
-                android:src="@drawable/parking_logo"
+                android:src="@drawable/icon_parking_logo"
                 app:layout_constraintStart_toStartOf="@id/view_fee"
                 app:layout_constraintTop_toTopOf="@id/view_fee" />
 

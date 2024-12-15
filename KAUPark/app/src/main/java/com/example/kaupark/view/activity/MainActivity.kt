@@ -3,7 +3,7 @@ package com.example.kaupark
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.kaupark.databinding.ChattingListBinding
-import com.example.kaupark.view.fragment.ChattingList
+import com.example.kaupark.view.fragment.ChattingListFragment
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(android.R.id.content, ChattingList())
+                .replace(android.R.id.content, ChattingListFragment())
                 .commit()
         }
     }

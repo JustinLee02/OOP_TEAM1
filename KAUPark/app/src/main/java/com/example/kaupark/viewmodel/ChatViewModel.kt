@@ -2,7 +2,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.kaupark.model.Chat
+import com.example.kaupark.model.ChatModel
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import java.util.Date
@@ -10,11 +10,11 @@ import java.util.Date
 class ChatViewModel : ViewModel() {
 
     private val firestore = FirebaseFirestore.getInstance()
-    private val _chatList = MutableLiveData<List<Chat>>()
-    val chatList: LiveData<List<Chat>> get() = _chatList
+    private val _chatList = MutableLiveData<List<ChatModel>>()
+    val chatList: LiveData<List<ChatModel>> get() = _chatList
 
     fun sendMessage(currentUser: String, receiver: String, message: String) {
-        val chat = Chat().apply {
+        val chat = ChatModel().apply {
             nickname = currentUser
             contents = message
             time = Date()
@@ -76,12 +76,12 @@ class ChatViewModel : ViewModel() {
                                 }
 
                                 if (chatDocuments != null) {
-                                    val loadedChats = mutableListOf<Chat>()
+                                    val loadedChats = mutableListOf<ChatModel>()
                                     for (chatDocument in chatDocuments) {
                                         val nickname = chatDocument.getString("nickname") ?: ""
                                         val contents = chatDocument.getString("contents") ?: ""
                                         val time = chatDocument.getDate("time")
-                                        loadedChats.add(Chat(nickname, contents, time))
+                                        loadedChats.add(ChatModel(nickname, contents, time))
                                     }
                                     _chatList.value = loadedChats
                                 }

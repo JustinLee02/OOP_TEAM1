@@ -4,20 +4,20 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.kaupark.model.ParkingItem
-import com.example.kaupark.model.User
+import com.example.kaupark.model.ParkingItemModel
+import com.example.kaupark.model.UserModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
-class ManageProfileViewModel(): ViewModel() {
+class ManageProfileViewModel: ViewModel() {
     private val firestore = FirebaseFirestore.getInstance()
     private val auth = FirebaseAuth.getInstance()
 
-    private val _parkingItems = MutableLiveData<List<ParkingItem>>()
-    val parkingItems: LiveData<List<ParkingItem>> get() = _parkingItems
+    private val _parkingItems = MutableLiveData<List<ParkingItemModel>>()
+    val parkingItems: LiveData<List<ParkingItemModel>> get() = _parkingItems
 
-    private val _userInfo = MutableLiveData<User>()
-    val userInfo: LiveData<User> get() = _userInfo
+    private val _userInfo = MutableLiveData<UserModel>()
+    val userInfo: LiveData<UserModel> get() = _userInfo
 
     private val _toastMessage = MutableLiveData<String?>()
     val toastMessage: LiveData<String?> get() = _toastMessage
@@ -34,11 +34,10 @@ class ManageProfileViewModel(): ViewModel() {
                 val email = document.getString("email")
                 val phoneNum = document.getString("phoneNum")
                 val carNum = document.getString("carNum")
-                val userInfo = User(name = name!!, studentId = studentId!!, email = email!!, phoneNum = phoneNum!!, carNum = carNum!!, password = "", deposit = 0)
+                val userInfo = UserModel(name = name!!, studentId = studentId!!, email = email!!, phoneNum = phoneNum!!, carNum = carNum!!, password = "", deposit = 0)
                 _userInfo.value = userInfo
             }
     }
-
 
     fun fetchParkingRecords() {
         val userId = auth.currentUser?.uid ?: return // 현재 로그인한 사용자의 ID 가져오기
@@ -48,7 +47,7 @@ class ManageProfileViewModel(): ViewModel() {
             .collection("parking_records")
             .get()
             .addOnSuccessListener { documents ->
-                val parkingList = mutableListOf<ParkingItem>()
+                val parkingList = mutableListOf<ParkingItemModel>()
                 // Firestore에서 데이터를 가져와 parkingItems에 추가
                 for (document in documents) {
                     val date = document.getString("date") ?: ""
@@ -57,7 +56,7 @@ class ManageProfileViewModel(): ViewModel() {
                     val durationSecs = "${durationMillis / 1000} sec"
                     val fee = "${durationMillis /1000 * 100}원"
 
-                    parkingList.add(ParkingItem(date, fee, durationSecs))
+                    parkingList.add(ParkingItemModel(date, fee, durationSecs))
                 }
                 _parkingItems.value = parkingList
             }

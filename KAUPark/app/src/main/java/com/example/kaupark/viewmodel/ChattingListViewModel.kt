@@ -3,7 +3,7 @@ package com.example.kaupark.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.kaupark.model.Person
+import com.example.kaupark.model.PersonModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -14,8 +14,8 @@ class ChattingListViewModel : ViewModel() {
     private val firestore = FirebaseFirestore.getInstance()
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
-    private val _personList = MutableLiveData<List<Person>>()
-    val personList: LiveData<List<Person>> get() = _personList
+    private val _personList = MutableLiveData<List<PersonModel>>()
+    val personList: LiveData<List<PersonModel>> get() = _personList
 
     private val _carNum = MutableLiveData<String>()
     val carNum: LiveData<String> get() = _carNum
@@ -39,13 +39,13 @@ class ChattingListViewModel : ViewModel() {
                 val currentTime = document.getDate("currentTime") ?: Date()
                 val lastMessage = document.getString("lastMessage") ?: "새로운 메세지가 왔습니다"
 
-                Person(participants, currentTime,lastMessage)
+                PersonModel(participants, currentTime,lastMessage)
             }
 
         _personList.value = personItems
 
     }
-    suspend fun deleteChattingList(person: Person, receiver: String) {
+    suspend fun deleteChattingList(person: PersonModel, receiver: String) {
         // 1. Firestore에서 해당 문서 찾기
         val result = firestore.collection("chattingLists")
             .whereArrayContains("participants", receiver)

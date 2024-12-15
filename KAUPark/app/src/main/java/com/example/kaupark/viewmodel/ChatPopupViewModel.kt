@@ -2,7 +2,7 @@ package com.example.kaupark.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.example.kaupark.model.Person
+import com.example.kaupark.model.PersonModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -52,7 +52,7 @@ class ChatPopupViewModel : ViewModel() {
 
     suspend fun createChat(carNum1: String, carNum2: String) {
         try {
-            val person = Person().apply {
+            val person = PersonModel().apply {
                 participants = mutableListOf(carNum1, carNum2)
                 currentTime = Date()
             }

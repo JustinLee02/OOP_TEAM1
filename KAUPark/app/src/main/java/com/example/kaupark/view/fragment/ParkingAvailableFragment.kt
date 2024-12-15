@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.kaupark.databinding.ParkingAvailableBinding
-import com.example.kaupark.model.ParkingSpot
+import com.example.kaupark.model.ParkingSpotModel
 import com.example.kaupark.viewmodel.ParkingAvailableViewModel
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.data.PieData
@@ -17,7 +17,7 @@ import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import androidx.lifecycle.Observer
 
-class ParkingAvailable : Fragment() {
+class ParkingAvailableFragment : Fragment() {
 
     private lateinit var binding: ParkingAvailableBinding
     private lateinit var viewModel: ParkingAvailableViewModel
@@ -47,7 +47,7 @@ class ParkingAvailable : Fragment() {
         return binding.root
     }
 
-    private fun displayParkingData(parkingSpotList: List<ParkingSpot>) {
+    private fun displayParkingData(parkingSpotList: List<ParkingSpotModel>) {
         for (spot in parkingSpotList) {
             when (spot.name) {
                 "library" -> {
@@ -89,7 +89,7 @@ class ParkingAvailable : Fragment() {
         }
     }
 
-    private fun setupQueueButton(button: View, spot: ParkingSpot) {
+    private fun setupQueueButton(button: View, spot: ParkingSpotModel) {
         button.setOnClickListener {
             showQueueDialog(spot.name)
         }
@@ -122,7 +122,7 @@ class ParkingAvailable : Fragment() {
         builder.create().show()
     }
 
-    private fun updatePieChart(pieChart: com.github.mikephil.charting.charts.PieChart, spot: ParkingSpot) {
+    private fun updatePieChart(pieChart: com.github.mikephil.charting.charts.PieChart, spot: ParkingSpotModel) {
         val entries = ArrayList<PieEntry>().apply {
             add(PieEntry((spot.total - spot.currentLeft).toFloat(), "사용 중"))
             add(PieEntry(spot.currentLeft.toFloat(), "남은 자리"))

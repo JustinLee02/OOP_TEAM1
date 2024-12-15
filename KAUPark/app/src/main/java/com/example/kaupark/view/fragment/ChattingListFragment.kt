@@ -1,7 +1,6 @@
 package com.example.kaupark.view.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,12 +11,12 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kaupark.databinding.ChattingListBinding
-import com.example.kaupark.PersonsAdapter
+import com.example.kaupark.view.adapter.PersonsAdapter
 import com.example.kaupark.R
 import com.example.kaupark.viewmodel.ChattingListViewModel
 import kotlinx.coroutines.launch
 
-class ChattingList : Fragment() {
+class ChattingListFragment : Fragment() {
 
     private val viewModel: ChattingListViewModel by viewModels()
     private lateinit var binding: ChattingListBinding

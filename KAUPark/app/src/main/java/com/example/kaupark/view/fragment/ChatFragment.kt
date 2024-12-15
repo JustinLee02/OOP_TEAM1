@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kaupark.R
 import com.example.kaupark.databinding.FragmentChatBinding
+import com.example.kaupark.view.adapter.ChatAdapter
 
 class ChatFragment : Fragment() {
 
@@ -50,7 +51,7 @@ class ChatFragment : Fragment() {
         binding.toolbarChat.title = receiver
         binding.toolbarChat.setTitleTextColor(ContextCompat.getColor(requireContext(), android.R.color.white))
 
-        binding.toolbarChat.setNavigationIcon(R.drawable.arrow_back)
+        binding.toolbarChat.setNavigationIcon(R.drawable.icon_arrow_back)
         binding.toolbarChat.setNavigationOnClickListener {
             parentFragmentManager.popBackStack()
         }

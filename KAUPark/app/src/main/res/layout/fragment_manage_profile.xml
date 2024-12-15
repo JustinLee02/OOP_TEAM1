@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".view.fragment.ManageProfile">
+    tools:context=".view.fragment.ManageProfileFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_setting"
@@ -46,7 +46,7 @@
                 android:layout_height="121dp"
                 android:layout_marginStart="145dp"
                 android:layout_marginTop="48dp"
-                android:src="@drawable/user"
+                android:src="@drawable/icon_user"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -83,7 +83,7 @@
                 android:layout_marginStart="33dp"
                 android:layout_marginTop="-9dp"
                 android:background="@drawable/edittext_rounded_all_corners"
-                android:drawableEnd="@drawable/name_edittext"
+                android:drawableEnd="@drawable/icon_name_edittext"
                 android:fontFamily="@font/pretendard_semibold"
                 android:hint="이수현"
                 android:paddingLeft="5dp"
@@ -114,7 +114,7 @@
                 android:layout_marginStart="0dp"
                 android:layout_marginTop="-9dp"
                 android:background="@drawable/edittext_rounded_all_corners"
-                android:drawableEnd="@drawable/studentid_edittext"
+                android:drawableEnd="@drawable/icon_studentid_edittext"
                 android:fontFamily="@font/pretendard_semibold"
                 android:hint="2021121141"
                 android:paddingLeft="5dp"
@@ -176,7 +176,7 @@
                 android:layout_marginStart="0dp"
                 android:layout_marginTop="-9dp"
                 android:background="@drawable/edittext_rounded_all_corners"
-                android:drawableEnd="@drawable/phone_edittext"
+                android:drawableEnd="@drawable/icon_phone_edittext"
                 android:fontFamily="@font/pretendard_semibold"
                 android:hint="01086246741"
                 android:paddingLeft="5dp"
@@ -207,7 +207,7 @@
                 android:layout_marginStart="0dp"
                 android:layout_marginTop="-9dp"
                 android:background="@drawable/edittext_rounded_all_corners"
-                android:drawableEnd="@drawable/car_edittext"
+                android:drawableEnd="@drawable/icon_car"
                 android:fontFamily="@font/pretendard_semibold"
                 android:hint="51가 4130"
                 android:paddingLeft="5dp"

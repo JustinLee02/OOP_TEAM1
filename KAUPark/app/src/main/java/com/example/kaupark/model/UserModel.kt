@@ -1,6 +1,6 @@
 package com.example.kaupark.model
 
-data class User(
+data class UserModel(
     val name: String,
     val studentId: String,
     val password: String,

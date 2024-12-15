@@ -10,7 +10,7 @@ import android.widget.ArrayAdapter
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import com.example.kaupark.R
-import com.example.kaupark.ToastHelper
+import com.example.kaupark.utils.ToastHelper
 import com.example.kaupark.databinding.HomeViewBinding
 import com.example.kaupark.viewmodel.HomeViewModel
 import com.naver.maps.geometry.LatLng
@@ -26,7 +26,7 @@ import java.time.LocalDate
  * Description: 메인 화면 역할을 하는 Fragment로, 주차장 정보를 보여주고 지도와 사용자 상호작용을 처리.
  * Implements OnMapReadyCallback: 네이버 맵 초기화 및 마커를 관리.
  */
-class HomeView : Fragment(), OnMapReadyCallback {
+class HomeFragment: Fragment(), OnMapReadyCallback {
 
     private lateinit var binding: HomeViewBinding
 
@@ -61,7 +61,7 @@ class HomeView : Fragment(), OnMapReadyCallback {
         // buttonMangeProfile 버튼 클릭 시 ManageProfile Fragment 로 이동
         binding.buttonManageprofile.setOnClickListener {
             parentFragmentManager.beginTransaction()
-                .replace(R.id.main_container, ManageProfile())
+                .replace(R.id.main_container, ManageProfileFragment())
                 .addToBackStack(null)
                 .commit()
         }
