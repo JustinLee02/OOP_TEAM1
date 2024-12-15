@@ -5,38 +5,50 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
 import com.example.kaupark.ParkingRecordAdapter
-import com.example.kaupark.R
+import com.example.kaupark.ToastHelper
 import com.example.kaupark.databinding.FragmentManageProfileBinding
-import com.example.kaupark.model.ParkingItem
+import com.example.kaupark.viewmodel.ManageProfileViewModel
 
 class ManageProfile : Fragment() {
 
-    private val parkingItems = listOf(
-        ParkingItem("2024-11-16", "12000", "3h 13min"),
-        ParkingItem("2024-11-15", "8000", "2h 5min"),
-        ParkingItem("2024-11-14", "10000", "2h 45min")
-    )
+    private lateinit var binding: FragmentManageProfileBinding
+
+    private val viewModel: ManageProfileViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = FragmentManageProfileBinding.inflate(inflater, container, false)
+        binding = FragmentManageProfileBinding.inflate(inflater, container, false)
+
         binding.recyclerviewParkingrecord.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = ParkingRecordAdapter(parkingItems)
+            adapter = ParkingRecordAdapter(emptyList()) // 초기에는 빈 리스트
         }
+
+        viewModel.parkingItems.observe(viewLifecycleOwner) { parkingItems ->
+            (binding.recyclerviewParkingrecord.adapter as ParkingRecordAdapter).apply {
+                this.parkingItems = parkingItems // RecyclerView 데이터 갱신
+                notifyDataSetChanged()
+            }
+        }
+
+        viewModel.toastMessage.observe(viewLifecycleOwner) { message ->
+            message?.let {
+                ToastHelper.showToast(requireContext(), it)
+                viewModel.clearToastMessage()
+            }
+        }
+
+        viewModel.fetchParkingRecords()
 
         return binding.root
     }
-
 }

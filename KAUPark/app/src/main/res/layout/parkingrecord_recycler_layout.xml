@@ -3,7 +3,9 @@
     android:layout_width="336dp"
     android:layout_height="74dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/rounded_all_corners">
+    android:background="@drawable/rounded_all_corners"
+    android:id="@+id/recycler"
+    >
 
     <ImageView
         android:id="@+id/imageview_car_gif"

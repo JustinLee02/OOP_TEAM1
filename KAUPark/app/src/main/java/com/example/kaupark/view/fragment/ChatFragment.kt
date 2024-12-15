@@ -3,6 +3,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -14,7 +15,7 @@ class ChatFragment : Fragment() {
 
     private val chatViewModel: ChatViewModel by activityViewModels()
     private lateinit var binding: FragmentChatBinding
-    private lateinit var adapter: ChatAdapter
+    private var adapter: ChatAdapter? = null
     private lateinit var currentUser: String
     private lateinit var receiver: String
 
@@ -46,6 +47,9 @@ class ChatFragment : Fragment() {
             binding.edittextMessage.setText("")
         }
 
+        binding.toolbarChat.title = receiver
+        binding.toolbarChat.setTitleTextColor(ContextCompat.getColor(requireContext(), android.R.color.white))
+
         binding.toolbarChat.setNavigationIcon(R.drawable.arrow_back)
         binding.toolbarChat.setNavigationOnClickListener {
             parentFragmentManager.popBackStack()
@@ -56,9 +60,16 @@ class ChatFragment : Fragment() {
 
     private fun setUpObservers() {
         chatViewModel.chatList.observe(viewLifecycleOwner, Observer { chatList ->
-            adapter = ChatAdapter(currentUser, ArrayList(chatList))
-            binding.recyclerviewChat.adapter = adapter
-            adapter.notifyDataSetChanged()
+            if (adapter == null) {
+                adapter = ChatAdapter(currentUser, ArrayList(chatList))
+                binding.recyclerviewChat.adapter = adapter
+            } else {
+                adapter?.updateList(chatList)
+            }
+
+            if (chatList.isNotEmpty()) {
+                binding.recyclerviewChat.scrollToPosition(chatList.size - 1)
+            }
         })
     }
 
