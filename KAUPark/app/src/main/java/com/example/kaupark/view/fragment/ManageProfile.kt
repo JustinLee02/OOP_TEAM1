@@ -5,10 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kaupark.ParkingRecordAdapter
+import com.example.kaupark.ToastHelper
 import com.example.kaupark.databinding.FragmentManageProfileBinding
 import com.example.kaupark.viewmodel.ManageProfileViewModel
 
@@ -20,7 +20,6 @@ class ManageProfile : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -43,7 +42,7 @@ class ManageProfile : Fragment() {
 
         viewModel.toastMessage.observe(viewLifecycleOwner) { message ->
             message?.let {
-                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                ToastHelper.showToast(requireContext(), it)
                 viewModel.clearToastMessage()
             }
         }
