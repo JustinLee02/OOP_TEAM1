@@ -14,7 +14,7 @@ class ChatFragment : Fragment() {
 
     private val chatViewModel: ChatViewModel by activityViewModels()
     private lateinit var binding: FragmentChatBinding
-    private lateinit var adapter: ChatAdapter
+    private var adapter: ChatAdapter? = null
     private lateinit var currentUser: String
     private lateinit var receiver: String
 
@@ -56,9 +56,16 @@ class ChatFragment : Fragment() {
 
     private fun setUpObservers() {
         chatViewModel.chatList.observe(viewLifecycleOwner, Observer { chatList ->
-            adapter = ChatAdapter(currentUser, ArrayList(chatList))
-            binding.recyclerviewChat.adapter = adapter
-            adapter.notifyDataSetChanged()
+            if (adapter == null) { // nullable 타입으로 체크
+                adapter = ChatAdapter(currentUser, ArrayList(chatList))
+                binding.recyclerviewChat.adapter = adapter
+            } else {
+                adapter?.updateList(chatList)
+            }
+
+            if (chatList.isNotEmpty()) {
+                binding.recyclerviewChat.scrollToPosition(chatList.size - 1)
+            }
         })
     }
 
