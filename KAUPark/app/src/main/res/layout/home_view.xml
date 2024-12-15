@@ -13,7 +13,7 @@
         android:layout_height="72dp"
         android:layout_marginTop="0dp"
         android:background="#40368A"
-        app:layout_constraintTop_toTopOf="@id/frameLayout2"></androidx.appcompat.widget.Toolbar>
+        app:layout_constraintTop_toTopOf="@id/frameLayout2"/>
 
     <ScrollView
         android:id="@+id/scrollview_home"
@@ -104,6 +104,7 @@
                 android:text="프로필 편집"
                 android:textColor="@color/black"
                 android:textSize="7dp"
+                android:fontFamily="@font/pretendard_bold"
                 app:layout_constraintStart_toStartOf="@id/circleimageview_user"
                 app:layout_constraintTop_toBottomOf="@id/circleimageview_user" />
 
@@ -156,6 +157,7 @@
                 android:background="@color/kaucolor"
                 android:text="입차"
                 android:textColor="@color/white"
+                android:fontFamily="@font/pretendard_bold"
                 app:layout_constraintStart_toStartOf="@id/containerview_mapimage"
                 app:layout_constraintTop_toBottomOf="@id/spinner_parkinglot" />
 
@@ -168,6 +170,7 @@
                 android:background="@color/kaucolor"
                 android:text="출차"
                 android:textColor="@color/white"
+                android:fontFamily="@font/pretendard_bold"
                 app:layout_constraintStart_toEndOf="@id/button_in"
                 app:layout_constraintTop_toTopOf="@id/button_in" />
 
