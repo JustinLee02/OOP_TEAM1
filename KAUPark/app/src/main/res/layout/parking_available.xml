@@ -33,6 +33,7 @@
         app:layout_constraintStart_toStartOf="@id/rectangleView_StudentCenter"
         app:layout_constraintEnd_toEndOf="@id/rectangleView_StudentCenter" />
 
+
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/studentCenter_piechart"
         android:layout_width="100dp"
@@ -42,7 +43,19 @@
         app:layout_constraintEnd_toEndOf="@id/rectangleView_StudentCenter"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/rectangleView_StudentCenter"
-        app:layout_constraintTop_toTopOf="@id/rectangleView_StudentCenter" />
+        app:layout_constraintTop_toTopOf="@id/rectangleView_StudentCenter" >
+
+    </com.github.mikephil.charting.charts.PieChart>
+
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/car_edittext"
+        android:contentDescription="편집 버튼"
+        android:background="@android:color/transparent"
+        app:layout_constraintTop_toTopOf="@id/rectangleView_StudentCenter"
+        app:layout_constraintEnd_toEndOf="@id/rectangleView_StudentCenter" />
 
     <View
         android:id = "@+id/rectangleView_Library"
@@ -72,6 +85,7 @@
         app:layout_constraintStart_toStartOf="@id/rectangleView_Library"
         app:layout_constraintEnd_toEndOf="@id/rectangleView_Library" />
 
+
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/library_piechart"
         android:layout_width="100dp"
@@ -82,6 +96,17 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/rectangleView_Library"
         app:layout_constraintTop_toTopOf="@id/rectangleView_Library" />
+
+    <ImageButton
+        android:id="@+id/imageButton3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/car_edittext"
+        android:contentDescription="편집 버튼"
+        android:background="@android:color/transparent"
+        app:layout_constraintTop_toTopOf="@id/rectangleView_Library"
+        app:layout_constraintEnd_toEndOf="@id/rectangleView_Library" />
+
 
     <View
         android:id = "@+id/rectangleView_AcademicBuilding"
@@ -103,7 +128,7 @@
         android:layout_marginStart="58.5dp"
         android:layout_marginEnd="58.5dp"
         android:gravity="center"
-        android:text="강의동"
+        android:text="산학협력관"
         android:textColor="#000000"
         android:textSize="16sp"
         app:layout_constraintTop_toTopOf="@id/rectangleView_AcademicBuilding"
@@ -121,6 +146,16 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/rectangleView_AcademicBuilding"
         app:layout_constraintTop_toTopOf="@id/rectangleView_AcademicBuilding" />
+
+    <ImageButton
+        android:id="@+id/imageButton4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/car_edittext"
+        android:contentDescription="편집 버튼"
+        android:background="@android:color/transparent"
+        app:layout_constraintTop_toTopOf="@id/rectangleView_AcademicBuilding"
+        app:layout_constraintEnd_toEndOf="@id/rectangleView_AcademicBuilding" />
 
     <View
         android:id = "@+id/rectangleView_ScienceBuilding"
@@ -161,6 +196,16 @@
         app:layout_constraintStart_toStartOf="@id/rectangleView_ScienceBuilding"
         app:layout_constraintTop_toTopOf="@id/rectangleView_ScienceBuilding" />
 
+    <ImageButton
+        android:id="@+id/imageButton5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/car_edittext"
+        android:contentDescription="편집 버튼"
+        android:background="@android:color/transparent"
+        app:layout_constraintTop_toTopOf="@id/rectangleView_ScienceBuilding"
+        app:layout_constraintEnd_toEndOf="@id/rectangleView_ScienceBuilding" />
+
     <View
         android:id = "@+id/rectangleView_SearchBuilding"
         android:layout_width="162dp"
@@ -200,6 +245,16 @@
         app:layout_constraintStart_toStartOf="@id/rectangleView_SearchBuilding"
         app:layout_constraintTop_toTopOf="@id/rectangleView_SearchBuilding" />
 
+    <ImageButton
+        android:id="@+id/imageButton6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/car_edittext"
+        android:contentDescription="편집 버튼"
+        android:background="@android:color/transparent"
+        app:layout_constraintTop_toTopOf="@id/rectangleView_SearchBuilding"
+        app:layout_constraintEnd_toEndOf="@id/rectangleView_SearchBuilding" />
+
     <View
         android:id = "@+id/rectangleView_SomethingBuilding"
         android:layout_width="162dp"
@@ -238,6 +293,17 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/rectangleView_SomethingBuilding"
         app:layout_constraintTop_toTopOf="@id/rectangleView_SomethingBuilding" />
+
+    <ImageButton
+        android:id="@+id/imageButton7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/car_edittext"
+        android:contentDescription="편집 버튼"
+        android:background="@android:color/transparent"
+        app:layout_constraintTop_toTopOf="@id/rectangleView_SomethingBuilding"
+        app:layout_constraintEnd_toEndOf="@id/rectangleView_SomethingBuilding" />
+
     <TextView
         android:id="@+id/textView7"
         android:layout_width="match_parent"
@@ -249,5 +315,7 @@
         android:textSize="24sp"
         tools:layout_editor_absoluteX="-1dp"
         tools:layout_editor_absoluteY="-1dp" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

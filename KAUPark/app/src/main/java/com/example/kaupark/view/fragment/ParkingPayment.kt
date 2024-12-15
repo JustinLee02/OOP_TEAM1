@@ -1,24 +1,22 @@
 package com.example.kaupark.view.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kaupark.R
 import com.example.kaupark.databinding.FragmentParkingPaymentBinding
 import com.example.kaupark.view.adapter.ImageAdapter
-import com.google.firebase.firestore.FirebaseFirestore
+import com.example.kaupark.viewmodel.ParkingPaymentViewModel
 
 class ParkingPayment : Fragment() {
 
     private lateinit var binding: FragmentParkingPaymentBinding
-    private val firestore = FirebaseFirestore.getInstance()
-    private var deposit = 0
-    private val userDocumentId = "PfANoIw3kBX8V2BmfgAsDz6Rf423"
+    private val parkingPaymentViewModel: ParkingPaymentViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,13 +36,25 @@ class ParkingPayment : Fragment() {
 
         // 결제 버튼 로직
         binding.button2.setOnClickListener {
-            loadDeposit {
-                processPayment()
+            val isRegularSelected = binding.radioRegular.isChecked
+            val isOnSiteSelected = binding.radioOnSite.isChecked
+
+            if (isOnSiteSelected) {
+                parkingPaymentViewModel.loadDuration { duration ->
+                    parkingPaymentViewModel.processPayment(isRegularSelected, isOnSiteSelected, duration)
+                }
+            } else {
+                parkingPaymentViewModel.processPayment(isRegularSelected, isOnSiteSelected, null)
             }
         }
 
         // 정기권 및 현장 요금 선택에 따른 결제 버튼 텍스트 변경
         setupRadioButtons()
+
+        // 결제 결과를 UI에 반영
+        parkingPaymentViewModel.paymentResult.observe(viewLifecycleOwner) { result ->
+            Toast.makeText(requireContext(), result, Toast.LENGTH_SHORT).show()
+        }
 
         return binding.root
     }
@@ -69,78 +79,12 @@ class ParkingPayment : Fragment() {
         // 현장 요금 결제 버튼
         binding.radioOnSite.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                loadDuration { duration ->
+                parkingPaymentViewModel.loadDuration { duration ->
                     binding.button2.text = "${duration}원 결제하기"
                 }
             } else {
                 binding.button2.text = "결제하기"
             }
         }
-    }
-
-    private fun loadDeposit(onDepositLoaded: () -> Unit) {
-        firestore.collection("users")
-            .document(userDocumentId)
-            .get()
-            .addOnSuccessListener { document ->
-                if (document != null && document.contains("deposit")) {
-                    deposit = document.getLong("deposit")?.toInt() ?: 0
-                    Log.d("ParkingPayment", "Current deposit: $deposit")
-                    onDepositLoaded()
-                } else {
-                    Log.e("ParkingPayment", "No deposit field found.")
-                }
-            }
-    }
-
-    private fun processPayment() {
-        val isRegularSelected = binding.radioRegular.isChecked
-        val isOnSiteSelected = binding.radioOnSite.isChecked
-
-        if (isRegularSelected) {
-            val cost = 60000
-            if (deposit >= cost) {
-                val newDeposit = deposit - cost
-                updateDeposit(newDeposit)
-            } else {
-                Toast.makeText(requireContext(), "잔액이 부족합니다.", Toast.LENGTH_SHORT).show()
-            }
-        } else if (isOnSiteSelected) {
-            loadDuration { duration ->
-                if (deposit >= duration) {
-                    val newDeposit = deposit - duration
-                    updateDeposit(newDeposit)
-                } else {
-                    Toast.makeText(requireContext(), "잔액이 부족합니다.", Toast.LENGTH_SHORT).show()
-                }
-            }
-        } else {
-            Toast.makeText(requireContext(), "정기권 또는 현장 결제를 선택하세요.", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    private fun updateDeposit(newDeposit: Int) {
-        firestore.collection("users")
-            .document(userDocumentId)
-            .update("deposit", newDeposit)
-            .addOnSuccessListener {
-                deposit = newDeposit
-                Toast.makeText(requireContext(), "결제가 완료되었습니다.", Toast.LENGTH_SHORT).show()
-            }
-    }
-
-    private fun loadDuration(onDurationLoaded: (Int) -> Unit) {
-        firestore.collection("users")
-            .document(userDocumentId)
-            .collection("parking_records")
-            .document("duration")
-            .get()
-            .addOnSuccessListener { document ->
-                if (document != null && document.contains("duration")) {
-                    val duration = document.getLong("duration")?.toInt() ?: 0
-                    Log.d("ParkingPayment", "Duration: $duration")
-                    onDurationLoaded(duration)
-                }
-            }
     }
 }
