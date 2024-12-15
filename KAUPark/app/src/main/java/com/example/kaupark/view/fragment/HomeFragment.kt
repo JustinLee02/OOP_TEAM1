@@ -11,7 +11,7 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import com.example.kaupark.R
 import com.example.kaupark.utils.ToastHelper
-import com.example.kaupark.databinding.HomeViewBinding
+import com.example.kaupark.databinding.FragmentHomeBinding
 import com.example.kaupark.viewmodel.HomeViewModel
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
@@ -28,7 +28,7 @@ import java.time.LocalDate
  */
 class HomeFragment: Fragment(), OnMapReadyCallback {
 
-    private lateinit var binding: HomeViewBinding
+    private lateinit var binding: FragmentHomeBinding
 
     // 현재 날짜를 저장하는 변수 (API 26 이상 필요)
     @RequiresApi(Build.VERSION_CODES.O)
@@ -48,7 +48,7 @@ class HomeFragment: Fragment(), OnMapReadyCallback {
     ): View {
 
         // View Binding
-        binding = HomeViewBinding.inflate(inflater, container, false)
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         // 현재 날짜를 홈 화면에 표시
         binding.textviewCurrenttime.text = date.toString()

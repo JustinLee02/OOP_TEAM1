@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.kaupark.databinding.ParkingAvailableBinding
+import com.example.kaupark.databinding.FragmentParkingAvailableBinding
 import com.example.kaupark.model.ParkingSpotModel
 import com.example.kaupark.viewmodel.ParkingAvailableViewModel
 import com.github.mikephil.charting.animation.Easing
@@ -19,14 +19,14 @@ import androidx.lifecycle.Observer
 
 class ParkingAvailableFragment : Fragment() {
 
-    private lateinit var binding: ParkingAvailableBinding
+    private lateinit var binding: FragmentParkingAvailableBinding
     private lateinit var viewModel: ParkingAvailableViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = ParkingAvailableBinding.inflate(inflater, container, false)
+        binding = FragmentParkingAvailableBinding.inflate(inflater, container, false)
 
         // ViewModel 초기화
         viewModel = ViewModelProvider(this).get(ParkingAvailableViewModel::class.java)

@@ -10,7 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.kaupark.databinding.ChattingListBinding
+import com.example.kaupark.databinding.FragmentChattingListBinding
 import com.example.kaupark.view.adapter.PersonsAdapter
 import com.example.kaupark.R
 import com.example.kaupark.viewmodel.ChattingListViewModel
@@ -19,14 +19,14 @@ import kotlinx.coroutines.launch
 class ChattingListFragment : Fragment() {
 
     private val viewModel: ChattingListViewModel by viewModels()
-    private lateinit var binding: ChattingListBinding
+    private lateinit var binding: FragmentChattingListBinding
     private lateinit var adapter: PersonsAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = ChattingListBinding.inflate(inflater, container, false)
+        binding = FragmentChattingListBinding.inflate(inflater, container, false)
 
         setupRecyclerView()
         setupObservers()

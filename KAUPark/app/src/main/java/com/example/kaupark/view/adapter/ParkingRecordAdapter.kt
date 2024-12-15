@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.kaupark.R
-import com.example.kaupark.databinding.ParkingrecordRecyclerLayoutBinding
+import com.example.kaupark.databinding.RecyclerviewParkingrecordBinding
 import com.example.kaupark.model.ParkingItemModel
 
 /**
@@ -17,7 +17,7 @@ class ParkingRecordAdapter(var parkingItems: List<ParkingItemModel>): RecyclerVi
      * RecyclerView의 각 아이템 뷰를 관리하는 ViewHolder 클래스
      * @param binding 아이템 뷰와 연결된 ViewBinding 객체
      */
-    inner class ParkingViewHolder(private val binding: ParkingrecordRecyclerLayoutBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class ParkingViewHolder(private val binding: RecyclerviewParkingrecordBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ParkingItemModel) {
             binding.textviewTime.text = item.date // 날짜
             binding.textviewWon.text = item.fee // 요금
@@ -38,7 +38,7 @@ class ParkingRecordAdapter(var parkingItems: List<ParkingItemModel>): RecyclerVi
      * @return 생성된 ViewHolder 객체
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ParkingViewHolder {
-        val binding = ParkingrecordRecyclerLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = RecyclerviewParkingrecordBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ParkingViewHolder(binding)
     }
 
