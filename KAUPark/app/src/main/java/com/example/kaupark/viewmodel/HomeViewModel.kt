@@ -10,41 +10,45 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.naver.maps.map.overlay.Marker
 import com.example.kaupark.data.ParkingClass
 
+
+/**
+ * HomewViewModel
+ * Description: HomeView Fragment와 연결되어 LiveData를 통해 데이터 변경을 UI에 반영
+ */
 class HomeViewModel() : ViewModel() {
 
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
     private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
 
-    // Encapsulation
-    // The value can only be modified within the ViewModel
-    private val _userCarNum = MutableLiveData<String>()
+    // LiveData 변수 선언 (UI 상태를 위한 변수)
+    private val _userCarNum = MutableLiveData<String>() // 사용자의 차량 번호
     val userCarNum: LiveData<String> get() = _userCarNum
 
-    private val _userName = MutableLiveData<String>()
+    private val _userName = MutableLiveData<String>() // 사용자의 이름
     val userName: LiveData<String> get() = _userName
 
-    private val _parkingRecord = MutableLiveData<ParkingRecord?>()
+    private val _parkingRecord = MutableLiveData<ParkingRecord?>() // 주차 기록
     val parkingRecord: LiveData<ParkingRecord?> get() = _parkingRecord
 
-    private val _parkingFee = MutableLiveData<String>()
+    private val _parkingFee = MutableLiveData<String>() // 주차 요금
     val parkingFee: LiveData<String> get() = _parkingFee
 
-    private val _parkingSpace = MutableLiveData<Int>()
+    private val _parkingSpace = MutableLiveData<Int>() // 남은 주차 공간 수
     val parkingSpace: LiveData<Int> get() = _parkingSpace
 
-    private val _isEntry = MutableLiveData<Boolean>()
+    private val _isEntry = MutableLiveData<Boolean>() // 주차장 입차 여부
     val isEntry: LiveData<Boolean> get() = _isEntry
 
-    private val _toastMessage = MutableLiveData<String?>()
+    private val _toastMessage = MutableLiveData<String?>() // 사용자에게 보여줄 토스트 메세지
     val toastMessage: LiveData<String?> get() = _toastMessage
 
-    private val _markers = MutableLiveData<List<Marker>>()
+    private val _markers = MutableLiveData<List<Marker>>() // 지도에 표시할 마커 목록
     val markers: LiveData<List<Marker>> get() = _markers
 
-    private val _selectedParkingLot = MutableLiveData<String>()
+    private val _selectedParkingLot = MutableLiveData<String>() // 선택된 주차장 이름
     val selectedParkingLot: LiveData<String> get() = _selectedParkingLot
 
-    private val _parkingRatio = MutableLiveData<String>()
+    private val _parkingRatio = MutableLiveData<String>() // 주차장 혼잡도 비율
     val parkingRatio: LiveData<String> get() = _parkingRatio
 
 
@@ -53,20 +57,22 @@ class HomeViewModel() : ViewModel() {
         loadMarkers()
     }
 
-    // Fetching user info
-    // User car number, id
+    /**
+     * Firestore에서 사용자 정보를 가져와 LiveData에 저장
+     */
     fun fetchUserInfo() {
         val userId = auth.currentUser?.uid ?: return
         firestore.collection("users").document(userId).get()
             .addOnSuccessListener { document ->
                 if (document != null) {
+                    // Firestore에서 사용자 이름과 차량 번호를 가져와 LiveData에 저장
                     val carNum = document.getString("carNum") ?: "차량 번호 없음"
                     val name = document.getString("name") ?: "이름 없음"
 
                     _userCarNum.value = carNum
                     _userName.value = name
                 } else {
-                    // Toast.makeText(this, "사용자 정보가 없습니다.", Toast.LENGTH_SHORT).show()
+                    // ToastHelper.showToast()
                 }
             }
             .addOnFailureListener { e ->
@@ -75,13 +81,17 @@ class HomeViewModel() : ViewModel() {
     }
 
 
-    // Record user entry time to millis
-    fun recordEntryTime() {
-        val userId = auth.currentUser?.uid ?: return
-        val entryTime = System.currentTimeMillis()
-        val currentDate = android.text.format.DateFormat.format("yyyy-MM-dd", entryTime).toString()
+    /**
+     * 사용자가 주차장에 입차했을 때 시간을 기록
+     * Firestore 에 입차 시간과 날짜를 저장
+     */
 
-        val record = ParkingRecord(entryTime = entryTime, date = currentDate)
+    fun recordEntryTime() {
+        val userId = auth.currentUser?.uid ?: return // 현재 로그인된 사용자 ID 가져오기
+        val entryTime = System.currentTimeMillis()
+        val currentDate = android.text.format.DateFormat.format("yyyy-MM-dd", entryTime).toString() // 현재 날짜 포맷팅
+
+        val record = ParkingRecord(entryTime = entryTime, date = currentDate) // 주차 기록 객체 생성
         if (_isEntry.value == true) {
             _toastMessage.value = "출차 버튼을 눌러주세요"
         } else {
@@ -100,6 +110,9 @@ class HomeViewModel() : ViewModel() {
         }
     }
 
+    /**
+     * 특정 주차장의 차량 수를 증가시키고 남은 공간을 업데이트
+     */
     fun increaseCarNum(parkingLot: String) {
 
         val location = when (parkingLot) {
@@ -141,8 +154,9 @@ class HomeViewModel() : ViewModel() {
             }
     }
 
-    // Record user exit time to millis
-    // Calculate duration by exitTime - entryTime
+    /**
+     * 사용자가 출차했을 때 시간을 기록하고 주차 요금을 계산
+     */
     fun recordExitTime() {
         val userId = auth.currentUser?.uid ?: return
         val exitTime = System.currentTimeMillis()
@@ -205,7 +219,9 @@ class HomeViewModel() : ViewModel() {
             }
     }
 
-    // Calculating Parking Fee
+    /**
+     * 주차 요금을 계산하여 LiveData에 저장
+     */
     private fun calculateParkingFee(durationMillis: Long) {
         val durationSecs = durationMillis / 1000
         val userId = auth.currentUser?.uid ?: return
@@ -224,24 +240,31 @@ class HomeViewModel() : ViewModel() {
                 Log.e("Firebase", "Error updating parking duration: ${e.message}")
             }
 
+        /*
+        _parkingFee.value = when {
+            durationMins < 30 -> "30분 무료 ${durationMins}분 주차중"
+            durationMins < 60 -> "2000원 ${durationMins}분 주차중"
+            else -> {
+                val additionalFee = ((durationMins - 60) / 30) * 500
+                "${2000 + additionalFee}원 ${durationMins}분 주차중"
+            }
+        } */
 
-//        _parkingFee.value = when {
-//            durationMins < 30 -> "30분 무료 ${durationMins}분 주차중"
-//            durationMins < 60 -> "2000원 ${durationMins}분 주차중"
-//            else -> {
-//                val additionalFee = ((durationMins - 60) / 30) * 500
-//                "${2000 + additionalFee}원 ${durationMins}분 주차중"
-//            }
-//        }
         _parkingFee.value = "${durationSecs * 100}원"
     }
 
+    /**
+     * 주차장 마커를 로드하고 혼잡도를 업데이트
+     */
     private fun loadMarkers() {
         val markerList = ParkingClass().getMarker()
         _markers.value = markerList
         updateMarkersWithParkingRatios(markerList)
     }
 
+    /**
+     * 주차장 혼잡도를 계산하여 마커에 표시
+     */
     private fun updateMarkersWithParkingRatios(markerList: List<Marker>) {
         markerList.forEach { marker ->
             val parkingLot = marker.captionText
@@ -261,6 +284,9 @@ class HomeViewModel() : ViewModel() {
         }
     }
 
+    /**
+     * 주차장의 혼잡도 비율을 계산하여 콜백으로 반환
+     */
     private fun getParkingLotRatio(parkingLot: String, callback: (String) -> Unit) {
         firestore.collection("parkingAvailable").document(parkingLot)
             .get()
@@ -281,6 +307,9 @@ class HomeViewModel() : ViewModel() {
             }
     }
 
+    /**
+     * 사용자가 선택한 주차장을 LiveData에 저장
+     */
     fun selectMarker(marker: Marker) {
         _selectedParkingLot.value = marker.captionText
     }
