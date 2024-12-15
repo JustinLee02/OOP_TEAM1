@@ -45,6 +45,34 @@ class ChattingListViewModel : ViewModel() {
         _personList.value = personItems
 
     }
+    suspend fun deleteChattingList(person: Person, receiver: String) {
+        // 1. Firestore에서 해당 문서 찾기
+        val result = firestore.collection("chattingLists")
+            .whereArrayContains("participants", receiver)
+            .get()
+            .await()
+
+        // 2. 찾은 문서의 chats 서브 컬렉션 삭제
+        result.documents.firstOrNull()?.let { document ->
+            val chatsCollection = firestore.collection("chattingLists")
+                .document(document.id)
+                .collection("chats")
+
+            // chats 서브 컬렉션에 있는 모든 문서 삭제
+            val chats = chatsCollection.get().await()
+            for (chatDoc in chats) {
+                chatsCollection.document(chatDoc.id).delete().await()
+            }
+
+            // 3. chats 삭제 후 chattingLists 문서 삭제
+            firestore.collection("chattingLists")
+                .document(document.id)
+                .delete()
+                .await()
+        }
+    }
+
+
 
     fun removePerson(position: Int) {
         _personList.value = _personList.value?.toMutableList()?.apply {
