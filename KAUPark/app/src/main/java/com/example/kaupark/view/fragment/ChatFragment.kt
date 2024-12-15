@@ -3,6 +3,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -45,6 +46,9 @@ class ChatFragment : Fragment() {
             chatViewModel.sendMessage(currentUser, receiver, message)
             binding.edittextMessage.setText("")
         }
+
+        binding.toolbarChat.title = receiver
+        binding.toolbarChat.setTitleTextColor(ContextCompat.getColor(requireContext(), android.R.color.white))
 
         binding.toolbarChat.setNavigationIcon(R.drawable.arrow_back)
         binding.toolbarChat.setNavigationOnClickListener {
