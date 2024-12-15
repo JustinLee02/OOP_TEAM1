@@ -13,29 +13,26 @@ import java.util.Locale
 class ChatAdapter(private val currentUser: String, private val itemList: ArrayList<Chat>) :
     RecyclerView.Adapter<ChatAdapter.ViewHolder>() {
 
+    private val dateFormat = SimpleDateFormat("yyyy-MM-dd a hh:mm", Locale.getDefault()) // 클래스 수준에서 정의
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.chat_layout, parent, false)
         return ViewHolder(view)
     }
 
-    override fun getItemCount(): Int {
-        return itemList.size
-    }
+    override fun getItemCount(): Int = itemList.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val chat = itemList[position]
 
-        if (currentUser == chat.nickname) {
-            holder.card.setCardBackgroundColor(Color.parseColor("#FFF176"))
-        } else {
-            holder.card.setCardBackgroundColor(Color.WHITE)
-        }
+        // 사용자에 따라 카드 배경 색상 변경
+        val cardColor = if (currentUser == chat.nickname) "#FFF176" else "#FFFFFF"
+        holder.card.setCardBackgroundColor(Color.parseColor(cardColor))
 
         holder.nickname.text = chat.nickname
         holder.contents.text = chat.contents
 
         // 시간 및 날짜 포맷
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd a hh:mm", Locale.getDefault())
         holder.time.text = chat.time?.let { dateFormat.format(it) } ?: "Unknown"
     }
 
