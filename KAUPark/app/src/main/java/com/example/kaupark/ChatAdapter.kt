@@ -39,6 +39,12 @@ class ChatAdapter(private val currentUser: String, private val itemList: ArrayLi
         holder.time.text = chat.time?.let { dateFormat.format(it) } ?: "Unknown"
     }
 
+    fun updateList(newList: List<Chat>) {
+        itemList.clear()
+        itemList.addAll(newList)
+        notifyDataSetChanged()
+    }
+
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val card: CardView = itemView.findViewById(R.id.chat_card_view)
         val nickname: TextView = itemView.findViewById(R.id.textview_nickname)
