@@ -7,54 +7,47 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.kaupark.databinding.ParkingAvailableBinding
 import com.example.kaupark.model.ParkingSpot
+import com.example.kaupark.viewmodel.ParkingAvailableViewModel
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
-import com.google.firebase.firestore.FirebaseFirestore
+import androidx.lifecycle.Observer
 
 class ParkingAvailable : Fragment() {
 
-    private val firestore = FirebaseFirestore.getInstance()
-    private val parkingSpotList = arrayListOf<ParkingSpot>()
-
     private lateinit var binding: ParkingAvailableBinding
+    private lateinit var viewModel: ParkingAvailableViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         binding = ParkingAvailableBinding.inflate(inflater, container, false)
-        loadParkingData()
+
+        // ViewModel 초기화
+        viewModel = ViewModelProvider(this).get(ParkingAvailableViewModel::class.java)
+
+        // 데이터 로딩
+        viewModel.loadParkingData()
+
+        // 데이터 변화 관찰
+        viewModel.parkingSpotList.observe(viewLifecycleOwner, Observer { parkingSpotList ->
+            displayParkingData(parkingSpotList)
+        })
+
+        // 에러 메시지 관찰
+        viewModel.errorMessage.observe(viewLifecycleOwner, Observer { error ->
+            Log.e("ParkingAvailable", error)
+        })
+
         return binding.root
     }
 
-    private fun loadParkingData() {
-        firestore.collection("parkingAvailable")
-            .get()
-            .addOnSuccessListener { documents ->
-                parkingSpotList.clear()
-
-                for (document in documents) {
-                    val name = document.id
-                    val currentLeft = document.getLong("currentLeft")?.toInt() ?: 0
-                    val total = document.getLong("total")?.toInt() ?: 0
-
-                    val parkingSpot = ParkingSpot(name, currentLeft, total)
-                    parkingSpotList.add(parkingSpot)
-                }
-
-                displayParkingData()
-            }
-            .addOnFailureListener { exception ->
-                Log.e("ParkingAvailable", "Error getting documents: ", exception)
-            }
-    }
-
-    private fun displayParkingData() {
+    private fun displayParkingData(parkingSpotList: List<ParkingSpot>) {
         for (spot in parkingSpotList) {
             when (spot.name) {
                 "library" -> {
@@ -83,24 +76,14 @@ class ParkingAvailable : Fragment() {
                 }
             }
 
-            if (spot.currentLeft == 0) {
-                when (spot.name) {
-                    "library" -> binding.imageButton3.visibility = View.VISIBLE
-                    "studentCenter" -> binding.imageButton2.visibility = View.VISIBLE
-                    "academicBuilding" -> binding.imageButton4.visibility = View.VISIBLE
-                    "scienceBuilding" -> binding.imageButton5.visibility = View.VISIBLE
-                    "searchBuilding" -> binding.imageButton6.visibility = View.VISIBLE
-                    "somethingBuilding" -> binding.imageButton7.visibility = View.VISIBLE
-                }
-            } else {
-                when (spot.name) {
-                    "library" -> binding.imageButton3.visibility = View.GONE
-                    "studentCenter" -> binding.imageButton2.visibility = View.GONE
-                    "academicBuilding" -> binding.imageButton4.visibility = View.GONE
-                    "scienceBuilding" -> binding.imageButton5.visibility = View.GONE
-                    "searchBuilding" -> binding.imageButton6.visibility = View.GONE
-                    "somethingBuilding" -> binding.imageButton7.visibility = View.GONE
-                }
+            // 주차 자리 현황에 따른 버튼 visibility 조정
+            when (spot.name) {
+                "library" -> binding.imageButton3.visibility = if (spot.currentLeft == 0) View.VISIBLE else View.GONE
+                "studentCenter" -> binding.imageButton2.visibility = if (spot.currentLeft == 0) View.VISIBLE else View.GONE
+                "academicBuilding" -> binding.imageButton4.visibility = if (spot.currentLeft == 0) View.VISIBLE else View.GONE
+                "scienceBuilding" -> binding.imageButton5.visibility = if (spot.currentLeft == 0) View.VISIBLE else View.GONE
+                "searchBuilding" -> binding.imageButton6.visibility = if (spot.currentLeft == 0) View.VISIBLE else View.GONE
+                "somethingBuilding" -> binding.imageButton7.visibility = if (spot.currentLeft == 0) View.VISIBLE else View.GONE
             }
         }
     }
@@ -119,12 +102,9 @@ class ParkingAvailable : Fragment() {
             // 대기열 등록 처리 로직 추가
             dialog.dismiss()
         }
-        builder.setNegativeButton("취소") { dialog, _ ->
-            dialog.dismiss()
-        }
+        builder.setNegativeButton("취소") { dialog, _ -> dialog.dismiss() }
         builder.create().show()
     }
-
 
     private fun updatePieChart(pieChart: com.github.mikephil.charting.charts.PieChart, spot: ParkingSpot) {
         val entries = ArrayList<PieEntry>().apply {
