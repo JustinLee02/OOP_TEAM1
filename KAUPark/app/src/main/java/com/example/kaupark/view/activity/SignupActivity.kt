@@ -8,9 +8,8 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.kaupark.R
-import com.example.kaupark.data.MyApp
 import com.example.kaupark.databinding.ActivitySignupBinding
-import com.example.kaupark.model.User
+import com.example.kaupark.model.UserModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -45,29 +44,13 @@ class SignupActivity : AppCompatActivity() {
 
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this) { task ->
             if(task.isSuccessful) {
-                val user = User(id, studentId, password, phoneNum, email, carNum, 100000)
-                saveUserData(user)
+                val user = UserModel(id, studentId, password, phoneNum, email, carNum, 100000)
                 Toast.makeText(this, "회원가입 성공!", Toast.LENGTH_SHORT).show()
                 navigateToLoginActivity()
             } else {
                 Toast.makeText(this, "회원가입 실패: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
             }
         }
-    }
-
-    private fun saveUserData(user: User) {
-
-        val userId = auth.currentUser?.uid ?: return
-        firestore.collection("users")
-            .document(userId)
-            .set(user)
-            .addOnSuccessListener { document ->
-                MyApp.prefs.setString("uid", userId)
-                Log.d("SignupActivity", "DocumentSnapshot added with ID:")
-            }
-            .addOnFailureListener { e ->
-                Log.e("SignupActivity", "문서 추가 오류", e)
-            }
     }
 
     private fun navigateToLoginActivity() {

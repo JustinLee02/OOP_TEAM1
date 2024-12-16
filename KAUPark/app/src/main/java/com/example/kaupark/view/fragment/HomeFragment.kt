@@ -10,8 +10,8 @@ import android.widget.ArrayAdapter
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import com.example.kaupark.R
-import com.example.kaupark.ToastHelper
-import com.example.kaupark.databinding.HomeViewBinding
+import com.example.kaupark.utils.ToastHelper
+import com.example.kaupark.databinding.FragmentHomeBinding
 import com.example.kaupark.viewmodel.HomeViewModel
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
@@ -26,9 +26,9 @@ import java.time.LocalDate
  * Description: 메인 화면 역할을 하는 Fragment로, 주차장 정보를 보여주고 지도와 사용자 상호작용을 처리.
  * Implements OnMapReadyCallback: 네이버 맵 초기화 및 마커를 관리.
  */
-class HomeView : Fragment(), OnMapReadyCallback {
+class HomeFragment: Fragment(), OnMapReadyCallback {
 
-    private lateinit var binding: HomeViewBinding
+    private lateinit var binding: FragmentHomeBinding
 
     // 현재 날짜를 저장하는 변수 (API 26 이상 필요)
     @RequiresApi(Build.VERSION_CODES.O)
@@ -48,7 +48,7 @@ class HomeView : Fragment(), OnMapReadyCallback {
     ): View {
 
         // View Binding
-        binding = HomeViewBinding.inflate(inflater, container, false)
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         // 현재 날짜를 홈 화면에 표시
         binding.textviewCurrenttime.text = date.toString()
@@ -61,7 +61,7 @@ class HomeView : Fragment(), OnMapReadyCallback {
         // buttonMangeProfile 버튼 클릭 시 ManageProfile Fragment 로 이동
         binding.buttonManageprofile.setOnClickListener {
             parentFragmentManager.beginTransaction()
-                .replace(R.id.main_container, ManageProfile())
+                .replace(R.id.main_container, ManageProfileFragment())
                 .addToBackStack(null)
                 .commit()
         }
@@ -77,7 +77,8 @@ class HomeView : Fragment(), OnMapReadyCallback {
         )
 
         // ArrayAdapter 를 사용해 Spinner 에 주차장 리스트를 설정.
-        // parkingLots 배열을 dropdown 항목에 연결
+        // 리스트 각 항복의 레이아웃 지정, 어댑터가 사용할 리스트 지정
+        // 드롭다운 레이아웃 지정
         val adapter = ArrayAdapter(
             requireContext(), android.R.layout.simple_spinner_item, parkingLots).also { arrayAdapter ->  
                 arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -88,23 +89,17 @@ class HomeView : Fragment(), OnMapReadyCallback {
         // 입차 버튼 클릭 이벤트 처리.
         binding.buttonIn.setOnClickListener {
             val parkingLot = binding.spinnerParkinglot.selectedItem?.toString()
-
-            if (!parkingLot.isNullOrBlank()) {
+            if (parkingLot != null) {
                 viewModel.increaseCarNum(parkingLot)
-                viewModel.recordEntryTime()
-            } else {
-                ToastHelper.showToast(requireContext(), "주차장을 선택하세요")
             }
         }
 
         // 출차 버튼 클릭 이벤트 처리.
         binding.buttonOut.setOnClickListener {
             val parkingLot = binding.spinnerParkinglot.selectedItem?.toString()
-            if(!parkingLot.isNullOrBlank()) {
+            if (parkingLot != null) {
                 viewModel.decreaseCarNum(parkingLot)
                 viewModel.recordExitTime()
-            } else {
-                ToastHelper.showToast(requireContext(), "주차장 이름을 입력하세요")
             }
         }
 

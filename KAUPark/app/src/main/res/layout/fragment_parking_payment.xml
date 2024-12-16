@@ -100,7 +100,7 @@
                 android:layout_marginBottom="64dp"
                 android:background="@android:color/transparent"
                 android:contentDescription="버튼 이미지"
-                android:src="@drawable/add" />
+                android:src="@drawable/icon_plus" />
 
         </LinearLayout>
 

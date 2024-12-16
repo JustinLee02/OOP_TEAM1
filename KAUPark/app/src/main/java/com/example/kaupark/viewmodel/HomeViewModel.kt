@@ -4,18 +4,19 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.kaupark.model.ParkingRecord
+import com.example.kaupark.data.ParkingClass
+import com.example.kaupark.model.ParkingRecordModel
+import com.example.kaupark.utils.ToastHelper
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.naver.maps.map.overlay.Marker
-import com.example.kaupark.data.ParkingClass
 
 
 /**
  * HomewViewModel
  * Description: HomeView Fragment와 연결되어 LiveData를 통해 데이터 변경을 UI에 반영
  */
-class HomeViewModel() : ViewModel() {
+class HomeViewModel: ViewModel() {
 
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
     private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
@@ -27,8 +28,8 @@ class HomeViewModel() : ViewModel() {
     private val _userName = MutableLiveData<String>() // 사용자의 이름
     val userName: LiveData<String> get() = _userName
 
-    private val _parkingRecord = MutableLiveData<ParkingRecord?>() // 주차 기록
-    val parkingRecord: LiveData<ParkingRecord?> get() = _parkingRecord
+    private val _parkingRecord = MutableLiveData<ParkingRecordModel?>() // 주차 기록
+    val parkingRecord: LiveData<ParkingRecordModel?> get() = _parkingRecord
 
     private val _parkingFee = MutableLiveData<String>() // 주차 요금
     val parkingFee: LiveData<String> get() = _parkingFee
@@ -47,10 +48,6 @@ class HomeViewModel() : ViewModel() {
 
     private val _selectedParkingLot = MutableLiveData<String>() // 선택된 주차장 이름
     val selectedParkingLot: LiveData<String> get() = _selectedParkingLot
-
-    private val _parkingRatio = MutableLiveData<String>() // 주차장 혼잡도 비율
-    val parkingRatio: LiveData<String> get() = _parkingRatio
-
 
     init {
         _isEntry.value = false
@@ -72,11 +69,11 @@ class HomeViewModel() : ViewModel() {
                     _userCarNum.value = carNum
                     _userName.value = name
                 } else {
-                    // ToastHelper.showToast()
+                    _toastMessage.value = "사용자 정보를 가져오지 못했습니다"
                 }
             }
             .addOnFailureListener { e ->
-                // Toast.makeText(this, "실패: ${e.message}", Toast.LENGTH_SHORT).show()
+                _toastMessage.value = "사용자 정보를 가져오지 못했습니다"
             }
     }
 
@@ -85,13 +82,12 @@ class HomeViewModel() : ViewModel() {
      * 사용자가 주차장에 입차했을 때 시간을 기록
      * Firestore 에 입차 시간과 날짜를 저장
      */
-
-    fun recordEntryTime() {
+    private fun recordEntryTime() {
         val userId = auth.currentUser?.uid ?: return // 현재 로그인된 사용자 ID 가져오기
         val entryTime = System.currentTimeMillis()
         val currentDate = android.text.format.DateFormat.format("yyyy-MM-dd", entryTime).toString() // 현재 날짜 포맷팅
 
-        val record = ParkingRecord(entryTime = entryTime, date = currentDate) // 주차 기록 객체 생성
+        val record = ParkingRecordModel(entryTime = entryTime, date = currentDate) // 주차 기록 객체 생성
         if (_isEntry.value == true) {
             _toastMessage.value = "출차 버튼을 눌러주세요"
         } else {
@@ -130,23 +126,25 @@ class HomeViewModel() : ViewModel() {
             .addOnSuccessListener { document ->
                 if (document != null && document.exists()) {
                     val currentLeft = document.getLong("currentLeft") ?: 0
-                    val total = document.getLong("total") ?: 0
-                    var updateCount = currentLeft - 1
+                    val updateCount = currentLeft - 1
 
                     if (currentLeft.toInt() == 0) {
                         _toastMessage.value = "자리가 없습니다!"
+                        _isEntry.value = false
                     } else {
                         parkingDoc.update("currentLeft", updateCount)
                             .addOnSuccessListener {
                                 _parkingSpace.value = updateCount.toInt()
                                 _toastMessage.value = "${parkingLot}에 입차했습니다"
+
+                                recordEntryTime()
                             }
                             .addOnFailureListener { e ->
                                 Log.e("Error", "${e.message}")
                             }
                     }
                 } else {
-
+                    _toastMessage.value = "ERROR"
                 }
             }
             .addOnFailureListener { e ->
@@ -160,7 +158,6 @@ class HomeViewModel() : ViewModel() {
     fun recordExitTime() {
         val userId = auth.currentUser?.uid ?: return
         val exitTime = System.currentTimeMillis()
-
 
         if (_isEntry.value == false) {
             _toastMessage.value = "입차 버튼을 눌러주세요"
@@ -176,7 +173,7 @@ class HomeViewModel() : ViewModel() {
                     val duration = exitTime - entryTime
                     val date = document.getString("date")
 
-                    val updatedRecord = ParkingRecord(entryTime, exitTime, duration, date)
+                    val updatedRecord = ParkingRecordModel(entryTime, exitTime, duration, date)
                     val documentId = entryTime.toString()
                     firestore.collection("users").document(userId)
                         .collection("parking_records").document(documentId)
@@ -184,14 +181,13 @@ class HomeViewModel() : ViewModel() {
                         .addOnSuccessListener {
                             _parkingRecord.value = updatedRecord
                             calculateParkingFee(duration)
-                            _isEntry.value = true
+                            _isEntry.value = false
                         }
                 }
                 .addOnFailureListener {
                     _parkingRecord.value = null
                 }
         }
-
     }
 
     fun decreaseCarNum(parkingLot: String) {
@@ -211,7 +207,7 @@ class HomeViewModel() : ViewModel() {
                             Log.e("Error", "${e.message}")
                         }
                 } else {
-
+                    _toastMessage.value = "ERROR"
                 }
             }
             .addOnFailureListener { e ->
@@ -248,7 +244,7 @@ class HomeViewModel() : ViewModel() {
                 val additionalFee = ((durationMins - 60) / 30) * 500
                 "${2000 + additionalFee}원 ${durationMins}분 주차중"
             }
-        } */
+        } */ // 기존 요금 체계
 
         _parkingFee.value = "${durationSecs * 100}원"
     }
