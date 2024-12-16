@@ -37,7 +37,9 @@ class ChatFragment : Fragment() {
 
         binding.recyclerviewChat.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
-        chatViewModel.loadMessages(currentUser, receiver)
+        lifecycleScope.launch {
+            chatViewModel.loadMessages(currentUser, receiver)
+        }
         setUpObservers()
 
         binding.edittextMessage.addTextChangedListener { text ->
@@ -46,7 +48,10 @@ class ChatFragment : Fragment() {
 
         binding.buttonSendmessage.setOnClickListener {
             val message = binding.edittextMessage.text.toString()
-            chatViewModel.sendMessage(currentUser, receiver, message)
+            lifecycleScope.launch {
+                chatViewModel.sendMessage(currentUser, receiver, message)
+            }
+
             binding.edittextMessage.setText("")
         }
 
